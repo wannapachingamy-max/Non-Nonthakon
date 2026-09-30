@@ -24,22 +24,66 @@
     <style>
         body {
             font-family: 'Kanit', sans-serif;
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 50%, #7dd3fc 100%);
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
         }
 
+        /* 5 วงกลมพื้นหลังขนาดใหญ่ โดดเด้งมีมิติ */
         .bg-circle {
             position: fixed;
             border-radius: 50%;
-            filter: blur(25px);
+            filter: blur(40px);
             z-index: 0;
             pointer-events: none;
-            opacity: 0.55;
+            opacity: 0.65;
         }
-        .circle-1 { width: 360px; height: 360px; background: #bae6fd; top: -80px; left: -100px; }
-        .circle-2 { width: 420px; height: 420px; background: #7dd3fc; top: 5%; right: -130px; }
+        
+        .circle-1 { 
+            width: 450px; height: 450px; 
+            background: #ffffff; 
+            top: -100px; left: -100px; 
+            animation: floatCircle1 8s ease-in-out infinite alternate;
+        }
+        .circle-2 { 
+            width: 500px; height: 500px; 
+            background: #38bdf8; 
+            top: 20%; right: -150px; 
+            animation: floatCircle2 10s ease-in-out infinite alternate;
+        }
+        .circle-3 { 
+            width: 400px; height: 400px; 
+            background: #0284c7; 
+            bottom: -100px; left: -100px; 
+            animation: floatCircle1 9s ease-in-out infinite alternate;
+        }
+        .circle-4 { 
+            width: 480px; height: 480px; 
+            background: #e0f2fe; 
+            bottom: 10%; right: -120px; 
+            animation: floatCircle2 11s ease-in-out infinite alternate;
+        }
+        .circle-5 { 
+            width: 350px; height: 350px; 
+            background: #0369a1; 
+            top: 45%; left: 30%; 
+            animation: floatCircle1 12s ease-in-out infinite alternate;
+            opacity: 0.35;
+        }
+
+        @keyframes floatCircle1 {
+            0% { transform: translateY(0px) translateX(0px) scale(1); }
+            50% { transform: translateY(-30px) translateX(20px) scale(1.08); }
+            100% { transform: translateY(20px) translateX(-20px) scale(0.95); }
+        }
+
+        @keyframes floatCircle2 {
+            0% { transform: translateY(0px) translateX(0px) scale(1); }
+            50% { transform: translateY(25px) translateX(-25px) scale(1.05); }
+            100% { transform: translateY(-20px) translateX(15px) scale(0.92); }
+        }
+
         .glass-card {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
@@ -56,8 +100,12 @@
 </head>
 <body class="text-sky-950 flex flex-col min-h-screen relative selection:bg-sky-200">
 
+    <!-- วงกลมพื้นหลัง 5 อัน -->
     <div class="bg-circle circle-1"></div>
     <div class="bg-circle circle-2"></div>
+    <div class="bg-circle circle-3"></div>
+    <div class="bg-circle circle-4"></div>
+    <div class="bg-circle circle-5"></div>
 
     <!-- Toast Notification -->
     <div id="toast" class="fixed top-5 right-5 z-50 transform translate-y-[-200%] transition-all duration-300 bg-sky-900 text-white px-5 py-3 rounded-2xl shadow-xl flex items-center space-x-3 text-sm font-medium border border-sky-700">
@@ -193,7 +241,6 @@
                     <div class="space-y-2.5">
                         <input type="text" id="qr-name" placeholder="ชื่อช่องทาง เช่น พร้อมเพย์ (สแกนจ่าย)" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 bg-white">
                         
-                        <!-- เพิ่มส่วนอัปโหลดไอคอนธนาคารสำหรับ QR -->
                         <div>
                             <label class="block text-[11px] text-sky-700 mb-1">อัปโหลดรูปไอคอนธนาคาร / โลโก้ช่องทางนี้ (รูปย่อแสดงด้านซ้าย)</label>
                             <input type="file" id="qr-icon-file" accept="image/*" onchange="previewQrIconImage(event)" class="w-full text-xs text-sky-600 file:mr-2 file:py-1.5 file:px-2 file:rounded-lg file:border-0 file:text-[11px] file:bg-sky-100 file:text-sky-700 bg-white border border-sky-200 rounded-xl cursor-pointer">
@@ -229,7 +276,6 @@
                     <div class="space-y-2.5">
                         <input type="text" id="normal-name" placeholder="ชื่อช่องทาง เช่น TrueMoney Wallet หรือ ธ.กสิกรไทย" class="w-full text-sm px-3 py-2 rounded-xl border border-blue-200 bg-white">
                         
-                        <!-- เพิ่มส่วนอัปโหลดไอคอนธนาคารสำหรับบัญชีปกติ -->
                         <div>
                             <label class="block text-[11px] text-blue-700 mb-1">อัปโหลดรูปไอคอนธนาคาร / โลโก้ช่องทางนี้ (รูปย่อแสดงด้านซ้าย)</label>
                             <input type="file" id="normal-icon-file" accept="image/*" onchange="previewNormalIconImage(event)" class="w-full text-xs text-blue-600 file:mr-2 file:py-1.5 file:px-2 file:rounded-lg file:border-0 file:text-[11px] file:bg-blue-100 file:text-blue-700 bg-white border border-blue-200 rounded-xl cursor-pointer">
@@ -401,7 +447,6 @@
             paymentMethods.forEach((item) => {
                 const card = document.createElement('div');
                 
-                // กำหนดรูปไอคอนทางซ้าย ถ้ามีใช้รูปที่อัป ถ้าไม่มีใช้ค่าเริ่มต้น
                 let leftIconHtml = '';
                 if (item.icon) {
                     leftIconHtml = `<img src="${item.icon}" class="w-full h-full object-cover">`;
@@ -414,7 +459,6 @@
                 }
 
                 if (!item.active) {
-                    // กรณีปิดใช้งานชั่วคราว
                     card.className = "glass-card rounded-3xl p-5 shadow-sm border border-amber-200 relative overflow-hidden opacity-90 bg-amber-50/50";
                     card.innerHTML = `
                         <div class="flex items-center space-x-4 mb-2">
@@ -430,7 +474,6 @@
                         </div>
                     `;
                 } else {
-                    // กรณีเปิดใช้งานปกติ
                     if (item.type === 'qr') {
                         card.className = "glass-card rounded-3xl p-5 shadow-lg border border-white relative overflow-hidden";
                         card.innerHTML = `
