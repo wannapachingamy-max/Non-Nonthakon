@@ -71,6 +71,7 @@
             <i class="fa-solid fa-gear"></i>
         </button>
 
+        <!-- โลโก้ร้าน (คลิกที่ปุ่มหลังบ้านเพื่อเปลี่ยนรูปโลโก้ได้ หรืออัปโหลด) -->
         <div class="relative w-28 h-28 mx-auto mb-4 float-animation">
             <img id="store-logo" src="https://placehold.co/200x200/e0f2fe/0284c7?text=NonNon" alt="Store Logo" class="relative w-28 h-28 rounded-full object-cover border-4 border-white shadow-md mx-auto">
         </div>
@@ -81,14 +82,25 @@
 
     <!-- Main Content -->
     <main class="w-full max-w-md mx-auto px-4 flex-grow pb-12 relative z-10">
+        <!-- รายการช่องทางชำระเงิน (แสดงตามที่ตั้งค่าไว้ เปิด/ปิด หรือเพิ่มลบได้) -->
         <div id="payment-list" class="space-y-4"></div>
 
-        <!-- Contact Section -->
+        <!-- Contact Section (เพิ่มลิงก์ครบถ้วน Line, Facebook, Instagram) -->
         <div class="mt-8 pt-6 border-t border-sky-200/60 text-center">
             <p class="text-xs text-sky-500 font-medium mb-3">💬 ช่องทางติดต่อสอบถามร้านค้า</p>
             <div class="flex justify-center items-center space-x-4">
-                <a href="https://lin.ee/NNKqu9g" target="_blank" class="w-12 h-12 rounded-2xl bg-emerald-500 text-white flex items-center justify-center shadow-sm text-xl"><i class="fa-brands fa-line"></i></a>
-                <a href="https://www.facebook.com/" target="_blank" class="w-12 h-12 rounded-2xl bg-blue-600 text-white flex items-center justify-center shadow-sm text-xl"><i class="fa-brands fa-facebook-f"></i></a>
+                <!-- LINE -->
+                <a href="https://lin.ee/NNKqu9g" target="_blank" class="w-12 h-12 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center shadow-sm text-xl transition-all" title="LINE">
+                    <i class="fa-brands fa-line"></i>
+                </a>
+                <!-- Facebook -->
+                <a href="https://www.facebook.com/share/19fLAacTiP/" target="_blank" class="w-12 h-12 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center shadow-sm text-xl transition-all" title="Facebook">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/nonnon_store06?stkn=MXV2ZHJhdGF6MHF1aQ==" target="_blank" class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 hover:opacity-90 text-white flex items-center justify-center shadow-sm text-xl transition-all" title="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
             </div>
         </div>
     </main>
@@ -157,18 +169,25 @@
             </div>
 
             <div class="space-y-5">
-                <!-- ตั้งค่าร้านค้า -->
+                <!-- ตั้งค่าข้อมูลร้านและโลโก้ -->
                 <div class="bg-sky-50 p-4 rounded-2xl border border-sky-200">
-                    <h3 class="text-sm font-bold text-sky-900 mb-2">🏪 ตั้งค่าข้อมูลร้าน</h3>
+                    <h3 class="text-sm font-bold text-sky-900 mb-2">🏪 ตั้งค่าข้อมูลร้านและโลโก้ด้านบน</h3>
                     <input type="text" id="admin-store-name" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 mb-2 bg-white" placeholder="ชื่อร้าน">
                     <input type="text" id="admin-store-subtitle" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 mb-2 bg-white" placeholder="สโลแกน">
+                    
+                    <div class="mb-2">
+                        <label class="block text-[11px] text-sky-700 mb-1">อัปโหลดรูปโลโก้ร้าน (บนสุด)</label>
+                        <input type="file" id="store-logo-file" accept="image/*" onchange="previewStoreLogo(event)" class="w-full text-xs text-sky-600 file:mr-2 file:py-1.5 file:px-2 file:rounded-lg file:border-0 file:text-[11px] file:bg-sky-100 file:text-sky-700 bg-white border border-sky-200 rounded-xl cursor-pointer">
+                        <input type="hidden" id="admin-store-logo-base64">
+                    </div>
+
                     <button onclick="saveStoreInfo()" class="w-full py-2 bg-sky-600 text-white rounded-xl text-xs font-semibold">บันทึกข้อมูลร้าน</button>
                 </div>
 
                 <!-- Hidden Input สำหรับเช็คว่ากำลังแก้รายการไหนอยู่ -->
                 <input type="hidden" id="edit-index" value="-1">
 
-                <!-- ฟอร์มที่ 1: เพิ่ม/แก้ไข QR Code พร้อมเพย์ (จับเวลา 17 นาที) -->
+                <!-- ฟอร์มที่ 1: เพิ่ม/แก้ไข QR Code พร้อมเพย์ (จำกัดเวลา 17 นาที) -->
                 <div class="bg-sky-50 p-4 rounded-2xl border border-sky-200">
                     <h3 id="qr-form-header" class="text-sm font-bold text-sky-900 mb-2">📷 เพิ่ม QR Code พร้อมเพย์ (จำกัดเวลา 17 นาที)</h3>
                     <div class="space-y-2.5">
@@ -177,7 +196,7 @@
                         <div class="grid grid-cols-2 gap-2">
                             <div>
                                 <label class="block text-[11px] text-sky-700 mb-1">อัปโหลดรูป QR Code</label>
-                                <input type="file" id="qr-file-input" accept="image/*" onchange="previewImage(event, 'qr-image-base64')" class="w-full text-xs text-sky-600 file:mr-2 file:py-1.5 file:px-2 file:rounded-lg file:border-0 file:text-[11px] file:bg-sky-100 file:text-sky-700 bg-white border border-sky-200 rounded-xl cursor-pointer">
+                                <input type="file" id="qr-file-input" accept="image/*" onchange="previewQrCodeImage(event)" class="w-full text-xs text-sky-600 file:mr-2 file:py-1.5 file:px-2 file:rounded-lg file:border-0 file:text-[11px] file:bg-sky-100 file:text-sky-700 bg-white border border-sky-200 rounded-xl cursor-pointer">
                                 <input type="hidden" id="qr-image-base64">
                             </div>
                             <div>
@@ -197,27 +216,21 @@
                     </div>
                 </div>
 
-                <!-- ฟอร์มที่ 2: เพิ่ม/แก้ไข เลขบัญชีธนาคาร / Wallet (กดคัดลอก + เพิ่มรูปไอคอนธนาคารได้) -->
+                <!-- ฟอร์มที่ 2: เพิ่ม/แก้ไข เลขบัญชีธนาคาร / TrueMoney Wallet (กดคัดลอก) -->
                 <div class="bg-blue-50 p-4 rounded-2xl border border-blue-200">
-                    <h3 id="normal-form-header" class="text-sm font-bold text-sky-900 mb-2">💳 เพิ่มเลขบัญชีธนาคาร / Wallet (พร้อมรูปไอคอนธนาคาร)</h3>
+                    <h3 id="normal-form-header" class="text-sm font-bold text-sky-900 mb-2">💳 เพิ่มเลขบัญชีธนาคาร / TrueMoney Wallet (กดคัดลอก)</h3>
                     <div class="space-y-2.5">
-                        <input type="text" id="normal-name" placeholder="ชื่อช่องทาง เช่น ธ.กสิกรไทย หรือ TrueMoney Wallet" class="w-full text-sm px-3 py-2 rounded-xl border border-blue-200 bg-white">
+                        <input type="text" id="normal-name" placeholder="ชื่อช่องทาง เช่น TrueMoney Wallet หรือ ธ.กสิกรไทย" class="w-full text-sm px-3 py-2 rounded-xl border border-blue-200 bg-white">
                         
                         <div class="grid grid-cols-2 gap-2">
-                            <div>
-                                <label class="block text-[11px] text-blue-700 mb-1">อัปโหลดรูปโลโก้/ไอคอนธนาคาร</label>
-                                <input type="file" id="normal-file-input" accept="image/*" onchange="previewImage(event, 'normal-image-base64')" class="w-full text-xs text-blue-600 file:mr-2 file:py-1.5 file:px-2 file:rounded-lg file:border-0 file:text-[11px] file:bg-blue-100 file:text-blue-700 bg-white border border-blue-200 rounded-xl cursor-pointer">
-                                <input type="hidden" id="normal-image-base64">
-                            </div>
                             <div>
                                 <label class="block text-[11px] text-blue-700 mb-1">เลขบัญชี / เบอร์วอเลท</label>
                                 <input type="text" id="normal-acc-num" placeholder="XXX-X-XXXXX-X" class="w-full text-sm px-3 py-2 rounded-xl border border-blue-200 bg-white font-mono">
                             </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-[11px] text-blue-700 mb-1">ชื่อบัญชีผู้รับ</label>
-                            <input type="text" id="normal-acc-name" placeholder="นาย นนท์ นนท์" class="w-full text-sm px-3 py-2 rounded-xl border border-blue-200 bg-white">
+                            <div>
+                                <label class="block text-[11px] text-blue-700 mb-1">ชื่อบัญชีผู้รับ</label>
+                                <input type="text" id="normal-acc-name" placeholder="นาย นนท์ นนท์" class="w-full text-sm px-3 py-2 rounded-xl border border-blue-200 bg-white">
+                            </div>
                         </div>
 
                         <button onclick="saveNormalMethod()" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold transition-all">
@@ -226,7 +239,7 @@
                     </div>
                 </div>
 
-                <!-- รายการที่มีอยู่ทั้งหมด พร้อมปุ่มล้างฟอร์ม -->
+                <!-- รายการที่มีอยู่ทั้งหมด พร้อมปุ่มเปิด-ปิด / ลบ / แก้ไข -->
                 <div class="bg-sky-50 p-4 rounded-2xl border border-sky-200">
                     <div class="flex justify-between items-center mb-2">
                         <h3 class="text-sm font-bold text-sky-900">📋 รายการช่องทางชำระเงินทั้งหมด</h3>
@@ -259,6 +272,13 @@
                 accountNumber: "089-123-4567",
                 type: "qr",
                 active: true
+            },
+            {
+                name: "TrueMoney Wallet",
+                accountNumber: "089-123-4567",
+                accountName: "นาย นนทวัฒน์ ใจดี",
+                type: "normal",
+                active: true
             }
         ];
 
@@ -273,6 +293,9 @@
         function renderStoreInfo() {
             document.getElementById('store-name').innerText = storeInfo.name;
             document.getElementById('store-subtitle').innerText = storeInfo.subtitle;
+            if(storeInfo.logo) {
+                document.getElementById('store-logo').src = storeInfo.logo;
+            }
             document.getElementById('admin-store-name').value = storeInfo.name;
             document.getElementById('admin-store-subtitle').value = storeInfo.subtitle;
         }
@@ -303,12 +326,22 @@
             reader.readAsDataURL(file);
         }
 
-        function previewImage(event, targetId) {
+        function previewStoreLogo(event) {
             const file = event.target.files[0];
             if (file) {
                 compressImage(file, function(base64String) {
-                    document.getElementById(targetId).value = base64String;
-                    showToast("อัปโหลดรูปสำเร็จ!");
+                    document.getElementById('admin-store-logo-base64').value = base64String;
+                    showToast("อัปโหลดโลโก้ร้านสำเร็จ!");
+                });
+            }
+        }
+
+        function previewQrCodeImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                compressImage(file, function(base64String) {
+                    document.getElementById('qr-image-base64').value = base64String;
+                    showToast("อัปโหลดรูป QR Code สำเร็จ!");
                 });
             }
         }
@@ -316,6 +349,10 @@
         function saveStoreInfo() {
             storeInfo.name = document.getElementById('admin-store-name').value;
             storeInfo.subtitle = document.getElementById('admin-store-subtitle').value;
+            const newLogo = document.getElementById('admin-store-logo-base64').value;
+            if(newLogo) {
+                storeInfo.logo = newLogo;
+            }
             localStorage.setItem('nonnon_store_info', JSON.stringify(storeInfo));
             renderStoreInfo();
             showToast("บันทึกข้อมูลร้านค้าสำเร็จ!");
@@ -326,6 +363,8 @@
             container.innerHTML = '';
 
             paymentMethods.forEach((item) => {
+                if (!item.active) return; // ถ้าปิดการใช้งาน จะไม่แสดงหน้าบ้าน
+
                 const card = document.createElement('div');
                 if (item.type === 'qr') {
                     card.className = "glass-card rounded-3xl p-5 shadow-lg border border-white relative overflow-hidden";
@@ -346,15 +385,10 @@
                     `;
                 } else {
                     card.className = "glass-card rounded-3xl p-5 shadow-lg border border-white relative overflow-hidden";
-                    // เช็คว่ามีรูปไอคอนธนาคารไหม ถ้าไม่มีให้แสดงไอคอนกระเป๋าแทน
-                    const iconDisplay = item.bankIcon ? 
-                        `<img src="${item.bankIcon}" class="w-full h-full object-cover">` : 
-                        `<i class="fa-solid fa-wallet text-sky-600 text-xl"></i>`;
-
                     card.innerHTML = `
                         <div class="flex items-center space-x-4 mb-4">
                             <div class="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center border border-sky-100 flex-shrink-0 overflow-hidden">
-                                ${iconDisplay}
+                                <i class="fa-solid fa-wallet text-sky-600 text-xl"></i>
                             </div>
                             <div class="flex-grow min-w-0">
                                 <h2 class="font-bold text-sky-950 text-base truncate">${item.name}</h2>
@@ -363,7 +397,7 @@
                         </div>
                         <div class="bg-white/95 rounded-2xl p-3.5 flex items-center justify-between border border-sky-100">
                             <span class="text-base font-bold text-sky-900 font-mono">${item.accountNumber}</span>
-                            <button onclick="copyToClipboard('${item.accountNumber}', '${item.name}')" class="bg-sky-600 text-white text-xs px-4 py-2 rounded-xl">คัดลอก</button>
+                            <button onclick="copyToClipboard('${item.accountNumber}', '${item.name}')" class="bg-sky-600 hover:bg-sky-700 text-white text-xs px-4 py-2 rounded-xl transition-all">คัดลอก</button>
                         </div>
                     `;
                 }
@@ -411,18 +445,29 @@
                 const row = document.createElement('div');
                 row.className = "flex items-center justify-between p-2.5 rounded-xl bg-white border border-sky-100 text-xs";
                 const badge = item.type === 'qr' ? '<span class="text-[10px] bg-sky-100 text-sky-700 px-1.5 py-0.5 rounded ml-1">QR 17น.</span>' : '<span class="text-[10px] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded ml-1">โอนปกติ</span>';
+                const statusBtnText = item.active ? 'เปิดอยู่' : 'ปิดอยู่';
+                const statusBtnClass = item.active ? 'bg-emerald-100 text-emerald-700' : 'bg-gray-200 text-gray-600';
+
                 row.innerHTML = `
-                    <div class="truncate"><span class="font-semibold">${item.name}</span> ${badge}</div>
-                    <div class="space-x-1 flex-shrink-0">
-                        <button onclick="editPaymentMethod(${index})" class="px-2.5 py-1 bg-sky-100 text-sky-700 rounded-lg">แก้ไข</button>
-                        <button onclick="deletePaymentMethod(${index})" class="px-2.5 py-1 bg-rose-100 text-rose-700 rounded-lg">ลบ</button>
+                    <div class="truncate max-w-[140px]"><span class="font-semibold">${item.name}</span> ${badge}</div>
+                    <div class="space-x-1 flex-shrink-0 flex items-center">
+                        <button onclick="togglePaymentStatus(${index})" class="px-2 py-1 rounded-lg ${statusBtnClass}">${statusBtnText}</button>
+                        <button onclick="editPaymentMethod(${index})" class="px-2 py-1 bg-sky-100 text-sky-700 rounded-lg">แก้ไข</button>
+                        <button onclick="deletePaymentMethod(${index})" class="px-2 py-1 bg-rose-100 text-rose-700 rounded-lg">ลบ</button>
                     </div>
                 `;
                 container.appendChild(row);
             });
         }
 
-        // บันทึกฟอร์ม QR Code
+        function togglePaymentStatus(index) {
+            paymentMethods[index].active = !paymentMethods[index].active;
+            localStorage.setItem('nonnon_payment_methods', JSON.stringify(paymentMethods));
+            renderFrontPaymentList();
+            renderAdminPaymentList();
+            showToast("เปลี่ยนสถานะการแสดงผลสำเร็จ");
+        }
+
         function saveQrMethod() {
             const name = document.getElementById('qr-name').value;
             const qrImage = document.getElementById('qr-image-base64').value;
@@ -459,10 +504,8 @@
             showToast("บันทึก QR Code สำเร็จ!");
         }
 
-        // บันทึกฟอร์มโอนปกติ (ธนาคาร/Wallet พร้อมรูปไอคอน)
         function saveNormalMethod() {
             const name = document.getElementById('normal-name').value;
-            const bankIcon = document.getElementById('normal-image-base64').value;
             const accountNumber = document.getElementById('normal-acc-num').value;
             const accountName = document.getElementById('normal-acc-name').value;
             const editIndex = parseInt(document.getElementById('edit-index').value);
@@ -474,14 +517,12 @@
 
             if (editIndex >= 0) {
                 paymentMethods[editIndex].name = name;
-                if (bankIcon) paymentMethods[editIndex].bankIcon = bankIcon;
                 paymentMethods[editIndex].accountNumber = accountNumber;
                 paymentMethods[editIndex].accountName = accountName;
                 paymentMethods[editIndex].type = 'normal';
             } else {
                 paymentMethods.push({
                     name,
-                    bankIcon: bankIcon || "",
                     accountNumber,
                     accountName,
                     type: 'normal',
@@ -493,7 +534,7 @@
             renderFrontPaymentList();
             renderAdminPaymentList();
             resetAllForms();
-            showToast("บันทึกบัญชีธนาคารสำเร็จ!");
+            showToast("บันทึกบัญชี/Wallet สำเร็จ!");
         }
 
         function editPaymentMethod(index) {
@@ -509,7 +550,6 @@
                 document.getElementById('qr-name').scrollIntoView({ behavior: 'smooth' });
             } else {
                 document.getElementById('normal-name').value = item.name;
-                document.getElementById('normal-image-base64').value = item.bankIcon || '';
                 document.getElementById('normal-acc-num').value = item.accountNumber || '';
                 document.getElementById('normal-acc-name').value = item.accountName || '';
                 document.getElementById('normal-form-header').innerText = "✏️ แก้ไขบัญชีธนาคาร / Wallet";
@@ -537,11 +577,9 @@
             document.getElementById('qr-form-header').innerText = "📷 เพิ่ม QR Code พร้อมเพย์ (จำกัดเวลา 17 นาที)";
 
             document.getElementById('normal-name').value = '';
-            document.getElementById('normal-file-input').value = '';
-            document.getElementById('normal-image-base64').value = '';
             document.getElementById('normal-acc-num').value = '';
             document.getElementById('normal-acc-name').value = '';
-            document.getElementById('normal-form-header').innerText = "💳 เพิ่มเลขบัญชีธนาคาร / Wallet (พร้อมรูปไอคอนธนาคาร)";
+            document.getElementById('normal-form-header').innerText = "💳 เพิ่มเลขบัญชีธนาคาร / TrueMoney Wallet (กดคัดลอก)";
 
             document.getElementById('edit-index').value = -1;
         }
