@@ -3,19 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ช่องทางการชำระเงิน - NonNon Store</title>
-    <!-- Tailwind CSS -->
+    <title>NONNON STORE - ช่องทางการชำระเงิน</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
+    <!-- FontAwesome 6 Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Kanit & Prompt -->
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Thai Google Fonts: Prompt & Mitr -->
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@400;500;600&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                        }
+                    },
                     fontFamily: {
-                        sans: ['Kanit', 'Prompt', 'sans-serif'],
+                        prompt: ['Prompt', 'sans-serif'],
+                        mitr: ['Mitr', 'sans-serif'],
                     }
                 }
             }
@@ -23,449 +37,718 @@
     </script>
     <style>
         body {
-            font-family: 'Kanit', sans-serif;
-            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 50%, #7dd3fc 100%);
+            font-family: 'Prompt', sans-serif;
+            background: linear-gradient(135deg, #f0f7ff 0%, #e0f2fe 50%, #dbeafe 100%);
+            background-attachment: fixed;
             min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
         }
-
-        .bg-circle {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(40px);
-            z-index: 0;
-            pointer-events: none;
-            opacity: 0.65;
-        }
-        
-        .circle-1 { width: 450px; height: 450px; background: #ffffff; top: -100px; left: -100px; animation: floatCircle1 8s ease-in-out infinite alternate; }
-        .circle-2 { width: 500px; height: 500px; background: #38bdf8; top: 20%; right: -150px; animation: floatCircle2 10s ease-in-out infinite alternate; }
-        .circle-3 { width: 400px; height: 400px; background: #0284c7; bottom: -100px; left: -100px; animation: floatCircle1 9s ease-in-out infinite alternate; }
-        .circle-4 { width: 480px; height: 480px; background: #e0f2fe; bottom: 10%; right: -120px; animation: floatCircle2 11s ease-in-out infinite alternate; }
-        .circle-5 { width: 350px; height: 350px; background: #0369a1; top: 45%; left: 30%; animation: floatCircle1 12s ease-in-out infinite alternate; opacity: 0.35; }
-
-        @keyframes floatCircle1 {
-            0% { transform: translateY(0px) translateX(0px) scale(1); }
-            50% { transform: translateY(-30px) translateX(20px) scale(1.08); }
-            100% { transform: translateY(20px) translateX(-20px) scale(0.95); }
-        }
-
-        @keyframes floatCircle2 {
-            0% { transform: translateY(0px) translateX(0px) scale(1); }
-            50% { transform: translateY(25px) translateX(-25px) scale(1.05); }
-            100% { transform: translateY(-20px) translateX(15px) scale(0.92); }
-        }
-
-        .cute-bear-bg {
-            position: fixed;
-            top: -15px;
-            left: -15px;
-            width: 150px;
-            height: 150px;
-            z-index: 1;
-            pointer-events: none;
-            opacity: 0.85;
-            animation: bearFloat 4s ease-in-out infinite;
-        }
-
-        @keyframes bearFloat {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-8px) rotate(2deg); }
-        }
-
-        .bear-ear-left { transform-origin: bottom center; animation: earWiggleLeft 2.5s ease-in-out infinite; }
-        .bear-ear-right { transform-origin: bottom center; animation: earWiggleRight 2.5s ease-in-out infinite; }
-
-        @keyframes earWiggleLeft {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(-12deg); }
-            75% { transform: rotate(5deg); }
-        }
-
-        @keyframes earWiggleRight {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(12deg); }
-            75% { transform: rotate(-5deg); }
-        }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.85);
+        .cute-card {
+            background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(186, 230, 253, 0.6);
+            border: 2px solid rgba(186, 230, 253, 0.6);
+            box-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.08), 0 8px 10px -6px rgba(2, 132, 199, 0.04);
         }
-        .float-animation {
-            animation: float 3s ease-in-out infinite;
+        .cute-badge {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
         }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-6px); }
+        .pulse-soft {
+            animation: pulse-soft 2s infinite ease-in-out;
+        }
+        @keyframes pulse-soft {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
         }
     </style>
 </head>
-<body class="text-sky-950 flex flex-col min-h-screen relative selection:bg-sky-200">
+<body class="text-slate-700 antialiased flex flex-col min-h-screen">
 
-    <div class="bg-circle circle-1"></div>
-    <div class="bg-circle circle-2"></div>
-    <div class="bg-circle circle-3"></div>
-    <div class="bg-circle circle-4"></div>
-    <div class="bg-circle circle-5"></div>
-
-    <div class="cute-bear-bg hidden sm:block">
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full drop-shadow-lg">
-            <g class="bear-ear-left">
-                <circle cx="55" cy="55" r="30" fill="#ffffff" stroke="#bae6fd" stroke-width="4"/>
-                <circle cx="55" cy="55" r="16" fill="#fbcfe8"/>
-            </g>
-            <g class="bear-ear-right">
-                <circle cx="145" cy="55" r="30" fill="#ffffff" stroke="#bae6fd" stroke-width="4"/>
-                <circle cx="145" cy="55" r="16" fill="#fbcfe8"/>
-            </g>
-            <circle cx="100" cy="110" r="65" fill="#ffffff" stroke="#bae6fd" stroke-width="4"/>
-            <circle cx="70" cy="120" r="12" fill="#fbcfe8" opacity="0.6"/>
-            <circle cx="130" cy="120" r="12" fill="#fbcfe8" opacity="0.6"/>
-            <circle cx="80" cy="100" r="7" fill="#0369a1"/>
-            <circle cx="120" cy="100" r="7" fill="#0369a1"/>
-            <circle cx="82" cy="98" r="2.5" fill="#ffffff"/>
-            <circle cx="122" cy="98" r="2.5" fill="#ffffff"/>
-            <ellipse cx="100" cy="112" rx="10" ry="7" fill="#0369a1"/>
-            <path d="M 95 123 Q 100 129 105 123" fill="none" stroke="#0369a1" stroke-width="3" stroke-linecap="round"/>
-        </svg>
-    </div>
-
-    <!-- Toast Notification -->
-    <div id="toast" class="fixed top-5 right-5 z-50 transform translate-y-[-200%] transition-all duration-300 bg-sky-900 text-white px-5 py-3 rounded-2xl shadow-xl flex items-center space-x-3 text-sm font-medium border border-sky-700">
-        <i class="fa-solid fa-circle-check text-sky-400 text-lg"></i>
-        <span id="toast-message">คัดลอกสำเร็จแล้วค่ะ!</span>
-    </div>
-
-    <!-- Header -->
-    <header class="w-full max-w-md mx-auto pt-10 pb-4 px-4 text-center relative z-10">
-        <button onclick="handleAdminAccess()" class="absolute top-8 right-4 bg-white/95 hover:bg-white text-sky-600 hover:text-sky-700 p-2.5 rounded-full shadow-sm transition-all duration-200 border border-sky-100 flex items-center justify-center text-sm" title="จัดการหลังบ้าน">
-            <i class="fa-solid fa-gear"></i>
-        </button>
-
-        <!-- โลโก้ร้าน -->
-        <div class="relative w-28 h-28 mx-auto mb-4 float-animation">
-            <img id="store-logo" src="" alt="Store Logo" class="relative w-28 h-28 rounded-full object-cover border-4 border-white shadow-md mx-auto bg-white">
-        </div>
-
-        <h1 id="store-name" class="text-2xl font-bold text-sky-950 tracking-wide">NonNon Store</h1>
-        <p id="store-subtitle" class="text-sm text-sky-600 font-medium mt-1">✨ รวมช่องทางชำระเงิน สะดวก ปลอดภัย ✨</p>
-    </header>
-
-    <!-- Main Content -->
-    <main class="w-full max-w-md mx-auto px-4 flex-grow pb-12 relative z-10">
-        <div id="payment-list" class="space-y-4"></div>
-
-        <div class="mt-8 pt-6 border-t border-sky-200/60 text-center">
-            <p class="text-xs text-sky-500 font-medium mb-3">💬 ช่องทางติดต่อสอบถามร้านค้า</p>
-            <div class="flex justify-center items-center space-x-4">
-                <a href="https://lin.ee/NNKqu9g" target="_blank" class="w-12 h-12 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center shadow-sm text-xl transition-all" title="LINE">
-                    <i class="fa-brands fa-line"></i>
-                </a>
-                <a href="https://www.facebook.com/share/19fLAacTiP/" target="_blank" class="w-12 h-12 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center shadow-sm text-xl transition-all" title="Facebook">
-                    <i class="fa-brands fa-facebook-f"></i>
-                </a>
-                <a href="https://www.instagram.com/nonnon_store06?stkn=MXV2ZHJhdGF6MHF1aQ==" target="_blank" class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 hover:opacity-90 text-white flex items-center justify-center shadow-sm text-xl transition-all" title="Instagram">
-                    <i class="fa-brands fa-instagram"></i>
-                </a>
-            </div>
-        </div>
-    </main>
-
-    <!-- QR Code Modal -->
-    <div id="qr-modal" class="fixed inset-0 z-50 bg-sky-950/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-sm p-6 border border-sky-100 flex flex-col text-center relative overflow-hidden">
-            <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-sky-400 via-blue-500 to-sky-600"></div>
-            
-            <div class="flex justify-between items-center mb-2">
-                <span class="text-xs font-bold px-3 py-1 bg-sky-100 text-sky-700 rounded-full flex items-center space-x-1">
-                    <i class="fa-solid fa-qrcode"></i>
-                    <span>QR Code พร้อมเพย์</span>
-                </span>
-                <button onclick="closeQrModal()" class="text-sky-400 hover:text-sky-600 p-2 rounded-full">
-                    <i class="fa-solid fa-xmark text-lg"></i>
+    <!-- Main Application Container -->
+    <div class="max-w-md w-full mx-auto p-4 sm:p-5 flex-grow flex flex-col justify-between">
+        
+        <div>
+            <!-- Header Section -->
+            <header class="text-center pt-3 pb-4 relative">
+                <!-- Admin Gear Button -->
+                <button onclick="openAdminLoginModal()" class="absolute top-1 right-1 w-9 h-9 bg-white/90 text-brand-500 rounded-2xl shadow-sm hover:shadow border border-brand-200 flex items-center justify-center hover:scale-105 transition transform" title="เข้าสู่ระบบแอดมิน">
+                    <i class="fa-solid fa-gear text-base"></i>
                 </button>
-            </div>
 
-            <h2 class="text-base font-bold text-sky-950 mb-1" id="qr-modal-title">สแกนเพื่อชำระเงิน</h2>
-            <p class="text-xs text-sky-500 mb-3" id="qr-modal-acc">พร้อมเพย์: <span id="qr-acc-number" class="font-mono font-bold"></span></p>
-
-            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3 mb-4 flex items-center justify-center space-x-2 text-amber-900 shadow-sm">
-                <i class="fa-regular fa-clock text-amber-600 text-base animate-pulse"></i>
-                <div class="text-xs font-semibold">
-                    กรุณาโอนภายใน: <span id="timer-countdown" class="font-mono text-sm font-bold text-rose-600">17:00</span> นาที
+                <!-- Store Logo -->
+                <div class="relative w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-3">
+                    <div class="w-full h-full rounded-full p-1.5 bg-white shadow-md border-2 border-brand-300 overflow-hidden flex items-center justify-center">
+                        <img id="displayStoreLogo" src="https://placehold.co/200x200/e0f2fe/0284c7?text=NONNON" alt="Store Logo" class="w-full h-full object-cover rounded-full" onerror="this.src='https://placehold.co/200x200/e0f2fe/0284c7?text=NONNON'">
+                    </div>
+                    <span class="absolute bottom-0 right-1 bg-white p-1 rounded-full text-brand-500 text-xs shadow-sm border border-brand-100">✨</span>
                 </div>
-            </div>
 
-            <div class="bg-sky-50/70 p-3 rounded-2xl border border-sky-100 mb-4 flex items-center justify-center relative shadow-inner">
-                <img id="qr-image-display" src="" alt="PromptPay QR" class="w-52 h-52 rounded-xl object-contain bg-white p-2 border border-sky-200 shadow-sm">
-            </div>
+                <!-- Store Title & Tagline -->
+                <h1 id="displayStoreTitle" class="font-mitr text-xl sm:text-2xl font-bold text-brand-700 tracking-tight">NONNON STORE</h1>
+                <p id="displayStoreSubtitle" class="text-xs sm:text-sm text-brand-500 mt-1 font-medium">ช่องทางการชำระเงิน สะดวก รวดเร็ว ปลอดภัย 💙</p>
+            </header>
 
-            <p class="text-[11px] text-sky-500 mb-4 leading-relaxed">
-                *ระบบจะจองสิทธิ์การชำระเงินนี้ตามเวลาที่กำหนด<br>หากเกินกำหนดรายการจะถูกยกเลิกอัตโนมัติ
+            <!-- Main Featured QR Code Section (ตรงส่วนบนใต้โลโก้) -->
+            <section id="mainQrSection" class="mb-5">
+                <div class="cute-card rounded-3xl p-5 text-center relative overflow-hidden">
+                    <!-- Top Ribbon/Badge -->
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full cute-badge text-brand-700 text-xs font-semibold mb-3 border border-brand-200">
+                        <i class="fa-solid fa-qrcode text-brand-500"></i>
+                        <span>สแกนชำระเงินผ่าน QR Code หลัก</span>
+                    </div>
+
+                    <!-- Main QR Code Image Container -->
+                    <div class="bg-white p-3 rounded-2xl border-2 border-dashed border-brand-200 max-w-[220px] mx-auto shadow-inner mb-3">
+                        <img id="displayMainQr" src="https://placehold.co/400x400/e0f2fe/0369a1?text=MAIN+QR+CODE" alt="Main QR Code" class="w-full aspect-square object-contain rounded-xl cursor-pointer hover:opacity-95 transition" onclick="zoomMainQr()" onerror="this.src='https://placehold.co/400x400/e0f2fe/0369a1?text=MAIN+QR+CODE'">
+                    </div>
+
+                    <p class="text-[11px] text-slate-500 mb-3">รองรับทุกแอปธนาคาร & พร้อมเพย์ สแกนได้ทันทีค่ะ</p>
+
+                    <!-- Main QR Action Buttons -->
+                    <div class="flex justify-center gap-2">
+                        <button onclick="zoomMainQr()" class="px-3.5 py-1.5 bg-brand-50 hover:bg-brand-100 text-brand-600 rounded-xl text-xs font-medium border border-brand-200 transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-magnifying-glass-plus"></i> ดูรูปใหญ่
+                        </button>
+                        <a id="downloadQrBtn" href="#" download="QR_Code_Payment.png" onclick="downloadMainQr(event)" class="px-3.5 py-1.5 bg-brand-500 hover:bg-brand-600 text-white rounded-xl text-xs font-medium shadow-sm transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-download"></i> บันทึกรูป QR
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Payment Channels List -->
+            <section class="space-y-3 mb-6">
+                <div class="flex items-center justify-between px-1">
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-brand-600 flex items-center gap-1.5">
+                        <i class="fa-solid fa-wallet"></i> บัญชีธนาคาร / วอเลท
+                    </h2>
+                    <span class="text-[10px] bg-brand-100 text-brand-600 px-2 py-0.5 rounded-full font-medium">กดคัดลอกได้เลย</span>
+                </div>
+
+                <div id="displayChannelsContainer" class="space-y-3">
+                    <!-- Payment channel cards dynamic injection -->
+                </div>
+            </section>
+        </div>
+
+        <!-- Footer / Contact Links Section -->
+        <footer class="pt-4 pb-2 border-t border-brand-200/60 text-center mt-auto">
+            <p class="text-xs font-semibold text-brand-600 mb-3 flex items-center justify-center gap-1">
+                <i class="fa-regular fa-comment-dots"></i> สอบถามข้อมูลเพิ่มเติม / แจ้งสลิป
             </p>
+            <div id="displayContactLinks" class="flex justify-center items-center gap-2 flex-wrap">
+                <!-- Social buttons injected here -->
+            </div>
+            <p class="text-[10px] text-slate-400 mt-4">© NONNON STORE — Payment Channels Hub</p>
+        </footer>
+    </div>
 
-            <button onclick="closeQrModal()" class="w-full py-3 bg-sky-600 hover:bg-sky-700 text-white rounded-2xl text-xs font-semibold transition-all shadow-md">
-                ปิดหน้าต่างนี้
+    <!-- QR Image Zoom Modal -->
+    <div id="qrZoomModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="cute-card bg-white rounded-3xl p-5 max-w-xs w-full text-center shadow-2xl relative">
+            <button onclick="closeZoomModal()" class="absolute top-3 right-3 text-slate-400 hover:text-slate-600 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
             </button>
+            <h3 class="font-bold text-brand-700 text-sm mb-3">QR Code สำหรับสแกนชำระเงิน</h3>
+            <div class="bg-brand-50 p-2 rounded-2xl border border-brand-100 mb-3">
+                <img id="zoomedQrImage" src="" alt="Zoomed QR" class="w-full aspect-square object-contain rounded-xl bg-white p-2">
+            </div>
+            <button onclick="closeZoomModal()" class="w-full py-2 bg-brand-500 text-white rounded-xl text-xs font-medium shadow">ปิดหน้าต่าง</button>
         </div>
     </div>
 
     <!-- Admin Login Modal -->
-    <div id="admin-login-modal" class="fixed inset-0 z-50 bg-sky-950/30 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl shadow-xl w-full max-w-sm p-6 border border-sky-100 flex flex-col text-center">
-            <h2 class="text-lg font-bold text-sky-950 mb-1">เข้าสู่ระบบหลังบ้าน</h2>
-            <form onsubmit="verifyAdminLogin(event)" class="space-y-4 mt-3">
-                <input type="password" id="admin-password" placeholder="รหัสผ่าน (1234)" class="w-full text-sm px-4 py-3 rounded-2xl border border-sky-200 focus:outline-none text-center tracking-widest">
-                <div class="flex space-x-2">
-                    <button type="button" onclick="toggleLoginModal()" class="w-1/2 py-2.5 bg-sky-50 text-sky-700 rounded-xl text-xs font-medium">ยกเลิก</button>
-                    <button type="submit" class="w-1/2 py-2.5 bg-sky-600 text-white rounded-xl text-xs font-medium">เข้าสู่ระบบ</button>
-                </div>
-            </form>
+    <div id="adminLoginModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="cute-card bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl">
+            <div class="flex justify-between items-center mb-3">
+                <h3 class="font-bold text-brand-700 text-base flex items-center gap-2">
+                    <i class="fa-solid fa-shield-halved text-brand-500"></i> เข้าสู่ระบบแอดมิน
+                </h3>
+                <button onclick="closeAdminLoginModal()" class="text-slate-400 hover:text-slate-600 w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-xs">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <p class="text-xs text-slate-500 mb-4">ใส่รหัสผ่านเพื่อแก้ไขข้อมูลร้านค้า (รหัสผ่านเริ่มต้น: <span class="font-bold text-brand-600">1234</span>)</p>
+            <input type="password" id="adminPasswordInput" placeholder="รหัสผ่าน" class="w-full px-4 py-2.5 rounded-xl border border-brand-200 text-sm mb-4 focus:outline-none focus:ring-2 focus:ring-brand-400">
+            <div class="flex gap-2">
+                <button onclick="closeAdminLoginModal()" class="w-1/2 py-2 bg-slate-100 text-slate-600 font-medium rounded-xl text-xs">ยกเลิก</button>
+                <button onclick="verifyAdminPass()" class="w-1/2 py-2 bg-brand-500 text-white font-medium rounded-xl text-xs shadow">เข้าสู่ระบบ</button>
+            </div>
         </div>
     </div>
 
-    <!-- Admin Panel Modal -->
-    <div id="admin-modal" class="fixed inset-0 z-50 bg-sky-950/30 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-lg max-h-[92vh] overflow-y-auto p-6 border border-sky-100 flex flex-col">
-            <div class="flex justify-between items-center pb-4 border-b border-sky-100 mb-4">
-                <h2 class="text-base font-bold text-sky-950">ระบบจัดการหลังบ้าน</h2>
-                <button onclick="toggleAdminModal()" class="text-sky-400 hover:text-sky-600"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-
-            <div class="space-y-5">
-                <div class="bg-sky-50 p-4 rounded-2xl border border-sky-200">
-                    <h3 class="text-sm font-bold text-sky-900 mb-2">🏪 ตั้งค่าข้อมูลร้านและโลโก้</h3>
-                    <input type="text" id="admin-store-name" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 mb-2 bg-white" placeholder="ชื่อร้าน">
-                    <input type="text" id="admin-store-subtitle" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 mb-2 bg-white" placeholder="สโลแกน">
-                    <input type="text" id="admin-store-logo" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 mb-2 bg-white" placeholder="ลิงก์รูปโลโก้ร้าน (URL)">
-                    <button onclick="saveStoreInfo()" class="w-full py-2 bg-sky-600 text-white rounded-xl text-xs font-semibold">บันทึกข้อมูลร้าน</button>
-                </div>
-            </div>
+    <!-- Admin Dashboard Modal -->
+    <div id="adminDashboardModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+        <div class="cute-card bg-white rounded-3xl max-w-lg w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden my-auto">
             
-            <div class="mt-4 pt-3 border-t border-sky-100 text-right">
-                <button onclick="toggleAdminModal()" class="px-4 py-2 bg-sky-600 text-white rounded-xl text-xs font-semibold">ปิดหน้าต่าง</button>
+            <!-- Dashboard Header -->
+            <div class="p-4 bg-brand-500 text-white flex justify-between items-center">
+                <h3 class="font-bold text-base flex items-center gap-2">
+                    <i class="fa-solid fa-sliders"></i> ระบบจัดการหลังบ้าน (Admin)
+                </h3>
+                <button onclick="closeAdminDashboard()" class="text-white/80 hover:text-white w-7 h-7 rounded-full bg-brand-600 flex items-center justify-center text-xs">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Dashboard Content (Scrollable) -->
+            <div class="p-4 sm:p-5 overflow-y-auto space-y-5 text-xs">
+                
+                <!-- 1. Store Header & Main QR Settings -->
+                <div class="bg-brand-50/70 p-4 rounded-2xl border border-brand-100 space-y-3">
+                    <h4 class="font-bold text-brand-700 text-sm flex items-center gap-1.5 border-b border-brand-200/60 pb-1.5">
+                        <i class="fa-solid fa-store text-brand-500"></i> ข้อมูลร้านค้า & QR Code หลักด้านบน
+                    </h4>
+                    
+                    <div>
+                        <label class="block font-medium mb-1 text-slate-600">ชื่อร้านค้า</label>
+                        <input type="text" id="adminStoreTitle" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white text-xs focus:ring-2 focus:ring-brand-400 focus:outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block font-medium mb-1 text-slate-600">คำโปรยร้านค้า</label>
+                        <input type="text" id="adminStoreSubtitle" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white text-xs focus:ring-2 focus:ring-brand-400 focus:outline-none">
+                    </div>
+
+                    <!-- Logo Upload / URL -->
+                    <div>
+                        <label class="block font-medium mb-1 text-slate-600">โลโก้ร้านค้า</label>
+                        <div class="flex gap-2 mb-1.5">
+                            <input type="text" id="adminStoreLogoUrl" placeholder="ระบุ URL รูปภาพ" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white text-xs focus:ring-2 focus:ring-brand-400 focus:outline-none">
+                            <label class="px-3 py-2 bg-brand-100 text-brand-700 font-medium rounded-xl cursor-pointer hover:bg-brand-200 text-xs flex items-center gap-1 flex-shrink-0">
+                                <i class="fa-solid fa-upload"></i> อัปโหลด
+                                <input type="file" id="adminStoreLogoFile" accept="image/*" class="hidden" onchange="handleFileUpload(this, 'adminStoreLogoUrl')">
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Main QR Upload / URL -->
+                    <div class="pt-2 border-t border-brand-100">
+                        <label class="block font-bold mb-1 text-brand-700">รูปภาพ QR Code หลัก (ส่วนบน)</label>
+                        <div class="flex gap-2 mb-1.5">
+                            <input type="text" id="adminMainQrUrl" placeholder="ระบุ URL รูป QR Code" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white text-xs focus:ring-2 focus:ring-brand-400 focus:outline-none">
+                            <label class="px-3 py-2 bg-brand-500 text-white font-medium rounded-xl cursor-pointer hover:bg-brand-600 text-xs flex items-center gap-1 flex-shrink-0 shadow-sm">
+                                <i class="fa-solid fa-upload"></i> อัปโหลด
+                                <input type="file" id="adminMainQrFile" accept="image/*" class="hidden" onchange="handleFileUpload(this, 'adminMainQrUrl')">
+                            </label>
+                        </div>
+                    </div>
+
+                    <button onclick="saveStoreSettings()" class="w-full py-2 bg-brand-500 hover:bg-brand-600 text-white font-semibold rounded-xl text-xs shadow transition">
+                        บันทึกข้อมูลส่วนหัว & QR หลัก
+                    </button>
+                </div>
+
+                <!-- 2. Contact Links Settings -->
+                <div class="bg-brand-50/70 p-4 rounded-2xl border border-brand-100 space-y-3">
+                    <h4 class="font-bold text-brand-700 text-sm flex items-center gap-1.5 border-b border-brand-200/60 pb-1.5">
+                        <i class="fa-solid fa-link text-brand-500"></i> ลิงก์โซเชียลติดต่อ
+                    </h4>
+                    <div>
+                        <label class="block font-medium mb-1 text-slate-600">Line URL</label>
+                        <input type="text" id="adminLineUrl" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white text-xs">
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1 text-slate-600">Facebook URL</label>
+                        <input type="text" id="adminFbUrl" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white text-xs">
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1 text-slate-600">Instagram URL</label>
+                        <input type="text" id="adminIgUrl" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white text-xs">
+                    </div>
+                    <button onclick="saveContactSettings()" class="w-full py-2 bg-brand-500 hover:bg-brand-600 text-white font-semibold rounded-xl text-xs shadow transition">
+                        บันทึกลิงก์ติดต่อ
+                    </button>
+                </div>
+
+                <!-- 3. Payment Channels List Management -->
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <h4 class="font-bold text-brand-700 text-sm flex items-center gap-1.5">
+                            <i class="fa-solid fa-list-check text-brand-500"></i> จัดการช่องทางชำระเงิน
+                        </h4>
+                        <button onclick="openChannelModal(null)" class="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-xl text-xs shadow flex items-center gap-1">
+                            <i class="fa-solid fa-plus"></i> เพิ่มช่องทาง
+                        </button>
+                    </div>
+
+                    <div id="adminChannelsContainer" class="space-y-2">
+                        <!-- Dynamic list of channels in admin -->
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Dashboard Footer -->
+            <div class="p-3 bg-slate-50 border-t border-slate-100 text-right">
+                <button onclick="closeAdminDashboard()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium rounded-xl text-xs">ปิดระบบหลังบ้าน</button>
             </div>
         </div>
     </div>
 
-    <script>
-        const ADMIN_PASSWORD = "1234";
+    <!-- Add/Edit Channel Modal -->
+    <div id="channelModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="cute-card bg-white rounded-3xl p-5 max-w-sm w-full shadow-2xl">
+            <h3 id="channelModalTitle" class="font-bold text-brand-700 text-sm mb-3 flex items-center gap-1.5">
+                <i class="fa-solid fa-credit-card text-brand-500"></i> เพิ่ม/แก้ไข ช่องทางชำระเงิน
+            </h3>
+            
+            <input type="hidden" id="channelModalId">
 
-        // ==========================================
-        // 🛠️ ส่วนตั้งค่าลิงก์รูปภาพและข้อมูลเริ่มต้นตรงนี้
-        // ==========================================
-        let storeInfo = {
-            name: "NonNon Store",
-            subtitle: "✨ รวมช่องทางชำระเงิน สะดวก ปลอดภัย ✨",
-            logo: "ใส่ลิงก์รูปโลโก้ร้านตรงนี้ เช่น https://i.imgur.com/xxxx.png" // <--- ใส่ลิงก์รูปโลโก้
+            <div class="space-y-2.5 text-xs">
+                <div>
+                    <label class="block font-medium mb-1 text-slate-600">ชื่อช่องทาง / ธนาคาร</label>
+                    <input type="text" id="channelModalName" placeholder="เช่น ธนาคารกสิกรไทย, TrueMoney Wallet" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white">
+                </div>
+                <div>
+                    <label class="block font-medium mb-1 text-slate-600">หมายเลขบัญชี / เบอร์วอเลท</label>
+                    <input type="text" id="channelModalNumber" placeholder="xxx-x-xxxxx-x" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white font-mono">
+                </div>
+                <div>
+                    <label class="block font-medium mb-1 text-slate-600">ชื่อบัญชี</label>
+                    <input type="text" id="channelModalHolder" placeholder="ชื่อ นามสกุล เจ้าของบัญชี" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white">
+                </div>
+                <div>
+                    <label class="block font-medium mb-1 text-slate-600">ไอคอนแอป/ธนาคาร</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="channelModalIconUrl" placeholder="URL รูปไอคอน" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white">
+                        <label class="px-2.5 py-2 bg-brand-100 text-brand-700 font-medium rounded-xl cursor-pointer hover:bg-brand-200 flex-shrink-0 flex items-center gap-1">
+                            <i class="fa-solid fa-upload"></i> อัปไฟล์
+                            <input type="file" accept="image/*" class="hidden" onchange="handleFileUpload(this, 'channelModalIconUrl')">
+                        </label>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 pt-1">
+                    <input type="checkbox" id="channelModalActive" class="w-4 h-4 text-brand-500 rounded border-slate-300 focus:ring-brand-400" checked>
+                    <label for="channelModalActive" class="font-medium text-slate-700">เปิดใช้งานช่องทางนี้ (แสดงหน้าลูกค้า)</label>
+                </div>
+            </div>
+
+            <div class="flex gap-2 mt-4">
+                <button onclick="closeChannelModal()" class="w-1/2 py-2 bg-slate-100 text-slate-600 font-medium rounded-xl text-xs">ยกเลิก</button>
+                <button onclick="saveChannelForm()" class="w-1/2 py-2 bg-brand-500 text-white font-medium rounded-xl text-xs shadow">บันทึก</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Dialog Modal (Replacing native confirm) -->
+    <div id="customDialogModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="cute-card bg-white rounded-3xl p-5 max-w-xs w-full text-center shadow-2xl">
+            <div class="w-12 h-12 rounded-full bg-rose-100 text-rose-500 flex items-center justify-center mx-auto mb-2 text-xl">
+                <i class="fa-solid fa-trash-can"></i>
+            </div>
+            <h4 id="dialogTitle" class="font-bold text-slate-800 text-sm mb-1">ยืนยันการลบ?</h4>
+            <p id="dialogMessage" class="text-xs text-slate-500 mb-4">คุณต้องการลบรายการนี้ใช่หรือไม่</p>
+            <div class="flex gap-2">
+                <button onclick="closeCustomDialog(false)" class="w-1/2 py-2 bg-slate-100 text-slate-600 font-medium rounded-xl text-xs">ยกเลิก</button>
+                <button onclick="closeCustomDialog(true)" class="w-1/2 py-2 bg-rose-500 text-white font-medium rounded-xl text-xs shadow">ลบข้อมูล</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Alert Notification -->
+    <div id="toastNotification" class="fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-slate-900/90 backdrop-blur-md text-white px-5 py-2.5 rounded-full text-xs font-medium shadow-2xl z-50 hidden items-center gap-2 border border-slate-700">
+        <i class="fa-solid fa-circle-check text-brand-400 text-sm"></i>
+        <span id="toastMessage">คัดลอกเลขบัญชีสำเร็จแล้ว! 📋</span>
+    </div>
+
+    <!-- Application Logic Script -->
+    <script>
+        // Initial Default Data Config
+        const DEFAULT_STORE = {
+            title: "nonnon_store06",
+            subtitle: "ช่องทางการชำระเงิน มินิมอล ปลอดภัย 100% ✨",
+            logo: "https://placehold.co/200x200/e0f2fe/0284c7?text=NONNON",
+            mainQr: "https://placehold.co/400x400/e0f2fe/0369a1?text=MAIN+SCAN+QR",
+            line: "https://lin.ee/NNKqu9g",
+            facebook: "https://www.facebook.com/share/19fLAacTiP/",
+            instagram: "https://www.instagram.com/nonnon_store06?stkn=MXV2ZHJhdGF6MHF1aQ=="
         };
 
-        let paymentMethods = [
+        const DEFAULT_CHANNELS = [
             {
-                name: "TrueMoney Wallet",
-                accountNumber: "089-123-4567",
-                accountName: "นาย นนทวัฒน์ ใจดี",
-                icon: "ใส่ลิงก์ไอคอนวอเลทตรงนี้ หรือปล่อยว่าง", // <--- ใส่ลิงก์ไอคอน TrueMoney
-                type: "normal",
+                id: "chan-1",
+                name: "ธนาคารกสิกรไทย (KBANK)",
+                number: "123-4-56789-0",
+                holder: "นนท์นนท์ สโตร์",
+                icon: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=120&auto=format&fit=crop&q=60",
                 active: true
             },
             {
+                id: "chan-2",
                 name: "ธนาคารไทยพาณิชย์ (SCB)",
-                accountNumber: "987-6-54321-0",
-                accountName: "นาย นนทวัฒน์ ใจดี",
-                icon: "ใส่ลิงก์ไอคอนธนาคารตรงนี้ หรือปล่อยว่าง", // <--- ใส่ลิงก์ไอคอน SCB
-                type: "normal",
+                number: "987-6-54321-0",
+                holder: "นนท์นนท์ สโตร์",
+                icon: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?w=120&auto=format&fit=crop&q=60",
                 active: true
             },
             {
-                name: "พร้อมเพย์",
-                qrImage: "ใส่ลิงก์รูป QR Code พร้อมเพย์ตรงนี้", // <--- ใส่ลิงก์รูป QR Code
-                accountName: "วรรณภา ไชยงาม",
-                accountNumber: "0891234567",
-                icon: "ใส่ลิงก์ไอคอนพร้อมเพย์ตรงนี้ หรือปล่อยว่าง",
-                type: "qr",
+                id: "chan-3",
+                name: "TrueMoney Wallet",
+                number: "089-123-4567",
+                holder: "นนท์นนท์ สโตร์",
+                icon: "https://images.unsplash.com/photo-1633167606207-d840b5070fc2?w=120&auto=format&fit=crop&q=60",
                 active: true
             }
         ];
-        // ==========================================
 
-        let countdownInterval = null;
+        // Dialog callback holder
+        let dialogCallback = null;
 
-        window.onload = function() {
-            renderStoreInfo();
-            renderFrontPaymentList();
-        };
-
-        function renderStoreInfo() {
-            document.getElementById('store-name').innerText = storeInfo.name;
-            document.getElementById('store-subtitle').innerText = storeInfo.subtitle;
-            if(storeInfo.logo) {
-                document.getElementById('store-logo').src = storeInfo.logo;
-            }
-            document.getElementById('admin-store-name').value = storeInfo.name;
-            document.getElementById('admin-store-subtitle').value = storeInfo.subtitle;
-            document.getElementById('admin-store-logo').value = storeInfo.logo;
+        // Load & Save State Helpers
+        function getStoreData() {
+            const data = localStorage.getItem('nonnon_store_data');
+            return data ? JSON.parse(data) : DEFAULT_STORE;
         }
 
-        function saveStoreInfo() {
-            storeInfo.name = document.getElementById('admin-store-name').value;
-            storeInfo.subtitle = document.getElementById('admin-store-subtitle').value;
-            storeInfo.logo = document.getElementById('admin-store-logo').value;
-            renderStoreInfo();
-            showToast("บันทึกข้อมูลร้านค้าสำเร็จ!");
+        function saveStoreData(data) {
+            localStorage.setItem('nonnon_store_data', JSON.stringify(data));
         }
 
-        function renderFrontPaymentList() {
-            const container = document.getElementById('payment-list');
-            container.innerHTML = '';
+        function getChannelsData() {
+            const data = localStorage.getItem('nonnon_channels_data');
+            return data ? JSON.parse(data) : DEFAULT_CHANNELS;
+        }
 
-            paymentMethods.forEach((item) => {
-                const card = document.createElement('div');
-                
-                let leftIconHtml = '';
-                if (item.icon && item.icon.startsWith('http')) {
-                    leftIconHtml = `<img src="${item.icon}" class="w-full h-full object-cover">`;
-                } else {
-                    if (item.type === 'qr') {
-                        leftIconHtml = `<img src="${item.qrImage}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/e0f2fe/0284c7?text=QR'">`;
-                    } else {
-                        leftIconHtml = `<i class="fa-solid fa-wallet text-sky-600 text-xl"></i>`;
-                    }
-                }
+        function saveChannelsData(data) {
+            localStorage.setItem('nonnon_channels_data', JSON.stringify(data));
+        }
 
-                if (!item.active) {
-                    card.className = "glass-card rounded-3xl p-5 shadow-sm border border-amber-200 relative overflow-hidden opacity-90 bg-amber-50/50";
-                    card.innerHTML = `
-                        <div class="flex items-center space-x-4 mb-2">
-                            <div class="w-14 h-14 rounded-2xl bg-amber-100 shadow-sm flex items-center justify-center border border-amber-200 flex-shrink-0 overflow-hidden">
-                                <i class="fa-solid fa-triangle-exclamation text-amber-600 text-xl"></i>
+        // Initialize App on DOM Load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderFrontend();
+        });
+
+        // Render Main Customer Interface
+        function renderFrontend() {
+            const store = getStoreData();
+            const channels = getChannelsData();
+
+            // Set Header Info
+            document.getElementById('displayStoreTitle').textContent = store.title;
+            document.getElementById('displayStoreSubtitle').textContent = store.subtitle;
+            document.getElementById('displayStoreLogo').src = store.logo || DEFAULT_STORE.logo;
+
+            // Set Featured Main QR Code
+            document.getElementById('displayMainQr').src = store.mainQr || DEFAULT_STORE.mainQr;
+
+            // Render Active Payment Channels
+            const container = document.getElementById('displayChannelsContainer');
+            const activeChannels = channels.filter(c => c.active);
+
+            if (activeChannels.length === 0) {
+                container.innerHTML = `
+                    <div class="cute-card rounded-2xl p-6 text-center text-slate-500">
+                        <i class="fa-solid fa-circle-info text-brand-400 text-2xl mb-1"></i>
+                        <p class="text-xs">ขณะนี้ยังไม่มีรายการบัญชีชำระเงินที่เปิดใช้งาน</p>
+                    </div>
+                `;
+            } else {
+                let html = '';
+                activeChannels.forEach(c => {
+                    html += `
+                        <div class="cute-card rounded-2xl p-4 transition transform hover:-translate-y-0.5">
+                            <div class="flex items-center gap-3 mb-2.5">
+                                <div class="w-11 h-11 rounded-xl bg-white p-1 shadow-sm border border-brand-100 flex-shrink-0 flex items-center justify-center overflow-hidden">
+                                    <img src="${c.icon || 'https://placehold.co/100x100/e0f2fe/0284c7?text=BANK'}" class="w-full h-full object-cover rounded-lg" onerror="this.src='https://placehold.co/100x100/e0f2fe/0284c7?text=BANK'">
+                                </div>
+                                <div class="overflow-hidden">
+                                    <h3 class="font-bold text-slate-800 text-sm truncate">${c.name}</h3>
+                                    <p class="text-[11px] text-slate-500 truncate"><span class="text-slate-400">ชื่อบัญชี:</span> ${c.holder || '-'}</p>
+                                </div>
                             </div>
-                            <div class="flex-grow min-w-0">
-                                <h2 class="font-bold text-sky-950 text-base truncate">${item.name}</h2>
-                                <span class="inline-block bg-amber-200/80 text-amber-800 text-[10px] font-semibold px-2 py-0.5 rounded-full mt-1">⚠️ ปิดปรับปรุงชั่วคราว</span>
+                            <div class="bg-white/90 rounded-xl p-2.5 border border-brand-100 flex items-center justify-between shadow-inner">
+                                <span class="font-mono font-bold text-slate-800 text-sm sm:text-base tracking-wide px-1">${c.number}</span>
+                                <button onclick="copyToClipboard('${c.number}')" class="px-3 py-1.5 bg-brand-500 hover:bg-brand-600 active:scale-95 text-white rounded-lg text-xs font-medium shadow transition flex items-center gap-1">
+                                    <i class="fa-regular fa-copy"></i> คัดลอก
+                                </button>
                             </div>
                         </div>
                     `;
-                } else {
-                    if (item.type === 'qr') {
-                        card.className = "glass-card rounded-3xl p-5 shadow-lg border border-white relative overflow-hidden";
-                        card.innerHTML = `
-                            <div class="flex items-center space-x-4 mb-4">
-                                <div class="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center border border-sky-100 flex-shrink-0 overflow-hidden">
-                                    ${leftIconHtml}
-                                </div>
-                                <div class="flex-grow min-w-0">
-                                    <h2 class="font-bold text-sky-950 text-base truncate">${item.name}</h2>
-                                    <p class="text-xs text-sky-600 truncate mt-0.5"><i class="fa-regular fa-user mr-1 text-sky-400"></i> ${item.accountName}</p>
-                                </div>
-                            </div>
-                            <button onclick='openQrModal(${JSON.stringify(item)})' class="w-full bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-700 hover:to-blue-700 text-white text-xs font-semibold py-3 px-4 rounded-2xl shadow-md transition-all flex items-center justify-center space-x-2">
-                                <i class="fa-solid fa-qrcode text-base"></i>
-                                <span>ขอ QR Code พร้อมเพย์ (โอนใน 17 นาที)</span>
-                            </button>
-                        `;
-                    } else {
-                        card.className = "glass-card rounded-3xl p-5 shadow-lg border border-white relative overflow-hidden";
-                        card.innerHTML = `
-                            <div class="flex items-center space-x-4 mb-4">
-                                <div class="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center border border-sky-100 flex-shrink-0 overflow-hidden">
-                                    ${leftIconHtml}
-                                </div>
-                                <div class="flex-grow min-w-0">
-                                    <h2 class="font-bold text-sky-950 text-base truncate">${item.name}</h2>
-                                    <p class="text-xs text-sky-600 truncate mt-0.5"><i class="fa-regular fa-user mr-1 text-sky-400"></i> ${item.accountName}</p>
-                                </div>
-                            </div>
-                            <div class="bg-white/95 rounded-2xl p-3.5 flex items-center justify-between border border-sky-100">
-                                <span class="text-base font-bold text-sky-900 font-mono">${item.accountNumber}</span>
-                                <button onclick="copyToClipboard('${item.accountNumber}', '${item.name}')" class="bg-sky-600 hover:bg-sky-700 text-white text-xs px-4 py-2 rounded-xl transition-all">คัดลอก</button>
-                            </div>
-                        `;
-                    }
-                }
-                container.appendChild(card);
-            });
+                });
+                container.innerHTML = html;
+            }
+
+            // Render Social Contact Badges
+            const contactContainer = document.getElementById('displayContactLinks');
+            let socialHtml = '';
+
+            if (store.line) {
+                socialHtml += `<a href="${store.line}" target="_blank" class="px-3.5 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full text-xs font-medium shadow-sm flex items-center gap-1.5 transition transform hover:scale-105"><i class="fa-brands fa-line text-sm"></i> Line</a>`;
+            }
+            if (store.facebook) {
+                socialHtml += `<a href="${store.facebook}" target="_blank" class="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-xs font-medium shadow-sm flex items-center gap-1.5 transition transform hover:scale-105"><i class="fa-brands fa-facebook text-sm"></i> Facebook</a>`;
+            }
+            if (store.instagram) {
+                socialHtml += `<a href="${store.instagram}" target="_blank" class="px-3.5 py-1.5 bg-pink-500 hover:bg-pink-600 text-white rounded-full text-xs font-medium shadow-sm flex items-center gap-1.5 transition transform hover:scale-105"><i class="fa-brands fa-instagram text-sm"></i> Instagram</a>`;
+            }
+
+            contactContainer.innerHTML = socialHtml || '<span class="text-xs text-slate-400">ไม่ได้ลงข้อมูลติดต่อ</span>';
         }
 
-        function openQrModal(item) {
-            document.getElementById('qr-modal-title').innerText = item.name;
-            document.getElementById('qr-acc-number').innerText = item.accountNumber || '-';
-            document.getElementById('qr-image-display').src = item.qrImage;
-            document.getElementById('qr-modal').classList.remove('hidden');
-            startCountdown(17 * 60);
-        }
-
-        function closeQrModal() {
-            document.getElementById('qr-modal').classList.add('hidden');
-            if (countdownInterval) clearInterval(countdownInterval);
-        }
-
-        function startCountdown(durationInSeconds) {
-            if (countdownInterval) clearInterval(countdownInterval);
-            let timer = durationInSeconds;
-            const display = document.getElementById('timer-countdown');
-
-            countdownInterval = setInterval(function () {
-                let minutes = parseInt(timer / 60, 10);
-                let seconds = parseInt(timer % 60, 10);
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-                display.textContent = minutes + ":" + seconds;
-
-                if (--timer < 0) {
-                    clearInterval(countdownInterval);
-                    display.textContent = "00:00 (หมดเวลา)";
-                    showToast("หมดเวลาชำระเงินแล้วค่ะ ⚠️");
-                }
-            }, 1000);
-        }
-
-        function handleAdminAccess() {
-            if (sessionStorage.getItem('is_admin_logged_in') === 'true') {
-                toggleAdminModal();
+        // Copy Text Functionality
+        function copyToClipboard(text) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast("คัดลอกหมายเลขสำเร็จแล้ว! 📋");
+                }).catch(() => fallbackCopy(text));
             } else {
-                document.getElementById('admin-login-modal').classList.remove('hidden');
+                fallbackCopy(text);
             }
         }
 
-        function toggleLoginModal() {
-            document.getElementById('admin-login-modal').classList.add('hidden');
-        }
-
-        function verifyAdminLogin(event) {
-            event.preventDefault();
-            if (document.getElementById('admin-password').value === ADMIN_PASSWORD) {
-                sessionStorage.setItem('is_admin_logged_in', 'true');
-                toggleLoginModal();
-                toggleAdminModal();
-                showToast("เข้าสู่ระบบหลังบ้านสำเร็จ!");
-            } else {
-                showToast("รหัสผ่านไม่ถูกต้อง!");
+        function fallbackCopy(text) {
+            const el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            try {
+                document.execCommand('copy');
+                showToast("คัดลอกหมายเลขสำเร็จแล้ว! 📋");
+            } catch (err) {
+                showToast("ไม่สามารถคัดลอกอัตโนมัติได้");
             }
-        }
-
-        function toggleAdminModal() {
-            document.getElementById('admin-modal').classList.toggle('hidden');
+            document.body.removeChild(el);
         }
 
         function showToast(msg) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-message').innerText = msg;
-            toast.classList.remove('translate-y-[-200%]');
-            toast.classList.add('translate-y-0');
+            const toast = document.getElementById('toastNotification');
+            document.getElementById('toastMessage').textContent = msg;
+            toast.classList.remove('hidden');
+            toast.classList.add('flex');
             setTimeout(() => {
-                toast.classList.remove('translate-y-0');
-                toast.classList.add('translate-y-[-200%]');
+                toast.classList.remove('flex');
+                toast.classList.add('hidden');
             }, 2500);
         }
 
-        function copyToClipboard(text, label) {
-            navigator.clipboard.writeText(text).then(() => {
-                showToast(`คัดลอก ${label} สำเร็จ!`);
+        // Main QR Zoom & Download
+        function zoomMainQr() {
+            const store = getStoreData();
+            document.getElementById('zoomedQrImage').src = store.mainQr || DEFAULT_STORE.mainQr;
+            document.getElementById('qrZoomModal').classList.remove('hidden');
+        }
+
+        function closeZoomModal() {
+            document.getElementById('qrZoomModal').classList.add('hidden');
+        }
+
+        function downloadMainQr(e) {
+            const store = getStoreData();
+            const url = store.mainQr || DEFAULT_STORE.mainQr;
+            // If it's a data URL or valid link
+            const btn = document.getElementById('downloadQrBtn');
+            btn.href = url;
+        }
+
+        // Admin Auth Modals
+        function openAdminLoginModal() {
+            document.getElementById('adminPasswordInput').value = '';
+            document.getElementById('adminLoginModal').classList.remove('hidden');
+        }
+
+        function closeAdminLoginModal() {
+            document.getElementById('adminLoginModal').classList.add('hidden');
+        }
+
+        function verifyAdminPass() {
+            const pass = document.getElementById('adminPasswordInput').value;
+            if (pass === '1234') {
+                closeAdminLoginModal();
+                openAdminDashboard();
+            } else {
+                showToast('❌ รหัสผ่านไม่ถูกต้อง');
+            }
+        }
+
+        // Admin Dashboard Setup
+        function openAdminDashboard() {
+            const store = getStoreData();
+            document.getElementById('adminStoreTitle').value = store.title || '';
+            document.getElementById('adminStoreSubtitle').value = store.subtitle || '';
+            document.getElementById('adminStoreLogoUrl').value = store.logo || '';
+            document.getElementById('adminMainQrUrl').value = store.mainQr || '';
+            document.getElementById('adminLineUrl').value = store.line || '';
+            document.getElementById('adminFbUrl').value = store.facebook || '';
+            document.getElementById('adminIgUrl').value = store.instagram || '';
+
+            renderAdminChannelsList();
+            document.getElementById('adminDashboardModal').classList.remove('hidden');
+        }
+
+        function closeAdminDashboard() {
+            document.getElementById('adminDashboardModal').classList.add('hidden');
+            renderFrontend();
+        }
+
+        function saveStoreSettings() {
+            const store = getStoreData();
+            store.title = document.getElementById('adminStoreTitle').value;
+            store.subtitle = document.getElementById('adminStoreSubtitle').value;
+            store.logo = document.getElementById('adminStoreLogoUrl').value;
+            store.mainQr = document.getElementById('adminMainQrUrl').value;
+
+            saveStoreData(store);
+            showToast('💾 บันทึกข้อมูลส่วนหัว & QR หลักสำเร็จ');
+        }
+
+        function saveContactSettings() {
+            const store = getStoreData();
+            store.line = document.getElementById('adminLineUrl').value;
+            store.facebook = document.getElementById('adminFbUrl').value;
+            store.instagram = document.getElementById('adminIgUrl').value;
+
+            saveStoreData(store);
+            showToast('💾 บันทึกช่องทางติดต่อสำเร็จ');
+        }
+
+        // File Upload Handler (Converts file to Base64)
+        function handleFileUpload(fileInput, targetInputId) {
+            const file = fileInput.files[0];
+            if (file) {
+                if (file.size > 3 * 1024 * 1024) {
+                    showToast('⚠️ ไฟล์รูปขนาดใหญ่เกินไป (ควรไม่เกิน 3MB)');
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById(targetInputId).value = e.target.result;
+                    showToast('📷 อัปโหลดรูปภาพเรียบร้อย');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Admin Channels Management
+        function renderAdminChannelsList() {
+            const channels = getChannelsData();
+            const container = document.getElementById('adminChannelsContainer');
+
+            if (channels.length === 0) {
+                container.innerHTML = '<p class="text-center text-slate-400 py-3">ยังไม่มีช่องทางชำระเงิน</p>';
+                return;
+            }
+
+            let html = '';
+            channels.forEach(c => {
+                html += `
+                    <div class="flex items-center justify-between p-2.5 bg-white rounded-xl border border-brand-100 shadow-sm gap-2">
+                        <div class="flex items-center gap-2 overflow-hidden">
+                            <img src="${c.icon || 'https://placehold.co/100x100'}" class="w-8 h-8 rounded-lg object-cover border flex-shrink-0" onerror="this.src='https://placehold.co/100x100'">
+                            <div class="truncate">
+                                <h5 class="font-bold text-slate-800 truncate">${c.name}</h5>
+                                <p class="text-[10px] font-mono text-slate-500 truncate">${c.number}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-1 flex-shrink-0">
+                            <button onclick="toggleChannelActive('${c.id}')" class="px-2 py-1 rounded-lg text-[10px] font-bold ${c.active ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-400'}">
+                                ${c.active ? 'ON' : 'OFF'}
+                            </button>
+                            <button onclick="openChannelModal('${c.id}')" class="w-7 h-7 bg-brand-50 text-brand-600 rounded-lg flex items-center justify-center text-xs hover:bg-brand-100">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                            <button onclick="confirmDeleteChannel('${c.id}')" class="w-7 h-7 bg-rose-50 text-rose-600 rounded-lg flex items-center justify-center text-xs hover:bg-rose-100">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
             });
+            container.innerHTML = html;
+        }
+
+        function toggleChannelActive(id) {
+            let channels = getChannelsData();
+            channels = channels.map(c => c.id === id ? { ...c, active: !c.active } : c);
+            saveChannelsData(channels);
+            renderAdminChannelsList();
+        }
+
+        function confirmDeleteChannel(id) {
+            openCustomDialog('ยืนยันการลบช่องทาง?', 'คุณต้องการลบช่องทางชำระเงินนี้ใช่หรือไม่', (confirmed) => {
+                if (confirmed) {
+                    let channels = getChannelsData();
+                    channels = channels.filter(c => c.id !== id);
+                    saveChannelsData(channels);
+                    renderAdminChannelsList();
+                    showToast('🗑 ลบช่องทางเรียบร้อยแล้ว');
+                }
+            });
+        }
+
+        // Channel Add/Edit Modal
+        function openChannelModal(id) {
+            if (id) {
+                const channels = getChannelsData();
+                const c = channels.find(item => item.id === id);
+                if (c) {
+                    document.getElementById('channelModalId').value = c.id;
+                    document.getElementById('channelModalName').value = c.name;
+                    document.getElementById('channelModalNumber').value = c.number;
+                    document.getElementById('channelModalHolder').value = c.holder || '';
+                    document.getElementById('channelModalIconUrl').value = c.icon || '';
+                    document.getElementById('channelModalActive').checked = c.active;
+                }
+            } else {
+                document.getElementById('channelModalId').value = '';
+                document.getElementById('channelModalName').value = '';
+                document.getElementById('channelModalNumber').value = '';
+                document.getElementById('channelModalHolder').value = '';
+                document.getElementById('channelModalIconUrl').value = '';
+                document.getElementById('channelModalActive').checked = true;
+            }
+            document.getElementById('channelModal').classList.remove('hidden');
+        }
+
+        function closeChannelModal() {
+            document.getElementById('channelModal').classList.add('hidden');
+        }
+
+        function saveChannelForm() {
+            const id = document.getElementById('channelModalId').value;
+            const name = document.getElementById('channelModalName').value.trim();
+            const number = document.getElementById('channelModalNumber').value.trim();
+            const holder = document.getElementById('channelModalHolder').value.trim();
+            const icon = document.getElementById('channelModalIconUrl').value.trim();
+            const active = document.getElementById('channelModalActive').checked;
+
+            if (!name || !number) {
+                showToast('⚠️ กรุณาระบุชื่อและหมายเลขบัญชี');
+                return;
+            }
+
+            let channels = getChannelsData();
+            if (id) {
+                channels = channels.map(c => c.id === id ? { id, name, number, holder, icon, active } : c);
+            } else {
+                channels.push({
+                    id: 'chan-' + Date.now(),
+                    name,
+                    number,
+                    holder,
+                    icon,
+                    active
+                });
+            }
+
+            saveChannelsData(channels);
+            closeChannelModal();
+            renderAdminChannelsList();
+            showToast('✨ บันทึกช่องทางเรียบร้อย');
+        }
+
+        // Custom Dialog Modal Logic
+        function openCustomDialog(title, msg, callback) {
+            document.getElementById('dialogTitle').textContent = title;
+            document.getElementById('dialogMessage').textContent = msg;
+            dialogCallback = callback;
+            document.getElementById('customDialogModal').classList.remove('hidden');
+        }
+
+        function closeCustomDialog(result) {
+            document.getElementById('customDialogModal').classList.add('hidden');
+            if (dialogCallback) {
+                dialogCallback(result);
+                dialogCallback = null;
+            }
         }
     </script>
 </body>
