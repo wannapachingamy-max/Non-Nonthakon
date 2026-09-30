@@ -177,7 +177,7 @@
                         <div class="grid grid-cols-2 gap-2">
                             <div>
                                 <label class="block text-[11px] text-sky-700 mb-1">อัปโหลดรูป QR Code</label>
-                                <input type="file" id="qr-file-input" accept="image/*" onchange="previewQrCodeImage(event)" class="w-full text-xs text-sky-600 file:mr-2 file:py-1.5 file:px-2 file:rounded-lg file:border-0 file:text-[11px] file:bg-sky-100 file:text-sky-700 bg-white border border-sky-200 rounded-xl cursor-pointer">
+                                <input type="file" id="qr-file-input" accept="image/*" onchange="previewImage(event, 'qr-image-base64')" class="w-full text-xs text-sky-600 file:mr-2 file:py-1.5 file:px-2 file:rounded-lg file:border-0 file:text-[11px] file:bg-sky-100 file:text-sky-700 bg-white border border-sky-200 rounded-xl cursor-pointer">
                                 <input type="hidden" id="qr-image-base64">
                             </div>
                             <div>
@@ -197,21 +197,27 @@
                     </div>
                 </div>
 
-                <!-- ฟอร์มที่ 2: เพิ่ม/แก้ไข เลขบัญชีธนาคาร / Wallet (กดคัดลอก) -->
+                <!-- ฟอร์มที่ 2: เพิ่ม/แก้ไข เลขบัญชีธนาคาร / Wallet (กดคัดลอก + เพิ่มรูปไอคอนธนาคารได้) -->
                 <div class="bg-blue-50 p-4 rounded-2xl border border-blue-200">
-                    <h3 id="normal-form-header" class="text-sm font-bold text-sky-900 mb-2">💳 เพิ่มเลขบัญชีธนาคาร / TrueMoney Wallet (กดคัดลอก)</h3>
+                    <h3 id="normal-form-header" class="text-sm font-bold text-sky-900 mb-2">💳 เพิ่มเลขบัญชีธนาคาร / Wallet (พร้อมรูปไอคอนธนาคาร)</h3>
                     <div class="space-y-2.5">
-                        <input type="text" id="normal-name" placeholder="ชื่อช่องทาง เช่น TrueMoney Wallet หรือ ธ.กสิกรไทย" class="w-full text-sm px-3 py-2 rounded-xl border border-blue-200 bg-white">
+                        <input type="text" id="normal-name" placeholder="ชื่อช่องทาง เช่น ธ.กสิกรไทย หรือ TrueMoney Wallet" class="w-full text-sm px-3 py-2 rounded-xl border border-blue-200 bg-white">
                         
                         <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-[11px] text-blue-700 mb-1">อัปโหลดรูปโลโก้/ไอคอนธนาคาร</label>
+                                <input type="file" id="normal-file-input" accept="image/*" onchange="previewImage(event, 'normal-image-base64')" class="w-full text-xs text-blue-600 file:mr-2 file:py-1.5 file:px-2 file:rounded-lg file:border-0 file:text-[11px] file:bg-blue-100 file:text-blue-700 bg-white border border-blue-200 rounded-xl cursor-pointer">
+                                <input type="hidden" id="normal-image-base64">
+                            </div>
                             <div>
                                 <label class="block text-[11px] text-blue-700 mb-1">เลขบัญชี / เบอร์วอเลท</label>
                                 <input type="text" id="normal-acc-num" placeholder="XXX-X-XXXXX-X" class="w-full text-sm px-3 py-2 rounded-xl border border-blue-200 bg-white font-mono">
                             </div>
-                            <div>
-                                <label class="block text-[11px] text-blue-700 mb-1">ชื่อบัญชีผู้รับ</label>
-                                <input type="text" id="normal-acc-name" placeholder="นาย นนท์ นนท์" class="w-full text-sm px-3 py-2 rounded-xl border border-blue-200 bg-white">
-                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] text-blue-700 mb-1">ชื่อบัญชีผู้รับ</label>
+                            <input type="text" id="normal-acc-name" placeholder="นาย นนท์ นนท์" class="w-full text-sm px-3 py-2 rounded-xl border border-blue-200 bg-white">
                         </div>
 
                         <button onclick="saveNormalMethod()" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold transition-all">
@@ -297,12 +303,12 @@
             reader.readAsDataURL(file);
         }
 
-        function previewQrCodeImage(event) {
+        function previewImage(event, targetId) {
             const file = event.target.files[0];
             if (file) {
                 compressImage(file, function(base64String) {
-                    document.getElementById('qr-image-base64').value = base64String;
-                    showToast("อัปโหลดรูป QR Code สำเร็จ!");
+                    document.getElementById(targetId).value = base64String;
+                    showToast("อัปโหลดรูปสำเร็จ!");
                 });
             }
         }
@@ -340,10 +346,15 @@
                     `;
                 } else {
                     card.className = "glass-card rounded-3xl p-5 shadow-lg border border-white relative overflow-hidden";
+                    // เช็คว่ามีรูปไอคอนธนาคารไหม ถ้าไม่มีให้แสดงไอคอนกระเป๋าแทน
+                    const iconDisplay = item.bankIcon ? 
+                        `<img src="${item.bankIcon}" class="w-full h-full object-cover">` : 
+                        `<i class="fa-solid fa-wallet text-sky-600 text-xl"></i>`;
+
                     card.innerHTML = `
                         <div class="flex items-center space-x-4 mb-4">
                             <div class="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center border border-sky-100 flex-shrink-0 overflow-hidden">
-                                <i class="fa-solid fa-wallet text-sky-600 text-xl"></i>
+                                ${iconDisplay}
                             </div>
                             <div class="flex-grow min-w-0">
                                 <h2 class="font-bold text-sky-950 text-base truncate">${item.name}</h2>
@@ -448,9 +459,10 @@
             showToast("บันทึก QR Code สำเร็จ!");
         }
 
-        // บันทึกฟอร์มโอนปกติ (ธนาคาร/Wallet)
+        // บันทึกฟอร์มโอนปกติ (ธนาคาร/Wallet พร้อมรูปไอคอน)
         function saveNormalMethod() {
             const name = document.getElementById('normal-name').value;
+            const bankIcon = document.getElementById('normal-image-base64').value;
             const accountNumber = document.getElementById('normal-acc-num').value;
             const accountName = document.getElementById('normal-acc-name').value;
             const editIndex = parseInt(document.getElementById('edit-index').value);
@@ -462,13 +474,14 @@
 
             if (editIndex >= 0) {
                 paymentMethods[editIndex].name = name;
+                if (bankIcon) paymentMethods[editIndex].bankIcon = bankIcon;
                 paymentMethods[editIndex].accountNumber = accountNumber;
                 paymentMethods[editIndex].accountName = accountName;
                 paymentMethods[editIndex].type = 'normal';
             } else {
                 paymentMethods.push({
                     name,
-                    qrImage: "",
+                    bankIcon: bankIcon || "",
                     accountNumber,
                     accountName,
                     type: 'normal',
@@ -480,7 +493,7 @@
             renderFrontPaymentList();
             renderAdminPaymentList();
             resetAllForms();
-            showToast("บันทึกบัญชี/Wallet สำเร็จ!");
+            showToast("บันทึกบัญชีธนาคารสำเร็จ!");
         }
 
         function editPaymentMethod(index) {
@@ -493,14 +506,13 @@
                 document.getElementById('qr-acc-num').value = item.accountNumber || '';
                 document.getElementById('qr-acc-name').value = item.accountName || '';
                 document.getElementById('qr-form-header').innerText = "✏️ แก้ไข QR Code พร้อมเพย์";
-                // เลื่อนหน้าต่างไปที่ฟอร์ม QR
                 document.getElementById('qr-name').scrollIntoView({ behavior: 'smooth' });
             } else {
                 document.getElementById('normal-name').value = item.name;
+                document.getElementById('normal-image-base64').value = item.bankIcon || '';
                 document.getElementById('normal-acc-num').value = item.accountNumber || '';
                 document.getElementById('normal-acc-name').value = item.accountName || '';
                 document.getElementById('normal-form-header').innerText = "✏️ แก้ไขบัญชีธนาคาร / Wallet";
-                // เลื่อนหน้าต่างไปที่ฟอร์มปกติ
                 document.getElementById('normal-name').scrollIntoView({ behavior: 'smooth' });
             }
             showToast("โหลดข้อมูลมายังฟอร์มเรียบร้อย");
@@ -525,9 +537,11 @@
             document.getElementById('qr-form-header').innerText = "📷 เพิ่ม QR Code พร้อมเพย์ (จำกัดเวลา 17 นาที)";
 
             document.getElementById('normal-name').value = '';
+            document.getElementById('normal-file-input').value = '';
+            document.getElementById('normal-image-base64').value = '';
             document.getElementById('normal-acc-num').value = '';
             document.getElementById('normal-acc-name').value = '';
-            document.getElementById('normal-form-header').innerText = "💳 เพิ่มเลขบัญชีธนาคาร / TrueMoney Wallet (กดคัดลอก)";
+            document.getElementById('normal-form-header').innerText = "💳 เพิ่มเลขบัญชีธนาคาร / Wallet (พร้อมรูปไอคอนธนาคาร)";
 
             document.getElementById('edit-index').value = -1;
         }
