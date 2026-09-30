@@ -202,7 +202,7 @@
                             <input type="text" id="adminStoreLogoUrl" placeholder="ลิงก์รูปภาพ หรือกดอัปโหลด" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white text-xs">
                             <label class="px-3 py-2 bg-brand-100 text-brand-700 font-medium rounded-xl cursor-pointer hover:bg-brand-200 text-xs flex items-center gap-1 flex-shrink-0">
                                 <i class="fa-solid fa-upload"></i> อัปโหลด
-                                <input type="file" accept="image/*" class="hidden" onchange="uploadToCloud(this, 'adminStoreLogoUrl')">
+                                <input type="file" accept="image/*" class="hidden" onchange="uploadImageLocally(this, 'adminStoreLogoUrl')">
                             </label>
                         </div>
                     </div>
@@ -213,7 +213,7 @@
                             <input type="text" id="adminMainQrUrl" placeholder="ลิงก์รูป QR Code หรือกดอัปโหลด" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white text-xs">
                             <label class="px-3 py-2 bg-brand-500 text-white font-medium rounded-xl cursor-pointer hover:bg-brand-600 text-xs flex items-center gap-1 flex-shrink-0 shadow-sm">
                                 <i class="fa-solid fa-upload"></i> อัปโหลด
-                                <input type="file" accept="image/*" class="hidden" onchange="uploadToCloud(this, 'adminMainQrUrl')">
+                                <input type="file" accept="image/*" class="hidden" onchange="uploadImageLocally(this, 'adminMainQrUrl')">
                             </label>
                         </div>
                     </div>
@@ -295,7 +295,7 @@
                         <input type="text" id="channelModalIconUrl" placeholder="ลิงก์ไอคอน หรือกดอัปโหลด" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white">
                         <label class="px-2.5 py-2 bg-brand-100 text-brand-700 font-medium rounded-xl cursor-pointer hover:bg-brand-200 flex-shrink-0 flex items-center gap-1">
                             <i class="fa-solid fa-upload"></i> อัปไฟล์
-                            <input type="file" accept="image/*" class="hidden" onchange="uploadToCloud(this, 'channelModalIconUrl')">
+                            <input type="file" accept="image/*" class="hidden" onchange="uploadImageLocally(this, 'channelModalIconUrl')">
                         </label>
                     </div>
                 </div>
@@ -510,34 +510,27 @@
             showToast('💾 บันทึกลิงก์ติดต่อสำเร็จ');
         }
 
-        // --- ระบบอัปโหลดรูปภาพขึ้นคลาวด์ฟรี (Catbox API) ทันทีที่กดเลือกไฟล์ ---
-        function uploadToCloud(fileInput, targetInputId) {
+        // --- ระบบอัปโหลดรูปภาพแบบแปลงเป็น Local Code (ทำงานได้ 100% ไม่ติดปัญหาเชื่อมต่อ) ---
+        function uploadImageLocally(fileInput, targetInputId) {
             const file = fileInput.files[0];
             if (!file) return;
 
-            showToast('⏳ กำลังอัปโหลดรูปภาพ กรุณารอสักครู่...');
+            if (file.size > 2 * 1024 * 1024) {
+                showToast('⚠️ ขนาดรูปภาพใหญ่เกินไป กรุณาใช้รูปขนาดต่ำกว่า 2MB');
+                return;
+            }
 
-            const formData = new FormData();
-            formData.append('reqtype', 'fileupload');
-            formData.append('fileToUpload', file);
+            showToast('⏳ กำลังโหลดรูปภาพ...');
 
-            fetch('https://catbox.moe/user/api.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.text())
-            .then(url => {
-                if (url && url.startsWith('http')) {
-                    document.getElementById(targetInputId).value = url.trim();
-                    showToast('🎉 อัปโหลดรูปภาพสำเร็จแล้ว!');
-                } else {
-                    showToast('❌ อัปโหลดไม่สำเร็จ กรุณาลองใหม่');
-                }
-            })
-            .catch(error => {
-                console.error(error);
-                showToast('❌ เกิดข้อผิดพลาดในการเชื่อมต่อ');
-            });
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById(targetInputId).value = e.target.result;
+                showToast('🎉 โหลดรูปภาพสำเร็จแล้ว!');
+            };
+            reader.onerror = function() {
+                showToast('❌ เกิดข้อผิดพลาดในการอ่านไฟล์รูปภาพ');
+            };
+            reader.readAsDataURL(file);
         }
 
         function renderAdminChannelsList() {
