@@ -34,23 +34,24 @@
         body {
             font-family: 'Kanit', sans-serif;
             background-color: #f0f9ff;
-            /* Minimal Fabric Pattern with Gentle Movement */
+            /* Polka Dot Fabric Pattern with Gentle Movement */
             background-image: 
-                linear-gradient(135deg, rgba(224, 242, 254, 0.7) 0%, rgba(186, 230, 253, 0.5) 100%),
-                repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(2, 132, 199, 0.03) 40px, rgba(2, 132, 199, 0.03) 40px),
-                repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(2, 132, 199, 0.03) 40px, rgba(2, 132, 199, 0.03) 40px);
-            background-size: 100% 100%, 80px 80px, 80px 80px;
-            animation: fabricMove 25s linear infinite;
+                radial-gradient(rgba(2, 132, 199, 0.12) 3px, transparent 3px),
+                radial-gradient(rgba(2, 132, 199, 0.08) 3px, transparent 3px),
+                linear-gradient(135deg, rgba(224, 242, 254, 0.8) 0%, rgba(186, 230, 253, 0.6) 100%);
+            background-size: 40px 40px, 40px 40px, 100% 100%;
+            background-position: 0 0, 20px 20px, 0 0;
+            animation: polkaDotMove 20s linear infinite;
             min-height: 100vh;
             overflow-x: hidden;
         }
 
-        @keyframes fabricMove {
+        @keyframes polkaDotMove {
             0% {
-                background-position: 0 0, 0 0, 0 0;
+                background-position: 0 0, 20px 20px, 0 0;
             }
             100% {
-                background-position: 0 0, 80px 80px, 80px 80px;
+                background-position: 40px 40px, 60px 60px, 0 0;
             }
         }
 
@@ -137,7 +138,7 @@
     <!-- Header / Top Section -->
     <header class="w-full max-w-md mx-auto pt-10 pb-4 px-4 text-center relative z-10">
         <!-- Admin Access Button -->
-        <button onclick="toggleAdminModal()" class="absolute top-8 right-4 bg-white/95 hover:bg-white text-slate-500 hover:text-sky-600 p-2.5 rounded-full shadow-md transition-all duration-200 border border-sky-100 flex items-center justify-center text-sm" title="จัดการหลังบ้าน">
+        <button onclick="handleAdminAccess()" class="absolute top-8 right-4 bg-white/95 hover:bg-white text-slate-500 hover:text-sky-600 p-2.5 rounded-full shadow-md transition-all duration-200 border border-sky-100 flex items-center justify-center text-sm" title="จัดการหลังบ้าน">
             <i class="fa-solid fa-gear"></i>
         </button>
 
@@ -175,13 +176,38 @@
         </div>
     </main>
 
+    <!-- Admin Login Modal -->
+    <div id="admin-login-modal" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-sm p-6 border border-sky-100 flex flex-col text-center">
+            <div class="w-16 h-16 bg-sky-100 text-sky-600 rounded-2xl mx-auto flex items-center justify-center text-2xl mb-4 shadow-sm">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <h2 class="text-lg font-bold text-slate-800 mb-1">เข้าสู่ระบบหลังบ้าน</h2>
+            <p class="text-xs text-slate-400 mb-5">กรุณากรอกรหัสผ่านแอดมินเพื่อจัดการระบบ</p>
+            
+            <form onsubmit="verifyAdminLogin(event)" class="space-y-4">
+                <div class="relative">
+                    <input type="password" id="admin-password" placeholder="รหัสผ่าน (ค่าเริ่มต้น: 1234)" class="w-full text-sm px-4 py-3 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-slate-50 text-center tracking-widest">
+                </div>
+                <div class="flex space-x-2 pt-2">
+                    <button type="button" onclick="toggleLoginModal()" class="w-1/2 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl text-xs font-medium transition-all">
+                        ยกเลิก
+                    </button>
+                    <button type="submit" class="w-1/2 py-2.5 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-xs font-medium transition-all shadow-md">
+                        เข้าสู่ระบบ
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Admin Modal Panel -->
     <div id="admin-modal" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto p-6 border border-sky-100 flex flex-col">
             <div class="flex justify-between items-center pb-4 border-b border-slate-100 mb-4">
                 <div class="flex items-center space-x-2">
                     <div class="bg-sky-100 text-sky-600 p-2 rounded-xl">
-                        <i class="fa-solid fa-lock text-sm"></i>
+                        <i class="fa-solid fa-gear text-sm"></i>
                     </div>
                     <h2 class="text-lg font-bold text-slate-800">ระบบหลังบ้าน (Admin Panel)</h2>
                 </div>
@@ -271,6 +297,9 @@
     </div>
 
     <script>
+        // กำหนดรหัสผ่านแอดมินที่นี่ (สามารถเปลี่ยนได้ตามต้องการ เช่น "myPassword123")
+        const ADMIN_PASSWORD = "1234";
+
         // Default initial data with reliable bank/wallet logo URLs
         const defaultStoreInfo = {
             name: "NonNon Store",
@@ -352,11 +381,9 @@
                     canvas.height = height;
                     const ctx = canvas.getContext('2d');
                     
-                    // เคลียร์พื้นหลังให้เป็นแบบใส (Transparent)
                     ctx.clearRect(0, 0, width, height);
                     ctx.drawImage(img, 0, 0, width, height);
                     
-                    // บันทึกออกเป็น PNG เพื่อคงความโปร่งใสไว้
                     callback(canvas.toDataURL('image/png'));
                 }
                 img.src = e.target.result;
@@ -535,6 +562,37 @@
             }, 2500);
         }
 
+        // Handle Admin Access Flow
+        function handleAdminAccess() {
+            // เช็คว่าเคยล็อกอินค้างไว้ใน session หรือยัง
+            if (sessionStorage.getItem('is_admin_logged_in') === 'true') {
+                toggleAdminModal();
+            } else {
+                toggleLoginModal();
+            }
+        }
+
+        function toggleLoginModal() {
+            const modal = document.getElementById('admin-login-modal');
+            modal.classList.toggle('hidden');
+            document.getElementById('admin-password').value = '';
+        }
+
+        function verifyAdminLogin(event) {
+            event.preventDefault();
+            const passInput = document.getElementById('admin-password').value;
+
+            if (passInput === ADMIN_PASSWORD) {
+                sessionStorage.setItem('is_admin_logged_in', 'true');
+                toggleLoginModal();
+                toggleAdminModal();
+                showToast("เข้าสู่ระบบหลังบ้านสำเร็จ! 🎉");
+            } else {
+                showToast("รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง ❌");
+                document.getElementById('admin-password').value = '';
+            }
+        }
+
         // Admin Modal Toggle
         function toggleAdminModal() {
             const modal = document.getElementById('admin-modal');
@@ -555,7 +613,6 @@
             }
 
             if (editIndex >= 0) {
-                // Update existing
                 paymentMethods[editIndex].name = name;
                 if (icon) {
                     paymentMethods[editIndex].icon = icon;
@@ -564,7 +621,6 @@
                 paymentMethods[editIndex].accountNumber = accountNumber;
                 showToast("อัปเดตช่องทางชำระเงินเรียบร้อยแล้วค่ะ!");
             } else {
-                // Add new
                 paymentMethods.push({
                     name,
                     icon: icon || 'https://placehold.co/100x100/bae6fd/0369a1?text=Logo',
