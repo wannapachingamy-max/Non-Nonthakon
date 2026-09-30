@@ -50,7 +50,7 @@
             50% { transform: translateY(-6px); }
         }
 
-        /* Cute Animated White Bears Background (Top Corners Only) */
+        /* Cute Animated White Bears Background */
         .cute-bear {
             position: fixed;
             z-index: 0;
@@ -77,7 +77,7 @@
 </head>
 <body class="text-slate-700 flex flex-col min-h-screen relative selection:bg-sky-200">
 
-    <!-- Background Cute Animated White Bears (Top Left & Top Right) -->
+    <!-- Background Cute Animated White Bears -->
     <!-- Top Left Bear -->
     <div class="cute-bear top-4 left-4 bear-blink">
         <svg width="70" height="70" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -111,6 +111,39 @@
         </svg>
     </div>
 
+    <!-- Bottom Left Bear -->
+    <div class="cute-bear bottom-8 left-6 bear-blink" style="animation-delay: 1.5s;">
+        <svg width="75" height="75" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="55" r="30" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+            <circle cx="35" cy="35" r="12" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+            <circle cx="65" cy="35" r="12" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+            <circle cx="35" cy="35" r="6" fill="#cbd5e1"/>
+            <circle cx="65" cy="35" r="6" fill="#cbd5e1"/>
+            <circle cx="42" cy="52" r="3" fill="#334155"/>
+            <circle cx="58" cy="52" r="3" fill="#334155"/>
+            <ellipse cx="50" cy="58" rx="6" ry="4" fill="#334155"/>
+            <path d="M45 65 Q50 70 55 65" stroke="#334155" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+    </div>
+
+    <!-- Bottom Right Bear -->
+    <div class="cute-bear bottom-12 right-6 bear-blink" style="animation-delay: 0.5s;">
+        <svg width="70" height="70" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="55" r="30" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+            <circle cx="35" cy="35" r="12" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+            <circle cx="65" cy="35" r="12" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+            <circle cx="35" cy="35" r="6" fill="#cbd5e1"/>
+            <circle cx="65" cy="35" r="6" fill="#cbd5e1"/>
+            <circle cx="42" cy="52" r="3" fill="#334155"/>
+            <circle cx="58" cy="52" r="3" fill="#334155"/>
+            <ellipse cx="50" cy="58" rx="6" ry="4" fill="#334155"/>
+            <path d="M47 65 Q50 68 53 65" stroke="#334155" stroke-width="2" stroke-linecap="round"/>
+            <!-- Hand waving -->
+            <path class="bear-wave" d="M78 60 Q85 50 80 42" stroke="white" stroke-width="6" stroke-linecap="round"/>
+            <circle cx="82" cy="42" r="6" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+        </svg>
+    </div>
+
     <!-- Toast Notification -->
     <div id="toast" class="fixed top-5 right-5 z-50 transform translate-y-[-200%] transition-all duration-300 bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-xl flex items-center space-x-3 text-sm font-medium">
         <i class="fa-solid fa-circle-check text-sky-400 text-lg"></i>
@@ -120,7 +153,7 @@
     <!-- Header / Top Section -->
     <header class="w-full max-w-md mx-auto pt-10 pb-4 px-4 text-center relative z-10">
         <!-- Admin Access Button -->
-        <button onclick="toggleAdminModal()" class="absolute top-8 right-4 bg-white/90 hover:bg-white text-slate-500 hover:text-sky-600 p-2.5 rounded-full shadow-md transition-all duration-200 border border-sky-100 flex items-center justify-center text-sm" title="จัดการหลังบ้าน">
+        <button onclick="toggleAdminModal()" class="absolute top-8 right-4 bg-white/95 hover:bg-white text-slate-500 hover:text-sky-600 p-2.5 rounded-full shadow-md transition-all duration-200 border border-sky-100 flex items-center justify-center text-sm" title="จัดการหลังบ้าน">
             <i class="fa-solid fa-gear"></i>
         </button>
 
@@ -307,7 +340,7 @@
             document.getElementById('admin-store-logo').value = storeInfo.logo;
         }
 
-        // Image compression helper to support any size image upload smoothly
+        // Image compression helper to support transparency (PNG) without black background
         function compressImage(file, callback) {
             const reader = new FileReader();
             reader.onload = function(e) {
@@ -334,8 +367,13 @@
                     canvas.width = width;
                     canvas.height = height;
                     const ctx = canvas.getContext('2d');
+                    
+                    // เคลียร์พื้นหลังให้เป็นแบบใส (Transparent)
+                    ctx.clearRect(0, 0, width, height);
                     ctx.drawImage(img, 0, 0, width, height);
-                    callback(canvas.toDataURL('image/jpeg', 0.85));
+                    
+                    // บันทึกออกเป็น PNG เพื่อคงความโปร่งใสไว้
+                    callback(canvas.toDataURL('image/png'));
                 }
                 img.src = e.target.result;
             }
