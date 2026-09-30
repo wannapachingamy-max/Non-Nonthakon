@@ -35,11 +35,12 @@
             font-family: 'Kanit', sans-serif;
             background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #bae6fd 100%);
             min-height: 100vh;
+            overflow-x: hidden;
         }
         .glass-card {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.88);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.8);
         }
         .float-animation {
             animation: float 3s ease-in-out infinite;
@@ -48,9 +49,100 @@
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-6px); }
         }
+
+        /* Cute Animated White Bears Background */
+        .cute-bear {
+            position: fixed;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.85;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
+        }
+        .bear-wave {
+            animation: wave 2.5s ease-in-out infinite alternate;
+            transform-origin: bottom center;
+        }
+        .bear-blink {
+            animation: float-bear 4s ease-in-out infinite;
+        }
+        @keyframes wave {
+            0% { transform: rotate(0deg) translateY(0); }
+            100% { transform: rotate(12deg) translateY(-4px); }
+        }
+        @keyframes float-bear {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
     </style>
 </head>
 <body class="text-slate-700 flex flex-col min-h-screen relative selection:bg-sky-200">
+
+    <!-- Background Cute Animated White Bears -->
+    <!-- Top Left Bear -->
+    <div class="cute-bear top-4 left-4 bear-blink">
+        <svg width="70" height="70" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="55" r="30" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+            <circle cx="35" cy="35" r="12" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+            <circle cx="65" cy="35" r="12" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+            <circle cx="35" cy="35" r="6" fill="#cbd5e1"/>
+            <circle cx="65" cy="35" r="6" fill="#cbd5e1"/>
+            <circle cx="42" cy="52" r="3" fill="#334155"/>
+            <circle cx="58" cy="52" r="3" fill="#334155"/>
+            <ellipse cx="50" cy="58" rx="6" ry="4" fill="#334155"/>
+            <path d="M45 65 Q50 70 55 65" stroke="#334155" stroke-width="2" stroke-linecap="round"/>
+            <!-- Hand waving -->
+            <path class="bear-wave" d="M22 60 Q15 50 20 42" stroke="white" stroke-width="6" stroke-linecap="round"/>
+            <circle cx="18" cy="42" r="6" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+        </svg>
+    </div>
+
+    <!-- Top Right Bear -->
+    <div class="cute-bear top-6 right-6 bear-blink" style="animation-delay: 1s;">
+        <svg width="65" height="65" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="55" r="30" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+            <circle cx="35" cy="35" r="12" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+            <circle cx="65" cy="35" r="12" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+            <circle cx="35" cy="35" r="6" fill="#cbd5e1"/>
+            <circle cx="65" cy="35" r="6" fill="#cbd5e1"/>
+            <circle cx="42" cy="52" r="3" fill="#334155"/>
+            <circle cx="58" cy="52" r="3" fill="#334155"/>
+            <ellipse cx="50" cy="58" rx="6" ry="4" fill="#334155"/>
+            <path d="M47 65 Q50 68 53 65" stroke="#334155" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+    </div>
+
+    <!-- Bottom Left Bear -->
+    <div class="cute-bear bottom-8 left-6 bear-blink" style="animation-delay: 1.5s;">
+        <svg width="75" height="75" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="55" r="30" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+            <circle cx="35" cy="35" r="12" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+            <circle cx="65" cy="35" r="12" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+            <circle cx="35" cy="35" r="6" fill="#cbd5e1"/>
+            <circle cx="65" cy="35" r="6" fill="#cbd5e1"/>
+            <circle cx="42" cy="52" r="3" fill="#334155"/>
+            <circle cx="58" cy="52" r="3" fill="#334155"/>
+            <ellipse cx="50" cy="58" rx="6" ry="4" fill="#334155"/>
+            <path d="M45 65 Q50 70 55 65" stroke="#334155" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+    </div>
+
+    <!-- Bottom Right Bear -->
+    <div class="cute-bear bottom-12 right-6 bear-blink" style="animation-delay: 0.5s;">
+        <svg width="70" height="70" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="55" r="30" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+            <circle cx="35" cy="35" r="12" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+            <circle cx="65" cy="35" r="12" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+            <circle cx="35" cy="35" r="6" fill="#cbd5e1"/>
+            <circle cx="65" cy="35" r="6" fill="#cbd5e1"/>
+            <circle cx="42" cy="52" r="3" fill="#334155"/>
+            <circle cx="58" cy="52" r="3" fill="#334155"/>
+            <ellipse cx="50" cy="58" rx="6" ry="4" fill="#334155"/>
+            <path d="M47 65 Q50 68 53 65" stroke="#334155" stroke-width="2" stroke-linecap="round"/>
+            <!-- Hand waving -->
+            <path class="bear-wave" d="M78 60 Q85 50 80 42" stroke="white" stroke-width="6" stroke-linecap="round"/>
+            <circle cx="82" cy="42" r="6" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+        </svg>
+    </div>
 
     <!-- Toast Notification -->
     <div id="toast" class="fixed top-5 right-5 z-50 transform translate-y-[-200%] transition-all duration-300 bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-xl flex items-center space-x-3 text-sm font-medium">
@@ -59,9 +151,9 @@
     </div>
 
     <!-- Header / Top Section -->
-    <header class="w-full max-w-md mx-auto pt-8 pb-4 px-4 text-center relative">
+    <header class="w-full max-w-md mx-auto pt-10 pb-4 px-4 text-center relative z-10">
         <!-- Admin Access Button -->
-        <button onclick="toggleAdminModal()" class="absolute top-6 right-4 bg-white/80 hover:bg-white text-slate-500 hover:text-sky-600 p-2.5 rounded-full shadow-md transition-all duration-200 border border-sky-100 flex items-center justify-center text-sm" title="จัดการหลังบ้าน">
+        <button onclick="toggleAdminModal()" class="absolute top-8 right-4 bg-white/90 hover:bg-white text-slate-500 hover:text-sky-600 p-2.5 rounded-full shadow-md transition-all duration-200 border border-sky-100 flex items-center justify-center text-sm" title="จัดการหลังบ้าน">
             <i class="fa-solid fa-gear"></i>
         </button>
 
@@ -76,7 +168,7 @@
     </header>
 
     <!-- Main Content -->
-    <main class="w-full max-w-md mx-auto px-4 flex-grow pb-12">
+    <main class="w-full max-w-md mx-auto px-4 flex-grow pb-12 relative z-10">
         <!-- Payment Channels Container -->
         <div id="payment-list" class="space-y-4">
             <!-- Dynamically populated via JavaScript -->
@@ -127,8 +219,9 @@
                         <input type="text" id="admin-store-subtitle" class="w-full text-sm px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white">
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-slate-600 mb-1">ลิงก์รูปโลโก้ร้าน (URL)</label>
-                        <input type="text" id="admin-store-logo" class="w-full text-sm px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white">
+                        <label class="block text-xs font-medium text-slate-600 mb-1">อัปโหลดรูปโลโก้าร้าน</label>
+                        <input type="file" id="admin-store-logo-file" accept="image/*" onchange="previewStoreLogo(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-sky-100 file:text-sky-700 hover:file:bg-sky-200 bg-white border border-slate-200 rounded-xl cursor-pointer">
+                        <input type="hidden" id="admin-store-logo">
                     </div>
                     <button onclick="saveStoreInfo()" class="w-full py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-xl text-xs font-medium transition-all shadow-sm">
                         บันทึกข้อมูลร้านค้า
@@ -140,6 +233,7 @@
             <div class="bg-sky-50/60 p-4 rounded-2xl mb-6 border border-sky-100">
                 <h3 id="form-title" class="text-sm font-semibold text-sky-900 mb-3"><i class="fa-solid fa-circle-plus mr-1.5 text-sky-600"></i> เพิ่มช่องทางชำระเงินใหม่</h3>
                 <input type="hidden" id="edit-index" value="-1">
+                <input type="hidden" id="pay-icon">
                 <div class="space-y-3">
                     <div class="grid grid-cols-2 gap-3">
                         <div>
@@ -147,8 +241,8 @@
                             <input type="text" id="pay-name" placeholder="เช่น กสิกรไทย" class="w-full text-sm px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white">
                         </div>
                         <div>
-                            <label class="block text-xs font-medium text-slate-600 mb-1">ลิงก์รูปโลโก้ธนาคาร (URL)</label>
-                            <input type="text" id="pay-icon" placeholder="https://... (URL รูปภาพ)" class="w-full text-sm px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white">
+                            <label class="block text-xs font-medium text-slate-600 mb-1">อัปโหลดรูปไอคอนธนาคาร</label>
+                            <input type="file" id="pay-icon-file" accept="image/*" onchange="previewPayIcon(event)" class="w-full text-xs text-slate-500 file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-[11px] file:font-semibold file:bg-sky-100 file:text-sky-700 hover:file:bg-sky-200 bg-white border border-slate-200 rounded-xl cursor-pointer">
                         </div>
                     </div>
                     <div class="grid grid-cols-2 gap-3">
@@ -246,10 +340,68 @@
             document.getElementById('admin-store-logo').value = storeInfo.logo;
         }
 
+        // Image compression helper to support any size image upload smoothly
+        function compressImage(file, callback) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 300;
+                    const MAX_HEIGHT = 300;
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > height) {
+                        if (width > MAX_WIDTH) {
+                            height *= MAX_WIDTH / width;
+                            width = MAX_WIDTH;
+                        }
+                    } else {
+                        if (height > MAX_HEIGHT) {
+                            width *= MAX_HEIGHT / height;
+                            height = MAX_HEIGHT;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    callback(canvas.toDataURL('image/jpeg', 0.85));
+                }
+                img.src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+
+        function previewStoreLogo(event) {
+            const file = event.target.files[0];
+            if (file) {
+                compressImage(file, function(base64String) {
+                    document.getElementById('admin-store-logo').value = base64String;
+                    showToast("อัปโหลดโลโก้สำเร็จแล้ว! (อย่าลืมกดบันทึกข้อมูลร้านค้า)");
+                });
+            }
+        }
+
+        function previewPayIcon(event) {
+            const file = event.target.files[0];
+            if (file) {
+                compressImage(file, function(base64String) {
+                    document.getElementById('pay-icon').value = base64String;
+                    showToast("อัปโหลดรูปไอคอนธนาคารสำเร็จ!");
+                });
+            }
+        }
+
         function saveStoreInfo() {
             storeInfo.name = document.getElementById('admin-store-name').value || "NonNon Store";
             storeInfo.subtitle = document.getElementById('admin-store-subtitle').value || "";
-            storeInfo.logo = document.getElementById('admin-store-logo').value || "https://placehold.co/200x200/bae6fd/0369a1?text=Logo";
+            const customLogo = document.getElementById('admin-store-logo').value;
+            if (customLogo) {
+                storeInfo.logo = customLogo;
+            }
             
             localStorage.setItem('nonnon_store_info', JSON.stringify(storeInfo));
             renderStoreInfo();
@@ -275,7 +427,7 @@
 
             activeMethods.forEach((item, index) => {
                 const card = document.createElement('div');
-                card.className = "glass-card rounded-3xl p-5 shadow-xl hover:shadow-2xl transition-all duration-300 border border-white/80 relative overflow-hidden group";
+                card.className = "glass-card rounded-3xl p-5 shadow-xl hover:shadow-2xl transition-all duration-300 border border-white/90 relative overflow-hidden group";
                 
                 const logoHtml = item.icon 
                     ? `<img src="${item.icon}" alt="${item.name}" class="w-full h-full object-contain p-1" onerror="this.onerror=null; this.src='https://placehold.co/100x100/bae6fd/0369a1?text=Logo';">`
@@ -293,7 +445,7 @@
                         </div>
                     </div>
                     
-                    <div class="bg-white/90 rounded-2xl p-3.5 flex items-center justify-between border border-sky-100/60 shadow-inner">
+                    <div class="bg-white/95 rounded-2xl p-3.5 flex items-center justify-between border border-sky-100/60 shadow-inner">
                         <div class="min-w-0 mr-2">
                             <span class="block text-[10px] text-slate-400 font-medium uppercase tracking-wider">เลขบัญชี / เบอร์โทร</span>
                             <span id="acc-num-${index}" class="text-base font-bold text-slate-700 tracking-wide font-mono">${item.accountNumber}</span>
@@ -416,7 +568,9 @@
             if (editIndex >= 0) {
                 // Update existing
                 paymentMethods[editIndex].name = name;
-                paymentMethods[editIndex].icon = icon;
+                if (icon) {
+                    paymentMethods[editIndex].icon = icon;
+                }
                 paymentMethods[editIndex].accountName = accountName;
                 paymentMethods[editIndex].accountNumber = accountNumber;
                 showToast("อัปเดตช่องทางชำระเงินเรียบร้อยแล้วค่ะ!");
@@ -424,7 +578,7 @@
                 // Add new
                 paymentMethods.push({
                     name,
-                    icon,
+                    icon: icon || 'https://placehold.co/100x100/bae6fd/0369a1?text=Logo',
                     accountName: accountName || storeInfo.name,
                     accountNumber,
                     active: true
@@ -475,6 +629,7 @@
         function resetForm() {
             document.getElementById('pay-name').value = '';
             document.getElementById('pay-icon').value = '';
+            document.getElementById('pay-icon-file').value = '';
             document.getElementById('pay-acc-name').value = '';
             document.getElementById('pay-acc-num').value = '';
             document.getElementById('edit-index').value = -1;
