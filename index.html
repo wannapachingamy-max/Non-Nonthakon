@@ -389,28 +389,38 @@
     <script>
         const ADMIN_PASSWORD = "1234";
 
+        // กำหนดข้อมูลเริ่มต้นร้านค้าหลัก (อัปเดตให้แสดงผลตรงกันทุกเครื่องทันที)
         let storeInfo = JSON.parse(localStorage.getItem('nonnon_store_info')) || {
             name: "NonNon Store",
             subtitle: "✨ รวมช่องทางชำระเงิน สะดวก ปลอดภัย ✨",
             logo: "https://placehold.co/200x200/e0f2fe/0284c7?text=NonNon"
         };
 
+        // กำหนดรายการช่องทางชำระเงินเริ่มต้น (แก้ไขลำดับและข้อมูลตรงนี้ได้เลยเพื่อให้ทุกเครื่องเห็นเหมือนกัน)
         let paymentMethods = JSON.parse(localStorage.getItem('nonnon_payment_methods')) || [
-            {
-                name: "พร้อมเพย์ QR Code (จำกัดเวลา 17 นาที)",
-                qrImage: "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PromptPaySample",
-                accountName: "นาย นนทวัฒน์ ใจดี",
-                accountNumber: "089-123-4567",
-                icon: "",
-                type: "qr",
-                active: true
-            },
             {
                 name: "TrueMoney Wallet",
                 accountNumber: "089-123-4567",
                 accountName: "นาย นนทวัฒน์ ใจดี",
                 icon: "",
                 type: "normal",
+                active: true
+            },
+            {
+                name: "ธนาคารไทยพาณิชย์ (SCB)",
+                accountNumber: "987-6-54321-0",
+                accountName: "นาย นนทวัฒน์ ใจดี",
+                icon: "",
+                type: "normal",
+                active: true
+            },
+            {
+                name: "พร้อมเพย์",
+                qrImage: "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PromptPaySample",
+                accountName: "วรรณภา ไชยงาม",
+                accountNumber: "",
+                icon: "",
+                type: "qr",
                 active: true
             }
         ];
