@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="th"> 
+<html lang="th">
 <head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ช่องทางการชำระเงิน - NonNon Store</title>
@@ -120,7 +119,7 @@
                 </div>
             </div>
 
-            <!-- QR Code Image Box (แสดงรูป QR Code จริงของคุณ) -->
+            <!-- QR Code Image Box -->
             <div class="bg-sky-50/70 p-3 rounded-2xl border border-sky-100 mb-4 flex items-center justify-center relative shadow-inner">
                 <img id="qr-image-display" src="" alt="PromptPay QR" class="w-52 h-52 rounded-xl object-contain bg-white p-2 border border-sky-200 shadow-sm">
             </div>
@@ -160,56 +159,73 @@
             <div class="space-y-5">
                 <!-- ตั้งค่าร้านค้า -->
                 <div class="bg-sky-50 p-4 rounded-2xl border border-sky-200">
-                    <h3 class="text-sm font-bold text-sky-900 mb-2">ตั้งค่าข้อมูลร้าน</h3>
+                    <h3 class="text-sm font-bold text-sky-900 mb-2">🏪 ตั้งค่าข้อมูลร้าน</h3>
                     <input type="text" id="admin-store-name" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 mb-2 bg-white" placeholder="ชื่อร้าน">
                     <input type="text" id="admin-store-subtitle" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 mb-2 bg-white" placeholder="สโลแกน">
                     <button onclick="saveStoreInfo()" class="w-full py-2 bg-sky-600 text-white rounded-xl text-xs font-semibold">บันทึกข้อมูลร้าน</button>
                 </div>
 
-                <!-- เพิ่ม/แก้ไขช่องทาง -->
-                <div class="bg-blue-50 p-4 rounded-2xl border border-blue-200">
-                    <h3 id="form-title" class="text-sm font-bold text-sky-900 mb-2">เพิ่มช่องทางชำระเงิน</h3>
-                    <input type="hidden" id="edit-index" value="-1">
-                    
+                <!-- Hidden Input สำหรับเช็คว่ากำลังแก้รายการไหนอยู่ -->
+                <input type="hidden" id="edit-index" value="-1">
+
+                <!-- ฟอร์มที่ 1: เพิ่ม/แก้ไข QR Code พร้อมเพย์ (จับเวลา 17 นาที) -->
+                <div class="bg-sky-50 p-4 rounded-2xl border border-sky-200">
+                    <h3 id="qr-form-header" class="text-sm font-bold text-sky-900 mb-2">📷 เพิ่ม QR Code พร้อมเพย์ (จำกัดเวลา 17 นาที)</h3>
                     <div class="space-y-2.5">
-                        <input type="text" id="pay-name" placeholder="ชื่อช่องทาง เช่น พร้อมเพย์ (สแกนจ่าย)" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 bg-white">
+                        <input type="text" id="qr-name" placeholder="ชื่อช่องทาง เช่น พร้อมเพย์ (สแกนจ่าย)" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 bg-white">
                         
                         <div class="grid grid-cols-2 gap-2">
                             <div>
-                                <label class="block text-[11px] text-sky-700 mb-1">อัปโหลดรูป QR Code พร้อมเพย์</label>
-                                <input type="file" id="pay-qr-file" accept="image/*" onchange="previewQrCodeImage(event)" class="w-full text-xs text-sky-600 file:mr-2 file:py-1.5 file:px-2 file:rounded-lg file:border-0 file:text-[11px] file:bg-sky-100 file:text-sky-700 bg-white border border-sky-200 rounded-xl cursor-pointer">
-                                <input type="hidden" id="pay-qr-image">
+                                <label class="block text-[11px] text-sky-700 mb-1">อัปโหลดรูป QR Code</label>
+                                <input type="file" id="qr-file-input" accept="image/*" onchange="previewQrCodeImage(event)" class="w-full text-xs text-sky-600 file:mr-2 file:py-1.5 file:px-2 file:rounded-lg file:border-0 file:text-[11px] file:bg-sky-100 file:text-sky-700 bg-white border border-sky-200 rounded-xl cursor-pointer">
+                                <input type="hidden" id="qr-image-base64">
                             </div>
                             <div>
-                                <label class="block text-[11px] text-sky-700 mb-1">เบอร์พร้อมเพย์ / เลขบัญชี</label>
-                                <input type="text" id="pay-acc-num" placeholder="089-123-4567" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 bg-white font-mono">
+                                <label class="block text-[11px] text-sky-700 mb-1">เบอร์พร้อมเพย์</label>
+                                <input type="text" id="qr-acc-num" placeholder="089-123-4567" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 bg-white font-mono">
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-2 gap-2">
-                            <div>
-                                <label class="block text-[11px] text-sky-700 mb-1">ชื่อบัญชีผู้รับ</label>
-                                <input type="text" id="pay-acc-name" placeholder="นาย นนท์ นนท์" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 bg-white">
-                            </div>
-                            <div>
-                                <label class="block text-[11px] text-sky-700 mb-1">รูปแบบการทำงาน</label>
-                                <select id="pay-type" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 bg-white">
-                                    <option value="qr">ระบบขอ QR Code (จำกัดเวลา 17 นาที)</option>
-                                    <option value="normal">โอนผ่านเลขบัญชีปกติ (คัดลอก)</option>
-                                </select>
-                            </div>
+                        <div>
+                            <label class="block text-[11px] text-sky-700 mb-1">ชื่อบัญชีผู้รับ</label>
+                            <input type="text" id="qr-acc-name" placeholder="นาย นนท์ นนท์" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 bg-white">
                         </div>
 
-                        <div class="flex space-x-2 pt-2">
-                            <button onclick="savePaymentMethod()" class="w-1/2 py-2.5 bg-emerald-600 text-white rounded-xl text-xs font-semibold">บันทึกข้อมูล</button>
-                            <button onclick="resetForm()" class="w-1/2 py-2.5 bg-white text-sky-700 rounded-xl text-xs font-medium border border-sky-200">ล้างฟอร์ม</button>
-                        </div>
+                        <button onclick="saveQrMethod()" class="w-full py-2.5 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-xs font-semibold transition-all">
+                            💾 บันทึก QR Code พร้อมเพย์
+                        </button>
                     </div>
                 </div>
 
-                <!-- รายการทั้งหมด -->
+                <!-- ฟอร์มที่ 2: เพิ่ม/แก้ไข เลขบัญชีธนาคาร / Wallet (กดคัดลอก) -->
+                <div class="bg-blue-50 p-4 rounded-2xl border border-blue-200">
+                    <h3 id="normal-form-header" class="text-sm font-bold text-sky-900 mb-2">💳 เพิ่มเลขบัญชีธนาคาร / TrueMoney Wallet (กดคัดลอก)</h3>
+                    <div class="space-y-2.5">
+                        <input type="text" id="normal-name" placeholder="ชื่อช่องทาง เช่น TrueMoney Wallet หรือ ธ.กสิกรไทย" class="w-full text-sm px-3 py-2 rounded-xl border border-blue-200 bg-white">
+                        
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-[11px] text-blue-700 mb-1">เลขบัญชี / เบอร์วอเลท</label>
+                                <input type="text" id="normal-acc-num" placeholder="XXX-X-XXXXX-X" class="w-full text-sm px-3 py-2 rounded-xl border border-blue-200 bg-white font-mono">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] text-blue-700 mb-1">ชื่อบัญชีผู้รับ</label>
+                                <input type="text" id="normal-acc-name" placeholder="นาย นนท์ นนท์" class="w-full text-sm px-3 py-2 rounded-xl border border-blue-200 bg-white">
+                            </div>
+                        </div>
+
+                        <button onclick="saveNormalMethod()" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold transition-all">
+                            💾 บันทึกบัญชีธนาคาร / Wallet
+                        </button>
+                    </div>
+                </div>
+
+                <!-- รายการที่มีอยู่ทั้งหมด พร้อมปุ่มล้างฟอร์ม -->
                 <div class="bg-sky-50 p-4 rounded-2xl border border-sky-200">
-                    <h3 class="text-sm font-bold text-sky-900 mb-2">รายการที่มีอยู่</h3>
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="text-sm font-bold text-sky-900">📋 รายการช่องทางชำระเงินทั้งหมด</h3>
+                        <button onclick="resetAllForms()" class="text-[11px] text-rose-600 hover:underline">ยกเลิกการแก้ไข / ล้างฟอร์ม</button>
+                    </div>
                     <div id="admin-payment-list" class="space-y-2 max-h-48 overflow-y-auto"></div>
                 </div>
             </div>
@@ -285,7 +301,7 @@
             const file = event.target.files[0];
             if (file) {
                 compressImage(file, function(base64String) {
-                    document.getElementById('pay-qr-image').value = base64String;
+                    document.getElementById('qr-image-base64').value = base64String;
                     showToast("อัปโหลดรูป QR Code สำเร็จ!");
                 });
             }
@@ -383,27 +399,28 @@
             paymentMethods.forEach((item, index) => {
                 const row = document.createElement('div');
                 row.className = "flex items-center justify-between p-2.5 rounded-xl bg-white border border-sky-100 text-xs";
+                const badge = item.type === 'qr' ? '<span class="text-[10px] bg-sky-100 text-sky-700 px-1.5 py-0.5 rounded ml-1">QR 17น.</span>' : '<span class="text-[10px] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded ml-1">โอนปกติ</span>';
                 row.innerHTML = `
-                    <span class="font-semibold truncate">${item.name}</span>
-                    <div class="space-x-1">
-                        <button onclick="editPaymentMethod(${index})" class="px-2 py-1 bg-sky-100 text-sky-700 rounded-lg">แก้ไข</button>
-                        <button onclick="deletePaymentMethod(${index})" class="px-2 py-1 bg-rose-100 text-rose-700 rounded-lg">ลบ</button>
+                    <div class="truncate"><span class="font-semibold">${item.name}</span> ${badge}</div>
+                    <div class="space-x-1 flex-shrink-0">
+                        <button onclick="editPaymentMethod(${index})" class="px-2.5 py-1 bg-sky-100 text-sky-700 rounded-lg">แก้ไข</button>
+                        <button onclick="deletePaymentMethod(${index})" class="px-2.5 py-1 bg-rose-100 text-rose-700 rounded-lg">ลบ</button>
                     </div>
                 `;
                 container.appendChild(row);
             });
         }
 
-        function savePaymentMethod() {
-            const name = document.getElementById('pay-name').value;
-            const qrImage = document.getElementById('pay-qr-image').value;
-            const accountNumber = document.getElementById('pay-acc-num').value;
-            const accountName = document.getElementById('pay-acc-name').value;
-            const type = document.getElementById('pay-type').value;
+        // บันทึกฟอร์ม QR Code
+        function saveQrMethod() {
+            const name = document.getElementById('qr-name').value;
+            const qrImage = document.getElementById('qr-image-base64').value;
+            const accountNumber = document.getElementById('qr-acc-num').value;
+            const accountName = document.getElementById('qr-acc-name').value;
             const editIndex = parseInt(document.getElementById('edit-index').value);
 
             if (!name) {
-                showToast("กรุณากรอกชื่อช่องทางด้วยนะคะ");
+                showToast("กรุณากรอกชื่อช่องทาง QR Code ด้วยนะคะ");
                 return;
             }
 
@@ -412,14 +429,14 @@
                 if (qrImage) paymentMethods[editIndex].qrImage = qrImage;
                 paymentMethods[editIndex].accountNumber = accountNumber;
                 paymentMethods[editIndex].accountName = accountName;
-                paymentMethods[editIndex].type = type;
+                paymentMethods[editIndex].type = 'qr';
             } else {
                 paymentMethods.push({
                     name,
                     qrImage: qrImage || 'https://placehold.co/200x200/e0f2fe/0284c7?text=QR',
                     accountNumber,
                     accountName,
-                    type,
+                    type: 'qr',
                     active: true
                 });
             }
@@ -427,18 +444,66 @@
             localStorage.setItem('nonnon_payment_methods', JSON.stringify(paymentMethods));
             renderFrontPaymentList();
             renderAdminPaymentList();
-            resetForm();
-            showToast("บันทึกข้อมูลสำเร็จ!");
+            resetAllForms();
+            showToast("บันทึก QR Code สำเร็จ!");
+        }
+
+        // บันทึกฟอร์มโอนปกติ (ธนาคาร/Wallet)
+        function saveNormalMethod() {
+            const name = document.getElementById('normal-name').value;
+            const accountNumber = document.getElementById('normal-acc-num').value;
+            const accountName = document.getElementById('normal-acc-name').value;
+            const editIndex = parseInt(document.getElementById('edit-index').value);
+
+            if (!name || !accountNumber) {
+                showToast("กรุณากรอกชื่อและเลขบัญชีให้ครบถ้วนด้วยนะคะ");
+                return;
+            }
+
+            if (editIndex >= 0) {
+                paymentMethods[editIndex].name = name;
+                paymentMethods[editIndex].accountNumber = accountNumber;
+                paymentMethods[editIndex].accountName = accountName;
+                paymentMethods[editIndex].type = 'normal';
+            } else {
+                paymentMethods.push({
+                    name,
+                    qrImage: "",
+                    accountNumber,
+                    accountName,
+                    type: 'normal',
+                    active: true
+                });
+            }
+
+            localStorage.setItem('nonnon_payment_methods', JSON.stringify(paymentMethods));
+            renderFrontPaymentList();
+            renderAdminPaymentList();
+            resetAllForms();
+            showToast("บันทึกบัญชี/Wallet สำเร็จ!");
         }
 
         function editPaymentMethod(index) {
             const item = paymentMethods[index];
-            document.getElementById('pay-name').value = item.name;
-            document.getElementById('pay-qr-image').value = item.qrImage || '';
-            document.getElementById('pay-acc-num').value = item.accountNumber || '';
-            document.getElementById('pay-acc-name').value = item.accountName || '';
-            document.getElementById('pay-type').value = item.type || 'qr';
             document.getElementById('edit-index').value = index;
+
+            if (item.type === 'qr') {
+                document.getElementById('qr-name').value = item.name;
+                document.getElementById('qr-image-base64').value = item.qrImage || '';
+                document.getElementById('qr-acc-num').value = item.accountNumber || '';
+                document.getElementById('qr-acc-name').value = item.accountName || '';
+                document.getElementById('qr-form-header').innerText = "✏️ แก้ไข QR Code พร้อมเพย์";
+                // เลื่อนหน้าต่างไปที่ฟอร์ม QR
+                document.getElementById('qr-name').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                document.getElementById('normal-name').value = item.name;
+                document.getElementById('normal-acc-num').value = item.accountNumber || '';
+                document.getElementById('normal-acc-name').value = item.accountName || '';
+                document.getElementById('normal-form-header').innerText = "✏️ แก้ไขบัญชีธนาคาร / Wallet";
+                // เลื่อนหน้าต่างไปที่ฟอร์มปกติ
+                document.getElementById('normal-name').scrollIntoView({ behavior: 'smooth' });
+            }
+            showToast("โหลดข้อมูลมายังฟอร์มเรียบร้อย");
         }
 
         function deletePaymentMethod(index) {
@@ -451,12 +516,19 @@
             }
         }
 
-        function resetForm() {
-            document.getElementById('pay-name').value = '';
-            document.getElementById('pay-qr-file').value = '';
-            document.getElementById('pay-qr-image').value = '';
-            document.getElementById('pay-acc-num').value = '';
-            document.getElementById('pay-acc-name').value = '';
+        function resetAllForms() {
+            document.getElementById('qr-name').value = '';
+            document.getElementById('qr-file-input').value = '';
+            document.getElementById('qr-image-base64').value = '';
+            document.getElementById('qr-acc-num').value = '';
+            document.getElementById('qr-acc-name').value = '';
+            document.getElementById('qr-form-header').innerText = "📷 เพิ่ม QR Code พร้อมเพย์ (จำกัดเวลา 17 นาที)";
+
+            document.getElementById('normal-name').value = '';
+            document.getElementById('normal-acc-num').value = '';
+            document.getElementById('normal-acc-name').value = '';
+            document.getElementById('normal-form-header').innerText = "💳 เพิ่มเลขบัญชีธนาคาร / TrueMoney Wallet (กดคัดลอก)";
+
             document.getElementById('edit-index').value = -1;
         }
 
