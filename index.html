@@ -262,7 +262,7 @@
         </div>
     </div>
 
-    <!-- Admin Modal Panel (Redesigned with Clear Block Separation & Status Indicators) -->
+    <!-- Admin Modal Panel -->
     <div id="admin-modal" class="fixed inset-0 z-50 bg-sky-950/30 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl shadow-2xl w-full max-w-lg max-h-[92vh] overflow-y-auto p-6 border border-sky-100 flex flex-col">
             <!-- Modal Header -->
@@ -318,7 +318,7 @@
                         บล็อกที่ 2
                     </div>
 
-                    <!-- Action Status Banner (แถบแจ้งเตือนสถานะการทำงานปัจจุบัน) -->
+                    <!-- Action Status Banner -->
                     <div id="form-status-banner" class="mb-3 p-2.5 rounded-xl bg-sky-100/90 border border-sky-300 text-sky-900 text-xs flex items-center justify-between">
                         <div class="flex items-center space-x-2">
                             <i class="fa-solid fa-circle-plus text-sky-600 text-sm" id="banner-icon"></i>
@@ -356,7 +356,7 @@
                             </div>
                         </div>
 
-                        <!-- สถานะการเปิด/ปิด และข้อความแจ้งเตือนเมื่อปิด -->
+                        <!-- สถานะการเปิด/ปิด -->
                         <div class="border-t border-sky-200/60 pt-3 space-y-3 bg-white/60 p-3 rounded-2xl border">
                             <div class="flex items-center justify-between">
                                 <span class="text-xs font-semibold text-sky-900">สถานะการแสดงผล:</span>
@@ -385,7 +385,7 @@
                     </div>
                 </div>
 
-                <!-- ================= BLOCK 3: รายการช่องทางทั้งหมด (จัดการ / ลบ / สลับสถานะ) ================= -->
+                <!-- ================= BLOCK 3: รายการช่องทางทั้งหมด ================= -->
                 <div class="bg-sky-50/70 p-4 rounded-3xl border border-sky-200/80 shadow-sm relative overflow-hidden">
                     <div class="absolute top-0 right-0 bg-sky-200 text-sky-800 text-[10px] font-bold px-3 py-1 rounded-bl-xl">
                         บล็อกที่ 3
@@ -413,7 +413,7 @@
     </div>
 
     <script>
-        const ADMIN_PASSWORD = "1234"; // รหัสผ่านแอดมิน (สามารถเปลี่ยนตรงนี้ได้ครับ)
+        const ADMIN_PASSWORD = "1234"; // รหัสผ่านแอดมิน (สามารถเปลี่ยนรหัสผ่านตรงนี้ได้ครับ)
 
         const defaultStoreInfo = {
             name: "NonNon Store",
@@ -687,7 +687,7 @@
             }, 2500);
         }
 
-        // ระบบตรวจสอบสถานะการเข้าสู่ระบบ
+        // ระบบตรวจสอบการเข้าสู่ระบบ
         function handleAdminAccess() {
             if (sessionStorage.getItem('is_admin_logged_in') === 'true') {
                 toggleAdminModal();
