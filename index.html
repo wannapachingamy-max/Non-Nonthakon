@@ -180,6 +180,14 @@
 
             <div class="p-4 sm:p-5 overflow-y-auto space-y-5 text-xs">
                 
+                <!-- Instruction Banner -->
+                <div class="bg-blue-50 border border-brand-200 p-3 rounded-2xl text-brand-800 space-y-1">
+                    <p class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-brand-500"></i> วิธีการใส่รูปภาพให้ลูกค้าเห็น:</p>
+                    <p class="text-[11px] text-slate-600 leading-relaxed">
+                        แนะนำให้นำรูปไปฝากไว้ในเว็บฟรี เช่น <a href="https://postimages.org/" target="_blank" class="text-brand-600 underline font-medium">Postimages</a> หรือ <a href="https://imgur.com/" target="_blank" class="text-brand-600 underline font-medium">Imgur</a> แล้วคัดลอกช่อง <b>Direct Link</b> (ลิงก์ตรงที่ลงท้ายด้วย .jpg หรือ .png) มาวางในช่องด้านล่างนี้ ลูกค้าทุกคนทั่วโลกจะเห็นรูปชัดเจนแน่นอนครับ!
+                    </p>
+                </div>
+
                 <!-- 1. Store Header & Main QR Settings -->
                 <div class="bg-brand-50/70 p-4 rounded-2xl border border-brand-100 space-y-3">
                     <h4 class="font-bold text-brand-700 text-sm flex items-center gap-1.5 border-b border-brand-200/60 pb-1.5">
@@ -197,25 +205,13 @@
                     </div>
 
                     <div>
-                        <label class="block font-medium mb-1 text-slate-600">โลโก้ร้านค้า</label>
-                        <div class="flex gap-2 mb-1.5">
-                            <input type="text" id="adminStoreLogoUrl" placeholder="ลิงก์รูปภาพ หรือกดอัปโหลด" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white text-xs">
-                            <label class="px-3 py-2 bg-brand-100 text-brand-700 font-medium rounded-xl cursor-pointer hover:bg-brand-200 text-xs flex items-center gap-1 flex-shrink-0">
-                                <i class="fa-solid fa-upload"></i> อัปโหลด
-                                <input type="file" accept="image/*" class="hidden" onchange="uploadImageLocally(this, 'adminStoreLogoUrl')">
-                            </label>
-                        </div>
+                        <label class="block font-medium mb-1 text-slate-600">ลิงก์รูปโลโก้ร้านค้า (URL)</label>
+                        <input type="text" id="adminStoreLogoUrl" placeholder="https://..." class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white text-xs">
                     </div>
 
                     <div class="pt-2 border-t border-brand-100">
-                        <label class="block font-bold mb-1 text-brand-700">รูปภาพ QR Code หลัก (ส่วนบน)</label>
-                        <div class="flex gap-2 mb-1.5">
-                            <input type="text" id="adminMainQrUrl" placeholder="ลิงก์รูป QR Code หรือกดอัปโหลด" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white text-xs">
-                            <label class="px-3 py-2 bg-brand-500 text-white font-medium rounded-xl cursor-pointer hover:bg-brand-600 text-xs flex items-center gap-1 flex-shrink-0 shadow-sm">
-                                <i class="fa-solid fa-upload"></i> อัปโหลด
-                                <input type="file" accept="image/*" class="hidden" onchange="uploadImageLocally(this, 'adminMainQrUrl')">
-                            </label>
-                        </div>
+                        <label class="block font-bold mb-1 text-brand-700">ลิงก์รูปภาพ QR Code หลัก (URL)</label>
+                        <input type="text" id="adminMainQrUrl" placeholder="https://..." class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white text-xs">
                     </div>
 
                     <button onclick="saveStoreSettings()" class="w-full py-2 bg-brand-500 hover:bg-brand-600 text-white font-semibold rounded-xl text-xs shadow transition">
@@ -290,14 +286,8 @@
                     <input type="text" id="channelModalHolder" placeholder="ชื่อ นามสกุล" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white">
                 </div>
                 <div>
-                    <label class="block font-medium mb-1 text-slate-600">ไอคอนแอป/ธนาคาร</label>
-                    <div class="flex gap-2">
-                        <input type="text" id="channelModalIconUrl" placeholder="ลิงก์ไอคอน หรือกดอัปโหลด" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white">
-                        <label class="px-2.5 py-2 bg-brand-100 text-brand-700 font-medium rounded-xl cursor-pointer hover:bg-brand-200 flex-shrink-0 flex items-center gap-1">
-                            <i class="fa-solid fa-upload"></i> อัปไฟล์
-                            <input type="file" accept="image/*" class="hidden" onchange="uploadImageLocally(this, 'channelModalIconUrl')">
-                        </label>
-                    </div>
+                    <label class="block font-medium mb-1 text-slate-600">ลิงก์ไอคอนธนาคาร (URL)</label>
+                    <input type="text" id="channelModalIconUrl" placeholder="https://..." class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white">
                 </div>
                 <div class="flex items-center gap-2 pt-1">
                     <input type="checkbox" id="channelModalActive" class="w-4 h-4 text-brand-500 rounded border-slate-300 focus:ring-brand-400" checked>
@@ -508,29 +498,6 @@
             store.instagram = document.getElementById('adminIgUrl').value;
             saveStoreData(store);
             showToast('💾 บันทึกลิงก์ติดต่อสำเร็จ');
-        }
-
-        // --- ระบบอัปโหลดรูปภาพแบบแปลงเป็น Local Code (ทำงานได้ 100% ไม่ติดปัญหาเชื่อมต่อ) ---
-        function uploadImageLocally(fileInput, targetInputId) {
-            const file = fileInput.files[0];
-            if (!file) return;
-
-            if (file.size > 2 * 1024 * 1024) {
-                showToast('⚠️ ขนาดรูปภาพใหญ่เกินไป กรุณาใช้รูปขนาดต่ำกว่า 2MB');
-                return;
-            }
-
-            showToast('⏳ กำลังโหลดรูปภาพ...');
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById(targetInputId).value = e.target.result;
-                showToast('🎉 โหลดรูปภาพสำเร็จแล้ว!');
-            };
-            reader.onerror = function() {
-                showToast('❌ เกิดข้อผิดพลาดในการอ่านไฟล์รูปภาพ');
-            };
-            reader.readAsDataURL(file);
         }
 
         function renderAdminChannelsList() {
