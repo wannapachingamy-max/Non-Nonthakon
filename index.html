@@ -68,7 +68,7 @@
         <!-- Store Logo / Image Placeholder -->
         <div class="relative w-28 h-28 mx-auto mb-4 float-animation">
             <div class="absolute inset-0 bg-gradient-to-tr from-sky-400 to-blue-500 rounded-full blur-md opacity-50"></div>
-            <img id="store-logo" src="https://placehold.co/200x200/bae6fd/0369a1?text=NonNon" alt="Store Logo" class="relative w-28 h-28 rounded-full object-cover border-4 border-white shadow-lg mx-auto">
+            <img id="store-logo" src="https://placehold.co/200x200/bae6fd/0369a1?text=NonNon" alt="Store Logo" class="relative w-28 h-28 rounded-full object-cover border-4 border-white shadow-lg mx-auto" onerror="this.src='https://placehold.co/200x200/bae6fd/0369a1?text=NonNon'">
         </div>
 
         <h1 id="store-name" class="text-2xl font-bold text-slate-800 tracking-wide">NonNon Store</h1>
@@ -127,7 +127,7 @@
                         <input type="text" id="admin-store-subtitle" class="w-full text-sm px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white">
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-slate-600 mb-1">ลิงก์รูปโลโก้ (URL)</label>
+                        <label class="block text-xs font-medium text-slate-600 mb-1">ลิงก์รูปโลโก้ร้าน (URL)</label>
                         <input type="text" id="admin-store-logo" class="w-full text-sm px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white">
                     </div>
                     <button onclick="saveStoreInfo()" class="w-full py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-xl text-xs font-medium transition-all shadow-sm">
@@ -147,8 +147,8 @@
                             <input type="text" id="pay-name" placeholder="เช่น กสิกรไทย" class="w-full text-sm px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white">
                         </div>
                         <div>
-                            <label class="block text-xs font-medium text-slate-600 mb-1">ประเภทไอคอน (FontAwesome)</label>
-                            <input type="text" id="pay-icon" placeholder="fa-solid fa-building-columns" class="w-full text-sm px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white">
+                            <label class="block text-xs font-medium text-slate-600 mb-1">ลิงก์รูปโลโก้ธนาคาร (URL)</label>
+                            <input type="text" id="pay-icon" placeholder="https://... (URL รูปภาพ)" class="w-full text-sm px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white">
                         </div>
                     </div>
                     <div class="grid grid-cols-2 gap-3">
@@ -193,7 +193,7 @@
     </div>
 
     <script>
-        // Default initial data if localStorage is empty
+        // Default initial data with reliable bank/wallet logo URLs
         const defaultStoreInfo = {
             name: "NonNon Store",
             subtitle: "✨ รวมช่องทางชำระเงิน สะดวก ปลอดภัย ✨",
@@ -203,30 +203,24 @@
         const defaultPaymentMethods = [
             {
                 name: "ธนาคารกสิกรไทย (KBANK)",
-                icon: "fa-solid fa-building-columns",
+                icon: "https://images.seeklogo.com/logo-png/52/2/kasikornbank-k-bank-logo-png_seeklogo-526435.png",
                 accountName: "นาย นนทวัฒน์ ใจดี",
                 accountNumber: "123-4-56789-0",
-                active: true,
-                colorBg: "bg-emerald-50 text-emerald-600 border-emerald-200",
-                badgeColor: "bg-emerald-100 text-emerald-700"
+                active: true
             },
             {
                 name: "TrueMoney Wallet",
-                icon: "fa-solid fa-wallet",
+                icon: "https://images.seeklogo.com/logo-png/44/1/truemoney-wallet-logo-png_seeklogo-446755.png",
                 accountName: "นาย นนทวัฒน์ ใจดี",
                 accountNumber: "089-123-4567",
-                active: true,
-                colorBg: "bg-orange-50 text-orange-600 border-orange-200",
-                badgeColor: "bg-orange-100 text-orange-700"
+                active: true
             },
             {
                 name: "ธนาคารไทยพาณิชย์ (SCB)",
-                icon: "fa-solid fa-landmark",
+                icon: "https://images.seeklogo.com/logo-png/43/1/siam-commercial-bank-scb-logo-png_seeklogo-434032.png",
                 accountName: "นาย นนทวัฒน์ ใจดี",
                 accountNumber: "987-6-54321-0",
-                active: true,
-                colorBg: "bg-blue-50 text-blue-600 border-blue-200",
-                badgeColor: "bg-blue-100 text-blue-700"
+                active: true
             }
         ];
 
@@ -262,7 +256,7 @@
             showToast("บันทึกข้อมูลร้านค้าเรียบร้อยแล้วค่ะ! ✨");
         }
 
-        // Render Front-end Payment Cards
+        // Render Front-end Payment Cards with Image Logos
         function renderFrontPaymentList() {
             const container = document.getElementById('payment-list');
             container.innerHTML = '';
@@ -282,11 +276,16 @@
             activeMethods.forEach((item, index) => {
                 const card = document.createElement('div');
                 card.className = "glass-card rounded-3xl p-5 shadow-xl hover:shadow-2xl transition-all duration-300 border border-white/80 relative overflow-hidden group";
+                
+                const logoHtml = item.icon 
+                    ? `<img src="${item.icon}" alt="${item.name}" class="w-full h-full object-contain p-1" onerror="this.onerror=null; this.src='https://placehold.co/100x100/bae6fd/0369a1?text=Logo';">`
+                    : `<i class="fa-solid fa-wallet text-sky-600 text-xl"></i>`;
+
                 card.innerHTML = `
                     <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-sky-200/40 to-transparent rounded-bl-full pointer-events-none"></div>
                     <div class="flex items-center space-x-4 mb-4">
-                        <div class="w-14 h-14 rounded-2xl bg-white shadow-md flex items-center justify-center text-sky-600 text-2xl border border-sky-100 flex-shrink-0 group-hover:scale-105 transition-transform">
-                            <i class="${item.icon || 'fa-solid fa-wallet'}"></i>
+                        <div class="w-14 h-14 rounded-2xl bg-white shadow-md flex items-center justify-center border border-sky-100 flex-shrink-0 overflow-hidden group-hover:scale-105 transition-transform">
+                            ${logoHtml}
                         </div>
                         <div class="flex-grow min-w-0">
                             <h2 class="font-bold text-slate-800 text-base truncate">${item.name}</h2>
@@ -322,11 +321,14 @@
             paymentMethods.forEach((item, index) => {
                 const row = document.createElement('div');
                 row.className = "flex items-center justify-between p-3 rounded-2xl bg-white border border-slate-100 shadow-sm text-xs";
+                
+                const thumbHtml = item.icon
+                    ? `<img src="${item.icon}" class="w-8 h-8 rounded-xl object-contain bg-sky-50 p-0.5 border border-sky-100" onerror="this.src='https://placehold.co/100x100/bae6fd/0369a1?text=Logo'">`
+                    : `<div class="w-8 h-8 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center"><i class="fa-solid fa-wallet"></i></div>`;
+
                 row.innerHTML = `
                     <div class="flex items-center space-x-3 min-w-0">
-                        <div class="w-8 h-8 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center flex-shrink-0">
-                            <i class="${item.icon || 'fa-solid fa-wallet'} text-sm"></i>
-                        </div>
+                        ${thumbHtml}
                         <div class="min-w-0">
                             <p class="font-semibold text-slate-800 truncate">${item.name}</p>
                             <p class="text-slate-400 font-mono text-[11px]">${item.accountNumber}</p>
@@ -401,7 +403,7 @@
         // Save or Update Payment Method
         function savePaymentMethod() {
             const name = document.getElementById('pay-name').value.trim();
-            const icon = document.getElementById('pay-icon').value.trim() || "fa-solid fa-wallet";
+            const icon = document.getElementById('pay-icon').value.trim();
             const accountName = document.getElementById('pay-acc-name').value.trim();
             const accountNumber = document.getElementById('pay-acc-num').value.trim();
             const editIndex = parseInt(document.getElementById('edit-index').value);
@@ -440,7 +442,7 @@
         function editPaymentMethod(index) {
             const item = paymentMethods[index];
             document.getElementById('pay-name').value = item.name;
-            document.getElementById('pay-icon').value = item.icon;
+            document.getElementById('pay-icon').value = item.icon || '';
             document.getElementById('pay-acc-name').value = item.accountName;
             document.getElementById('pay-acc-num').value = item.accountNumber;
             document.getElementById('edit-index').value = index;
@@ -451,7 +453,7 @@
 
         // Delete Payment Method
         function deletePaymentMethod(index) {
-            if (confirm("คุณต้องการลบช่องทางนี้ใช่ or ไม่?")) {
+            if (confirm("คุณต้องการลบช่องทางนี้ใช่หรือไม่?")) {
                 paymentMethods.splice(index, 1);
                 localStorage.setItem('nonnon_payment_methods', JSON.stringify(paymentMethods));
                 renderFrontPaymentList();
