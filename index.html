@@ -51,13 +51,6 @@
         .cute-badge {
             background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
         }
-        .pulse-soft {
-            animation: pulse-soft 2s infinite ease-in-out;
-        }
-        @keyframes pulse-soft {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-        }
     </style>
 </head>
 <body class="text-slate-700 antialiased flex flex-col min-h-screen">
@@ -86,23 +79,20 @@
                 <p id="displayStoreSubtitle" class="text-xs sm:text-sm text-brand-500 mt-1 font-medium">ช่องทางการชำระเงิน สะดวก รวดเร็ว ปลอดภัย 💙</p>
             </header>
 
-            <!-- Main Featured QR Code Section (ตรงส่วนบนใต้โลโก้) -->
+            <!-- Main Featured QR Code Section -->
             <section id="mainQrSection" class="mb-5">
                 <div class="cute-card rounded-3xl p-5 text-center relative overflow-hidden">
-                    <!-- Top Ribbon/Badge -->
                     <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full cute-badge text-brand-700 text-xs font-semibold mb-3 border border-brand-200">
                         <i class="fa-solid fa-qrcode text-brand-500"></i>
                         <span>สแกนชำระเงินผ่าน QR Code หลัก</span>
                     </div>
 
-                    <!-- Main QR Code Image Container -->
                     <div class="bg-white p-3 rounded-2xl border-2 border-dashed border-brand-200 max-w-[220px] mx-auto shadow-inner mb-3">
                         <img id="displayMainQr" src="https://placehold.co/400x400/e0f2fe/0369a1?text=MAIN+QR+CODE" alt="Main QR Code" class="w-full aspect-square object-contain rounded-xl cursor-pointer hover:opacity-95 transition" onclick="zoomMainQr()" onerror="this.src='https://placehold.co/400x400/e0f2fe/0369a1?text=MAIN+QR+CODE'">
                     </div>
 
                     <p class="text-[11px] text-slate-500 mb-3">รองรับทุกแอปธนาคาร & พร้อมเพย์ สแกนได้ทันทีค่ะ</p>
 
-                    <!-- Main QR Action Buttons -->
                     <div class="flex justify-center gap-2">
                         <button onclick="zoomMainQr()" class="px-3.5 py-1.5 bg-brand-50 hover:bg-brand-100 text-brand-600 rounded-xl text-xs font-medium border border-brand-200 transition flex items-center gap-1.5">
                             <i class="fa-solid fa-magnifying-glass-plus"></i> ดูรูปใหญ่
@@ -124,7 +114,7 @@
                 </div>
 
                 <div id="displayChannelsContainer" class="space-y-3">
-                    <!-- Payment channel cards dynamic injection -->
+                    <!-- Payment channels dynamic injection -->
                 </div>
             </section>
         </div>
@@ -179,7 +169,6 @@
     <div id="adminDashboardModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
         <div class="cute-card bg-white rounded-3xl max-w-lg w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden my-auto">
             
-            <!-- Dashboard Header -->
             <div class="p-4 bg-brand-500 text-white flex justify-between items-center">
                 <h3 class="font-bold text-base flex items-center gap-2">
                     <i class="fa-solid fa-sliders"></i> ระบบจัดการหลังบ้าน (Admin)
@@ -189,7 +178,6 @@
                 </button>
             </div>
 
-            <!-- Dashboard Content (Scrollable) -->
             <div class="p-4 sm:p-5 overflow-y-auto space-y-5 text-xs">
                 
                 <!-- 1. Store Header & Main QR Settings -->
@@ -200,34 +188,32 @@
                     
                     <div>
                         <label class="block font-medium mb-1 text-slate-600">ชื่อร้านค้า</label>
-                        <input type="text" id="adminStoreTitle" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white text-xs focus:ring-2 focus:ring-brand-400 focus:outline-none">
+                        <input type="text" id="adminStoreTitle" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white text-xs">
                     </div>
 
                     <div>
                         <label class="block font-medium mb-1 text-slate-600">คำโปรยร้านค้า</label>
-                        <input type="text" id="adminStoreSubtitle" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white text-xs focus:ring-2 focus:ring-brand-400 focus:outline-none">
+                        <input type="text" id="adminStoreSubtitle" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white text-xs">
                     </div>
 
-                    <!-- Logo Upload / URL -->
                     <div>
                         <label class="block font-medium mb-1 text-slate-600">โลโก้ร้านค้า</label>
                         <div class="flex gap-2 mb-1.5">
-                            <input type="text" id="adminStoreLogoUrl" placeholder="ระบุ URL รูปภาพ" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white text-xs focus:ring-2 focus:ring-brand-400 focus:outline-none">
+                            <input type="text" id="adminStoreLogoUrl" placeholder="ลิงก์รูปภาพ หรือกดอัปโหลด" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white text-xs">
                             <label class="px-3 py-2 bg-brand-100 text-brand-700 font-medium rounded-xl cursor-pointer hover:bg-brand-200 text-xs flex items-center gap-1 flex-shrink-0">
                                 <i class="fa-solid fa-upload"></i> อัปโหลด
-                                <input type="file" id="adminStoreLogoFile" accept="image/*" class="hidden" onchange="handleFileUpload(this, 'adminStoreLogoUrl')">
+                                <input type="file" accept="image/*" class="hidden" onchange="uploadToCloud(this, 'adminStoreLogoUrl')">
                             </label>
                         </div>
                     </div>
 
-                    <!-- Main QR Upload / URL -->
                     <div class="pt-2 border-t border-brand-100">
                         <label class="block font-bold mb-1 text-brand-700">รูปภาพ QR Code หลัก (ส่วนบน)</label>
                         <div class="flex gap-2 mb-1.5">
-                            <input type="text" id="adminMainQrUrl" placeholder="ระบุ URL รูป QR Code" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white text-xs focus:ring-2 focus:ring-brand-400 focus:outline-none">
+                            <input type="text" id="adminMainQrUrl" placeholder="ลิงก์รูป QR Code หรือกดอัปโหลด" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white text-xs">
                             <label class="px-3 py-2 bg-brand-500 text-white font-medium rounded-xl cursor-pointer hover:bg-brand-600 text-xs flex items-center gap-1 flex-shrink-0 shadow-sm">
                                 <i class="fa-solid fa-upload"></i> อัปโหลด
-                                <input type="file" id="adminMainQrFile" accept="image/*" class="hidden" onchange="handleFileUpload(this, 'adminMainQrUrl')">
+                                <input type="file" accept="image/*" class="hidden" onchange="uploadToCloud(this, 'adminMainQrUrl')">
                             </label>
                         </div>
                     </div>
@@ -270,14 +256,11 @@
                         </button>
                     </div>
 
-                    <div id="adminChannelsContainer" class="space-y-2">
-                        <!-- Dynamic list of channels in admin -->
-                    </div>
+                    <div id="adminChannelsContainer" class="space-y-2"></div>
                 </div>
 
             </div>
 
-            <!-- Dashboard Footer -->
             <div class="p-3 bg-slate-50 border-t border-slate-100 text-right">
                 <button onclick="closeAdminDashboard()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium rounded-xl text-xs">ปิดระบบหลังบ้าน</button>
             </div>
@@ -296,7 +279,7 @@
             <div class="space-y-2.5 text-xs">
                 <div>
                     <label class="block font-medium mb-1 text-slate-600">ชื่อช่องทาง / ธนาคาร</label>
-                    <input type="text" id="channelModalName" placeholder="เช่น ธนาคารกสิกรไทย, TrueMoney Wallet" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white">
+                    <input type="text" id="channelModalName" placeholder="เช่น ธนาคารกสิกรไทย" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white">
                 </div>
                 <div>
                     <label class="block font-medium mb-1 text-slate-600">หมายเลขบัญชี / เบอร์วอเลท</label>
@@ -304,21 +287,21 @@
                 </div>
                 <div>
                     <label class="block font-medium mb-1 text-slate-600">ชื่อบัญชี</label>
-                    <input type="text" id="channelModalHolder" placeholder="ชื่อ นามสกุล เจ้าของบัญชี" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white">
+                    <input type="text" id="channelModalHolder" placeholder="ชื่อ นามสกุล" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white">
                 </div>
                 <div>
                     <label class="block font-medium mb-1 text-slate-600">ไอคอนแอป/ธนาคาร</label>
                     <div class="flex gap-2">
-                        <input type="text" id="channelModalIconUrl" placeholder="URL รูปไอคอน" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white">
+                        <input type="text" id="channelModalIconUrl" placeholder="ลิงก์ไอคอน หรือกดอัปโหลด" class="w-full px-3 py-2 rounded-xl border border-brand-200 bg-white">
                         <label class="px-2.5 py-2 bg-brand-100 text-brand-700 font-medium rounded-xl cursor-pointer hover:bg-brand-200 flex-shrink-0 flex items-center gap-1">
                             <i class="fa-solid fa-upload"></i> อัปไฟล์
-                            <input type="file" accept="image/*" class="hidden" onchange="handleFileUpload(this, 'channelModalIconUrl')">
+                            <input type="file" accept="image/*" class="hidden" onchange="uploadToCloud(this, 'channelModalIconUrl')">
                         </label>
                     </div>
                 </div>
                 <div class="flex items-center gap-2 pt-1">
                     <input type="checkbox" id="channelModalActive" class="w-4 h-4 text-brand-500 rounded border-slate-300 focus:ring-brand-400" checked>
-                    <label for="channelModalActive" class="font-medium text-slate-700">เปิดใช้งานช่องทางนี้ (แสดงหน้าลูกค้า)</label>
+                    <label for="channelModalActive" class="font-medium text-slate-700">เปิดใช้งานช่องทางนี้</label>
                 </div>
             </div>
 
@@ -329,7 +312,7 @@
         </div>
     </div>
 
-    <!-- Custom Dialog Modal (Replacing native confirm) -->
+    <!-- Custom Dialog Modal -->
     <div id="customDialogModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="cute-card bg-white rounded-3xl p-5 max-w-xs w-full text-center shadow-2xl">
             <div class="w-12 h-12 rounded-full bg-rose-100 text-rose-500 flex items-center justify-center mx-auto mb-2 text-xl">
@@ -344,15 +327,14 @@
         </div>
     </div>
 
-    <!-- Toast Alert Notification -->
+    <!-- Toast Notification -->
     <div id="toastNotification" class="fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-slate-900/90 backdrop-blur-md text-white px-5 py-2.5 rounded-full text-xs font-medium shadow-2xl z-50 hidden items-center gap-2 border border-slate-700">
         <i class="fa-solid fa-circle-check text-brand-400 text-sm"></i>
-        <span id="toastMessage">คัดลอกเลขบัญชีสำเร็จแล้ว! 📋</span>
+        <span id="toastMessage">สำเร็จ!</span>
     </div>
 
-    <!-- Application Logic Script -->
+    <!-- Application Script -->
     <script>
-        // Initial Default Data Config
         const DEFAULT_STORE = {
             title: "nonnon_store06",
             subtitle: "ช่องทางการชำระเงิน มินิมอล ปลอดภัย 100% ✨",
@@ -371,29 +353,11 @@
                 holder: "นนท์นนท์ สโตร์",
                 icon: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=120&auto=format&fit=crop&q=60",
                 active: true
-            },
-            {
-                id: "chan-2",
-                name: "ธนาคารไทยพาณิชย์ (SCB)",
-                number: "987-6-54321-0",
-                holder: "นนท์นนท์ สโตร์",
-                icon: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?w=120&auto=format&fit=crop&q=60",
-                active: true
-            },
-            {
-                id: "chan-3",
-                name: "TrueMoney Wallet",
-                number: "089-123-4567",
-                holder: "นนท์นนท์ สโตร์",
-                icon: "https://images.unsplash.com/photo-1633167606207-d840b5070fc2?w=120&auto=format&fit=crop&q=60",
-                active: true
             }
         ];
 
-        // Dialog callback holder
         let dialogCallback = null;
 
-        // Load & Save State Helpers
         function getStoreData() {
             const data = localStorage.getItem('nonnon_store_data');
             return data ? JSON.parse(data) : DEFAULT_STORE;
@@ -412,35 +376,24 @@
             localStorage.setItem('nonnon_channels_data', JSON.stringify(data));
         }
 
-        // Initialize App on DOM Load
         document.addEventListener('DOMContentLoaded', () => {
             renderFrontend();
         });
 
-        // Render Main Customer Interface
         function renderFrontend() {
             const store = getStoreData();
             const channels = getChannelsData();
 
-            // Set Header Info
             document.getElementById('displayStoreTitle').textContent = store.title;
             document.getElementById('displayStoreSubtitle').textContent = store.subtitle;
             document.getElementById('displayStoreLogo').src = store.logo || DEFAULT_STORE.logo;
-
-            // Set Featured Main QR Code
             document.getElementById('displayMainQr').src = store.mainQr || DEFAULT_STORE.mainQr;
 
-            // Render Active Payment Channels
             const container = document.getElementById('displayChannelsContainer');
             const activeChannels = channels.filter(c => c.active);
 
             if (activeChannels.length === 0) {
-                container.innerHTML = `
-                    <div class="cute-card rounded-2xl p-6 text-center text-slate-500">
-                        <i class="fa-solid fa-circle-info text-brand-400 text-2xl mb-1"></i>
-                        <p class="text-xs">ขณะนี้ยังไม่มีรายการบัญชีชำระเงินที่เปิดใช้งาน</p>
-                    </div>
-                `;
+                container.innerHTML = `<div class="cute-card rounded-2xl p-6 text-center text-slate-500"><p class="text-xs">ยังไม่มีรายการบัญชีชำระเงินที่เปิดใช้งาน</p></div>`;
             } else {
                 let html = '';
                 activeChannels.forEach(c => {
@@ -467,46 +420,18 @@
                 container.innerHTML = html;
             }
 
-            // Render Social Contact Badges
             const contactContainer = document.getElementById('displayContactLinks');
             let socialHtml = '';
-
-            if (store.line) {
-                socialHtml += `<a href="${store.line}" target="_blank" class="px-3.5 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full text-xs font-medium shadow-sm flex items-center gap-1.5 transition transform hover:scale-105"><i class="fa-brands fa-line text-sm"></i> Line</a>`;
-            }
-            if (store.facebook) {
-                socialHtml += `<a href="${store.facebook}" target="_blank" class="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-xs font-medium shadow-sm flex items-center gap-1.5 transition transform hover:scale-105"><i class="fa-brands fa-facebook text-sm"></i> Facebook</a>`;
-            }
-            if (store.instagram) {
-                socialHtml += `<a href="${store.instagram}" target="_blank" class="px-3.5 py-1.5 bg-pink-500 hover:bg-pink-600 text-white rounded-full text-xs font-medium shadow-sm flex items-center gap-1.5 transition transform hover:scale-105"><i class="fa-brands fa-instagram text-sm"></i> Instagram</a>`;
-            }
-
+            if (store.line) socialHtml += `<a href="${store.line}" target="_blank" class="px-3.5 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full text-xs font-medium shadow-sm flex items-center gap-1.5"><i class="fa-brands fa-line text-sm"></i> Line</a>`;
+            if (store.facebook) socialHtml += `<a href="${store.facebook}" target="_blank" class="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-xs font-medium shadow-sm flex items-center gap-1.5"><i class="fa-brands fa-facebook text-sm"></i> Facebook</a>`;
+            if (store.instagram) socialHtml += `<a href="${store.instagram}" target="_blank" class="px-3.5 py-1.5 bg-pink-500 hover:bg-pink-600 text-white rounded-full text-xs font-medium shadow-sm flex items-center gap-1.5"><i class="fa-brands fa-instagram text-sm"></i> Instagram</a>`;
             contactContainer.innerHTML = socialHtml || '<span class="text-xs text-slate-400">ไม่ได้ลงข้อมูลติดต่อ</span>';
         }
 
-        // Copy Text Functionality
         function copyToClipboard(text) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).then(() => {
-                    showToast("คัดลอกหมายเลขสำเร็จแล้ว! 📋");
-                }).catch(() => fallbackCopy(text));
-            } else {
-                fallbackCopy(text);
+                navigator.clipboard.writeText(text).then(() => showToast("คัดลอกหมายเลขสำเร็จแล้ว! 📋"));
             }
-        }
-
-        function fallbackCopy(text) {
-            const el = document.createElement('textarea');
-            el.value = text;
-            document.body.appendChild(el);
-            el.select();
-            try {
-                document.execCommand('copy');
-                showToast("คัดลอกหมายเลขสำเร็จแล้ว! 📋");
-            } catch (err) {
-                showToast("ไม่สามารถคัดลอกอัตโนมัติได้");
-            }
-            document.body.removeChild(el);
         }
 
         function showToast(msg) {
@@ -514,13 +439,9 @@
             document.getElementById('toastMessage').textContent = msg;
             toast.classList.remove('hidden');
             toast.classList.add('flex');
-            setTimeout(() => {
-                toast.classList.remove('flex');
-                toast.classList.add('hidden');
-            }, 2500);
+            setTimeout(() => { toast.classList.remove('flex'); toast.classList.add('hidden'); }, 2500);
         }
 
-        // Main QR Zoom & Download
         function zoomMainQr() {
             const store = getStoreData();
             document.getElementById('zoomedQrImage').src = store.mainQr || DEFAULT_STORE.mainQr;
@@ -533,25 +454,18 @@
 
         function downloadMainQr(e) {
             const store = getStoreData();
-            const url = store.mainQr || DEFAULT_STORE.mainQr;
-            // If it's a data URL or valid link
-            const btn = document.getElementById('downloadQrBtn');
-            btn.href = url;
+            document.getElementById('downloadQrBtn').href = store.mainQr || DEFAULT_STORE.mainQr;
         }
 
-        // Admin Auth Modals
         function openAdminLoginModal() {
             document.getElementById('adminPasswordInput').value = '';
             document.getElementById('adminLoginModal').classList.remove('hidden');
         }
 
-        function closeAdminLoginModal() {
-            document.getElementById('adminLoginModal').classList.add('hidden');
-        }
+        function closeAdminLoginModal() { document.getElementById('adminLoginModal').classList.add('hidden'); }
 
         function verifyAdminPass() {
-            const pass = document.getElementById('adminPasswordInput').value;
-            if (pass === '1234') {
+            if (document.getElementById('adminPasswordInput').value === '1234') {
                 closeAdminLoginModal();
                 openAdminDashboard();
             } else {
@@ -559,7 +473,6 @@
             }
         }
 
-        // Admin Dashboard Setup
         function openAdminDashboard() {
             const store = getStoreData();
             document.getElementById('adminStoreTitle').value = store.title || '';
@@ -569,7 +482,6 @@
             document.getElementById('adminLineUrl').value = store.line || '';
             document.getElementById('adminFbUrl').value = store.facebook || '';
             document.getElementById('adminIgUrl').value = store.instagram || '';
-
             renderAdminChannelsList();
             document.getElementById('adminDashboardModal').classList.remove('hidden');
         }
@@ -585,7 +497,6 @@
             store.subtitle = document.getElementById('adminStoreSubtitle').value;
             store.logo = document.getElementById('adminStoreLogoUrl').value;
             store.mainQr = document.getElementById('adminMainQrUrl').value;
-
             saveStoreData(store);
             showToast('💾 บันทึกข้อมูลส่วนหัว & QR หลักสำเร็จ');
         }
@@ -595,38 +506,47 @@
             store.line = document.getElementById('adminLineUrl').value;
             store.facebook = document.getElementById('adminFbUrl').value;
             store.instagram = document.getElementById('adminIgUrl').value;
-
             saveStoreData(store);
-            showToast('💾 บันทึกช่องทางติดต่อสำเร็จ');
+            showToast('💾 บันทึกลิงก์ติดต่อสำเร็จ');
         }
 
-        // File Upload Handler (Converts file to Base64)
-        function handleFileUpload(fileInput, targetInputId) {
+        // --- ระบบอัปโหลดรูปภาพขึ้นคลาวด์ฟรี (Catbox API) ทันทีที่กดเลือกไฟล์ ---
+        function uploadToCloud(fileInput, targetInputId) {
             const file = fileInput.files[0];
-            if (file) {
-                if (file.size > 3 * 1024 * 1024) {
-                    showToast('⚠️ ไฟล์รูปขนาดใหญ่เกินไป (ควรไม่เกิน 3MB)');
-                    return;
+            if (!file) return;
+
+            showToast('⏳ กำลังอัปโหลดรูปภาพ กรุณารอสักครู่...');
+
+            const formData = new FormData();
+            formData.append('reqtype', 'fileupload');
+            formData.append('fileToUpload', file);
+
+            fetch('https://catbox.moe/user/api.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(url => {
+                if (url && url.startsWith('http')) {
+                    document.getElementById(targetInputId).value = url.trim();
+                    showToast('🎉 อัปโหลดรูปภาพสำเร็จแล้ว!');
+                } else {
+                    showToast('❌ อัปโหลดไม่สำเร็จ กรุณาลองใหม่');
                 }
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById(targetInputId).value = e.target.result;
-                    showToast('📷 อัปโหลดรูปภาพเรียบร้อย');
-                };
-                reader.readAsDataURL(file);
-            }
+            })
+            .catch(error => {
+                console.error(error);
+                showToast('❌ เกิดข้อผิดพลาดในการเชื่อมต่อ');
+            });
         }
 
-        // Admin Channels Management
         function renderAdminChannelsList() {
             const channels = getChannelsData();
             const container = document.getElementById('adminChannelsContainer');
-
             if (channels.length === 0) {
                 container.innerHTML = '<p class="text-center text-slate-400 py-3">ยังไม่มีช่องทางชำระเงิน</p>';
                 return;
             }
-
             let html = '';
             channels.forEach(c => {
                 html += `
@@ -639,15 +559,9 @@
                             </div>
                         </div>
                         <div class="flex items-center gap-1 flex-shrink-0">
-                            <button onclick="toggleChannelActive('${c.id}')" class="px-2 py-1 rounded-lg text-[10px] font-bold ${c.active ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-400'}">
-                                ${c.active ? 'ON' : 'OFF'}
-                            </button>
-                            <button onclick="openChannelModal('${c.id}')" class="w-7 h-7 bg-brand-50 text-brand-600 rounded-lg flex items-center justify-center text-xs hover:bg-brand-100">
-                                <i class="fa-solid fa-pen"></i>
-                            </button>
-                            <button onclick="confirmDeleteChannel('${c.id}')" class="w-7 h-7 bg-rose-50 text-rose-600 rounded-lg flex items-center justify-center text-xs hover:bg-rose-100">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
+                            <button onclick="toggleChannelActive('${c.id}')" class="px-2 py-1 rounded-lg text-[10px] font-bold ${c.active ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-400'}">${c.active ? 'ON' : 'OFF'}</button>
+                            <button onclick="openChannelModal('${c.id}')" class="w-7 h-7 bg-brand-50 text-brand-600 rounded-lg flex items-center justify-center text-xs hover:bg-brand-100"><i class="fa-solid fa-pen"></i></button>
+                            <button onclick="confirmDeleteChannel('${c.id}')" class="w-7 h-7 bg-rose-50 text-rose-600 rounded-lg flex items-center justify-center text-xs hover:bg-rose-100"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     </div>
                 `;
@@ -674,11 +588,9 @@
             });
         }
 
-        // Channel Add/Edit Modal
         function openChannelModal(id) {
             if (id) {
-                const channels = getChannelsData();
-                const c = channels.find(item => item.id === id);
+                const c = getChannelsData().find(item => item.id === id);
                 if (c) {
                     document.getElementById('channelModalId').value = c.id;
                     document.getElementById('channelModalName').value = c.name;
@@ -698,9 +610,7 @@
             document.getElementById('channelModal').classList.remove('hidden');
         }
 
-        function closeChannelModal() {
-            document.getElementById('channelModal').classList.add('hidden');
-        }
+        function closeChannelModal() { document.getElementById('channelModal').classList.add('hidden'); }
 
         function saveChannelForm() {
             const id = document.getElementById('channelModalId').value;
@@ -719,14 +629,7 @@
             if (id) {
                 channels = channels.map(c => c.id === id ? { id, name, number, holder, icon, active } : c);
             } else {
-                channels.push({
-                    id: 'chan-' + Date.now(),
-                    name,
-                    number,
-                    holder,
-                    icon,
-                    active
-                });
+                channels.push({ id: 'chan-' + Date.now(), name, number, holder, icon, active });
             }
 
             saveChannelsData(channels);
@@ -735,7 +638,6 @@
             showToast('✨ บันทึกช่องทางเรียบร้อย');
         }
 
-        // Custom Dialog Modal Logic
         function openCustomDialog(title, msg, callback) {
             document.getElementById('dialogTitle').textContent = title;
             document.getElementById('dialogMessage').textContent = msg;
@@ -745,10 +647,7 @@
 
         function closeCustomDialog(result) {
             document.getElementById('customDialogModal').classList.add('hidden');
-            if (dialogCallback) {
-                dialogCallback(result);
-                dialogCallback = null;
-            }
+            if (dialogCallback) { dialogCallback(result); dialogCallback = null; }
         }
     </script>
 </body>
