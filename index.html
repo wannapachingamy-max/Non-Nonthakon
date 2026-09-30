@@ -201,7 +201,7 @@
 
     <!-- Header / Top Section -->
     <header class="w-full max-w-md mx-auto pt-10 pb-4 px-4 text-center relative z-10">
-        <button onclick="handleAdminAccess()" class="absolute top-8 right-4 bg-white/90 hover:bg-white text-sky-600 hover:text-sky-700 p-2.5 rounded-full shadow-sm transition-all duration-200 border border-sky-100 flex items-center justify-center text-sm" title="จัดการหลังบ้าน">
+        <button onclick="handleAdminAccess()" class="absolute top-8 right-4 bg-white/95 hover:bg-white text-sky-600 hover:text-sky-700 p-2.5 rounded-full shadow-sm transition-all duration-200 border border-sky-100 flex items-center justify-center text-sm" title="จัดการหลังบ้าน">
             <i class="fa-solid fa-gear"></i>
         </button>
 
@@ -236,6 +236,47 @@
             </div>
         </div>
     </main>
+
+    <!-- PromptPay QR Code Modal with 17-Minute Timer -->
+    <div id="qr-modal" class="fixed inset-0 z-50 bg-sky-950/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-sm p-6 border border-sky-100 flex flex-col text-center relative overflow-hidden animate-fadeIn">
+            <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-sky-400 via-blue-500 to-sky-600"></div>
+            
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-xs font-bold px-3 py-1 bg-sky-100 text-sky-700 rounded-full flex items-center space-x-1">
+                    <i class="fa-solid fa-qrcode"></i>
+                    <span>PromptPay QR Code</span>
+                </span>
+                <button onclick="closeQrModal()" class="text-sky-400 hover:text-sky-600 p-2 rounded-full transition-colors">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <h2 class="text-base font-bold text-sky-950 mb-1" id="qr-modal-title">สแกนเพื่อชำระเงิน</h2>
+            <p class="text-xs text-sky-500 mb-4" id="qr-modal-acc">พร้อมเพย์: <span id="qr-acc-number" class="font-mono font-bold"></span></p>
+
+            <!-- Countdown Timer Box -->
+            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3 mb-4 flex items-center justify-center space-x-2 text-amber-900 shadow-sm">
+                <i class="fa-regular fa-clock text-amber-600 text-base animate-pulse"></i>
+                <div class="text-xs font-semibold">
+                    กรุณาโอนภายใน: <span id="timer-countdown" class="font-mono text-sm font-bold text-rose-600">17:00</span> นาที
+                </div>
+            </div>
+
+            <!-- QR Code Image Box -->
+            <div class="bg-sky-50/70 p-4 rounded-2xl border border-sky-100 mb-4 flex items-center justify-center relative shadow-inner">
+                <img id="qr-image-display" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=NonNonStorePromptPay" alt="PromptPay QR" class="w-48 h-48 rounded-xl object-contain bg-white p-2 border border-sky-200 shadow-sm">
+            </div>
+
+            <p class="text-[11px] text-sky-500 mb-5 leading-relaxed">
+                *ระบบจะจองสิทธิ์การชำระเงินนี้ตามเวลาที่กำหนด<br>เมื่อโอนเงินแล้วกรุณาส่งสلักหลักฐานให้ร้านค้าทันทีค่ะ
+            </p>
+
+            <button onclick="closeQrModal()" class="w-full py-3 bg-sky-600 hover:bg-sky-700 text-white rounded-2xl text-xs font-semibold transition-all shadow-md">
+                เข้าใจแล้ว / ปิดหน้าต่าง
+            </button>
+        </div>
+    </div>
 
     <!-- Admin Login Modal -->
     <div id="admin-login-modal" class="fixed inset-0 z-50 bg-sky-950/30 backdrop-blur-sm hidden flex items-center justify-center p-4">
@@ -337,23 +378,32 @@
                     <div class="space-y-3">
                         <div class="grid grid-cols-2 gap-3">
                             <div>
-                                <label class="block text-xs font-medium text-sky-700 mb-1">ชื่อธนาคาร / แอป <span class="text-rose-500">*</span></label>
-                                <input type="text" id="pay-name" placeholder="เช่น กสิกรไทย" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white text-sky-950">
+                                <label class="block text-xs font-medium text-sky-700 mb-1">ชื่อช่องทาง / พร้อมเพย์ <span class="text-rose-500">*</span></label>
+                                <input type="text" id="pay-name" placeholder="เช่น พร้อมเพย์ (QR Code)" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white text-sky-950">
                             </div>
                             <div>
-                                <label class="block text-xs font-medium text-sky-700 mb-1">รูปไอคอนธนาคาร</label>
+                                <label class="block text-xs font-medium text-sky-700 mb-1">รูปไอคอน</label>
                                 <input type="file" id="pay-icon-file" accept="image/*" onchange="previewPayIcon(event)" class="w-full text-xs text-sky-600 file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-[11px] file:font-semibold file:bg-sky-100 file:text-sky-700 hover:file:bg-sky-200 bg-white border border-sky-200 rounded-xl cursor-pointer">
                             </div>
                         </div>
                         <div class="grid grid-cols-2 gap-3">
                             <div>
-                                <label class="block text-xs font-medium text-sky-700 mb-1">ชื่อบัญชี</label>
+                                <label class="block text-xs font-medium text-sky-700 mb-1">ชื่อบัญชี / ชื่อร้าน</label>
                                 <input type="text" id="pay-acc-name" placeholder="นาย นนท์ นนท์" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white text-sky-950">
                             </div>
                             <div>
-                                <label class="block text-xs font-medium text-sky-700 mb-1">เลขบัญชี / เบอร์โทร <span class="text-rose-500">*</span></label>
-                                <input type="text" id="pay-acc-num" placeholder="123-4-56789-0" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white text-sky-950 font-mono">
+                                <label class="block text-xs font-medium text-sky-700 mb-1">เลขบัญชี / เบอร์พร้อมเพย์ <span class="text-rose-500">*</span></label>
+                                <input type="text" id="pay-acc-num" placeholder="089-123-4567" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white text-sky-950 font-mono">
                             </div>
+                        </div>
+
+                        <!-- ตัวเลือกประเภทช่องทาง (เปิดให้เลือกว่าเป็นแบบ QR Code 17 นาที หรือโอนบัญชีปกติ) -->
+                        <div>
+                            <label class="block text-xs font-medium text-sky-700 mb-1">รูปแบบการชำระเงิน</label>
+                            <select id="pay-type" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white text-sky-950 font-medium">
+                                <option value="qr">ระบบขอ QR Code พร้อมเพย์ (จำกัดเวลา 17 นาที)</option>
+                                <option value="normal">โอนผ่านเลขบัญชี/คัดลอก (แสดงเลขบัญชีตรงๆ)</option>
+                            </select>
                         </div>
 
                         <!-- สถานะการเปิด/ปิด -->
@@ -413,7 +463,7 @@
     </div>
 
     <script>
-        const ADMIN_PASSWORD = "1234"; // รหัสผ่านแอดมิน (สามารถเปลี่ยนรหัสผ่านตรงนี้ได้ครับ)
+        const ADMIN_PASSWORD = "1234"; // รหัสผ่านแอดมิน
 
         const defaultStoreInfo = {
             name: "NonNon Store",
@@ -423,10 +473,20 @@
 
         const defaultPaymentMethods = [
             {
+                name: "พร้อมเพย์ QR Code (จำกัดเวลา 17 นาที)",
+                icon: "https://images.seeklogo.com/logo-png/44/1/promptpay-logo-png_seeklogo-446754.png",
+                accountName: "นาย นนทวัฒน์ ใจดี",
+                accountNumber: "089-123-4567",
+                type: "qr", // ประเภทขอ QR Code พร้อมตัวนับถอยหลัง 17 นาที
+                active: true,
+                closedMessage: "ปิดปรับปรุงระบบชั่วคราว"
+            },
+            {
                 name: "ธนาคารกสิกรไทย (KBANK)",
                 icon: "https://images.seeklogo.com/logo-png/52/2/kasikornbank-k-bank-logo-png_seeklogo-526435.png",
                 accountName: "นาย นนทวัฒน์ ใจดี",
                 accountNumber: "123-4-56789-0",
+                type: "normal",
                 active: true,
                 closedMessage: "ปิดปรับปรุงระบบชั่วคราว"
             },
@@ -435,14 +495,7 @@
                 icon: "https://images.seeklogo.com/logo-png/44/1/truemoney-wallet-logo-png_seeklogo-446755.png",
                 accountName: "นาย นนทวัฒน์ ใจดี",
                 accountNumber: "089-123-4567",
-                active: true,
-                closedMessage: "ปิดปรับปรุงระบบชั่วคราว"
-            },
-            {
-                name: "ธนาคารไทยพาณิชย์ (SCB)",
-                icon: "https://images.seeklogo.com/logo-png/43/1/siam-commercial-bank-scb-logo-png_seeklogo-434032.png",
-                accountName: "นาย นนทวัฒน์ ใจดี",
-                accountNumber: "987-6-54321-0",
+                type: "normal",
                 active: true,
                 closedMessage: "ปิดปรับปรุงระบบชั่วคราว"
             }
@@ -450,6 +503,8 @@
 
         let storeInfo = JSON.parse(localStorage.getItem('nonnon_store_info')) || defaultStoreInfo;
         let paymentMethods = JSON.parse(localStorage.getItem('nonnon_payment_methods')) || defaultPaymentMethods;
+
+        let countdownInterval = null;
 
         window.onload = function() {
             renderStoreInfo();
@@ -572,29 +627,52 @@
 
                 if (item.active) {
                     card.className = "glass-card rounded-3xl p-5 shadow-lg hover:shadow-xl transition-all duration-300 border border-white relative overflow-hidden group";
-                    card.innerHTML = `
-                        <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-sky-100/60 to-transparent rounded-bl-full pointer-events-none"></div>
-                        <div class="flex items-center space-x-4 mb-4">
-                            <div class="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center border border-sky-100 flex-shrink-0 overflow-hidden group-hover:scale-105 transition-transform">
-                                ${logoHtml}
+                    
+                    if (item.type === 'qr') {
+                        // รูปแบบปุ่มขอ QR Code พร้อมเพย์
+                        card.innerHTML = `
+                            <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-sky-200/50 to-transparent rounded-bl-full pointer-events-none"></div>
+                            <div class="flex items-center space-x-4 mb-4">
+                                <div class="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center border border-sky-100 flex-shrink-0 overflow-hidden group-hover:scale-105 transition-transform">
+                                    ${logoHtml}
+                                </div>
+                                <div class="flex-grow min-w-0">
+                                    <h2 class="font-bold text-sky-950 text-base truncate">${item.name}</h2>
+                                    <p class="text-xs text-sky-600 truncate mt-0.5"><i class="fa-regular fa-user mr-1 text-sky-400"></i> ${item.accountName}</p>
+                                </div>
                             </div>
-                            <div class="flex-grow min-w-0">
-                                <h2 class="font-bold text-sky-950 text-base truncate">${item.name}</h2>
-                                <p class="text-xs text-sky-600 truncate mt-0.5"><i class="fa-regular fa-user mr-1 text-sky-400"></i> ${item.accountName}</p>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-white/95 rounded-2xl p-3.5 flex items-center justify-between border border-sky-100 shadow-inner">
-                            <div class="min-w-0 mr-2">
-                                <span class="block text-[10px] text-sky-400 font-medium uppercase tracking-wider">เลขบัญชี / เบอร์โทร</span>
-                                <span class="text-base font-bold text-sky-900 tracking-wide font-mono">${item.accountNumber}</span>
-                            </div>
-                            <button onclick="copyToClipboard('${item.accountNumber}', '${item.name}')" class="bg-sky-600 hover:bg-sky-700 active:scale-95 text-white text-xs font-medium px-4 py-2.5 rounded-xl shadow-sm transition-all flex items-center space-x-1.5 flex-shrink-0">
-                                <i class="fa-regular fa-copy"></i>
-                                <span>คัดลอก</span>
+                            
+                            <button onclick="openQrModal('${item.name}', '${item.accountNumber}')" class="w-full bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-700 hover:to-blue-700 active:scale-95 text-white text-xs font-semibold py-3 px-4 rounded-2xl shadow-md transition-all flex items-center justify-center space-x-2">
+                                <i class="fa-solid fa-qrcode text-base"></i>
+                                <span>ขอ QR Code พร้อมเพย์ (โอนใน 17 นาที)</span>
                             </button>
-                        </div>
-                    `;
+                        `;
+                    } else {
+                        // รูปแบบแสดงเลขบัญชีปกติ
+                        card.innerHTML = `
+                            <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-sky-100/60 to-transparent rounded-bl-full pointer-events-none"></div>
+                            <div class="flex items-center space-x-4 mb-4">
+                                <div class="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center border border-sky-100 flex-shrink-0 overflow-hidden group-hover:scale-105 transition-transform">
+                                    ${logoHtml}
+                                </div>
+                                <div class="flex-grow min-w-0">
+                                    <h2 class="font-bold text-sky-950 text-base truncate">${item.name}</h2>
+                                    <p class="text-xs text-sky-600 truncate mt-0.5"><i class="fa-regular fa-user mr-1 text-sky-400"></i> ${item.accountName}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white/95 rounded-2xl p-3.5 flex items-center justify-between border border-sky-100 shadow-inner">
+                                <div class="min-w-0 mr-2">
+                                    <span class="block text-[10px] text-sky-400 font-medium uppercase tracking-wider">เลขบัญชี / เบอร์โทร</span>
+                                    <span class="text-base font-bold text-sky-900 tracking-wide font-mono">${item.accountNumber}</span>
+                                </div>
+                                <button onclick="copyToClipboard('${item.accountNumber}', '${item.name}')" class="bg-sky-600 hover:bg-sky-700 active:scale-95 text-white text-xs font-medium px-4 py-2.5 rounded-xl shadow-sm transition-all flex items-center space-x-1.5 flex-shrink-0">
+                                    <i class="fa-regular fa-copy"></i>
+                                    <span>คัดลอก</span>
+                                </button>
+                            </div>
+                        `;
+                    }
                 } else {
                     card.className = "glass-card rounded-3xl p-5 shadow-sm border border-amber-200/60 relative overflow-hidden opacity-90";
                     const closedMsg = item.closedMessage || "ปิดปรับปรุงชั่วคราว";
@@ -623,6 +701,52 @@
             });
         }
 
+        // ฟังก์ชันเปิด QR Code และเริ่มนับถอยหลัง 17 นาที
+        function openQrModal(name, accountNumber) {
+            document.getElementById('qr-modal-title').innerText = name;
+            document.getElementById('qr-acc-number').innerText = accountNumber;
+            
+            // สร้าง URL QR Code ตามเบอร์พร้อมเพย์
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=PromptPay:${accountNumber}`;
+            document.getElementById('qr-image-display').src = qrUrl;
+
+            document.getElementById('qr-modal').classList.remove('hidden');
+
+            // เริ่มนับถอยหลัง 17 นาที (17 * 60 = 1020 วินาที)
+            startCountdown(17 * 60);
+        }
+
+        function closeQrModal() {
+            document.getElementById('qr-modal').classList.add('hidden');
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+            }
+        }
+
+        function startCountdown(durationInSeconds) {
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+            }
+            let timer = durationInSeconds;
+            const display = document.getElementById('timer-countdown');
+
+            countdownInterval = setInterval(function () {
+                let minutes = parseInt(timer / 60, 10);
+                let seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    clearInterval(countdownInterval);
+                    display.textContent = "00:00 (หมดเวลา)";
+                    showToast("QR Code หมดอายุแล้วค่ะ กรุณากดขอใหม่อีกครั้ง ⚠️");
+                }
+            }, 1000);
+        }
+
         function renderAdminPaymentList() {
             const container = document.getElementById('admin-payment-list');
             container.innerHTML = '';
@@ -640,11 +764,18 @@
                     ? `<img src="${item.icon}" class="w-8 h-8 rounded-xl object-contain bg-sky-50 p-0.5 border border-sky-100" onerror="this.src='https://placehold.co/100x100/e0f2fe/0284c7?text=Logo'">`
                     : `<div class="w-8 h-8 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center"><i class="fa-solid fa-wallet"></i></div>`;
 
+                const typeBadge = item.type === 'qr' 
+                    ? `<span class="px-1.5 py-0.5 rounded bg-sky-100 text-sky-700 font-bold text-[9px] mr-1">QR 17น.</span>` 
+                    : `<span class="px-1.5 py-0.5 rounded bg-blue-50 text-blue-600 font-bold text-[9px] mr-1">โอนปกติ</span>`;
+
                 row.innerHTML = `
                     <div class="flex items-center space-x-3 min-w-0">
                         ${thumbHtml}
                         <div class="min-w-0">
-                            <p class="font-semibold text-sky-950 truncate">${item.name}</p>
+                            <div class="flex items-center">
+                                ${typeBadge}
+                                <p class="font-semibold text-sky-950 truncate">${item.name}</p>
+                            </div>
                             <p class="text-sky-500 font-mono text-[11px]">${item.accountNumber}</p>
                         </div>
                     </div>
@@ -687,7 +818,6 @@
             }, 2500);
         }
 
-        // ระบบตรวจสอบการเข้าสู่ระบบ
         function handleAdminAccess() {
             if (sessionStorage.getItem('is_admin_logged_in') === 'true') {
                 toggleAdminModal();
@@ -727,12 +857,13 @@
             const icon = document.getElementById('pay-icon').value.trim();
             const accountName = document.getElementById('pay-acc-name').value.trim();
             const accountNumber = document.getElementById('pay-acc-num').value.trim();
+            const type = document.getElementById('pay-type').value;
             const active = document.getElementById('pay-active').checked;
             const closedMessage = document.getElementById('pay-closed-message').value.trim();
             const editIndex = parseInt(document.getElementById('edit-index').value);
 
             if (!name || !accountNumber) {
-                showToast("กรุณากรอกชื่อและเลขบัญชีให้ครบถ้วนด้วยนะคะ 📝");
+                showToast("กรุณากรอกชื่อและเลขบัญชี/เบอร์พร้อมเพย์ให้ครบถ้วนด้วยนะคะ 📝");
                 return;
             }
 
@@ -743,6 +874,7 @@
                 }
                 paymentMethods[editIndex].accountName = accountName;
                 paymentMethods[editIndex].accountNumber = accountNumber;
+                paymentMethods[editIndex].type = type;
                 paymentMethods[editIndex].active = active;
                 paymentMethods[editIndex].closedMessage = closedMessage || "ปิดปรับปรุงระบบชั่วคราว";
                 showToast("อัปเดตข้อมูลสำเร็จเรียบร้อยค่ะ! ✅");
@@ -752,6 +884,7 @@
                     icon: icon || 'https://placehold.co/100x100/e0f2fe/0284c7?text=Logo',
                     accountName: accountName || storeInfo.name,
                     accountNumber,
+                    type,
                     active: active,
                     closedMessage: closedMessage || "ปิดปรับปรุงระบบชั่วคราว"
                 });
@@ -770,6 +903,7 @@
             document.getElementById('pay-icon').value = item.icon || '';
             document.getElementById('pay-acc-name').value = item.accountName;
             document.getElementById('pay-acc-num').value = item.accountNumber;
+            document.getElementById('pay-type').value = item.type || 'qr';
             document.getElementById('pay-active').checked = item.active !== false;
             document.getElementById('pay-active').dispatchEvent(new Event('change'));
             document.getElementById('pay-closed-message').value = item.closedMessage || "";
@@ -805,6 +939,7 @@
             document.getElementById('pay-icon-file').value = '';
             document.getElementById('pay-acc-name').value = '';
             document.getElementById('pay-acc-num').value = '';
+            document.getElementById('pay-type').value = 'qr';
             document.getElementById('pay-active').checked = true;
             document.getElementById('pay-active').dispatchEvent(new Event('change'));
             document.getElementById('pay-closed-message').value = '';
