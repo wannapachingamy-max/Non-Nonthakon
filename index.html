@@ -163,7 +163,6 @@
     <div class="bg-circle circle-5"></div>
 
     <!-- Background Cute Animated White Bears (Top Only) -->
-    <!-- Top Left Bear -->
     <div class="cute-bear top-4 left-4 bear-blink">
         <svg width="70" height="70" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="50" cy="55" r="30" fill="white" stroke="#bae6fd" stroke-width="2"/>
@@ -175,13 +174,11 @@
             <circle cx="58" cy="52" r="3" fill="#0284c7"/>
             <ellipse cx="50" cy="58" rx="6" ry="4" fill="#0284c7"/>
             <path d="M45 65 Q50 70 55 65" stroke="#0284c7" stroke-width="2" stroke-linecap="round"/>
-            <!-- Hand waving -->
             <path class="bear-wave" d="M22 60 Q15 50 20 42" stroke="white" stroke-width="6" stroke-linecap="round"/>
             <circle cx="18" cy="42" r="6" fill="white" stroke="#bae6fd" stroke-width="2"/>
         </svg>
     </div>
 
-    <!-- Top Right Bear -->
     <div class="cute-bear top-6 right-6 bear-blink" style="animation-delay: 1s;">
         <svg width="65" height="65" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="50" cy="55" r="30" fill="white" stroke="#bae6fd" stroke-width="2"/>
@@ -204,12 +201,10 @@
 
     <!-- Header / Top Section -->
     <header class="w-full max-w-md mx-auto pt-10 pb-4 px-4 text-center relative z-10">
-        <!-- Admin Access Button -->
         <button onclick="handleAdminAccess()" class="absolute top-8 right-4 bg-white/90 hover:bg-white text-sky-600 hover:text-sky-700 p-2.5 rounded-full shadow-sm transition-all duration-200 border border-sky-100 flex items-center justify-center text-sm" title="จัดการหลังบ้าน">
             <i class="fa-solid fa-gear"></i>
         </button>
 
-        <!-- Store Logo / Image Placeholder -->
         <div class="relative w-28 h-28 mx-auto mb-4 float-animation">
             <div class="absolute inset-0 bg-gradient-to-tr from-sky-200 to-blue-300 rounded-full blur-md opacity-60"></div>
             <img id="store-logo" src="https://placehold.co/200x200/e0f2fe/0284c7?text=NonNon" alt="Store Logo" class="relative w-28 h-28 rounded-full object-cover border-4 border-white shadow-md mx-auto" onerror="this.src='https://placehold.co/200x200/e0f2fe/0284c7?text=NonNon'">
@@ -221,7 +216,6 @@
 
     <!-- Main Content -->
     <main class="w-full max-w-md mx-auto px-4 flex-grow pb-12 relative z-10">
-        <!-- Payment Channels Container -->
         <div id="payment-list" class="space-y-4">
             <!-- Dynamically populated via JavaScript -->
         </div>
@@ -268,120 +262,157 @@
         </div>
     </div>
 
-    <!-- Admin Modal Panel -->
+    <!-- Admin Modal Panel (Redesigned with Clear Block Separation & Status Indicators) -->
     <div id="admin-modal" class="fixed inset-0 z-50 bg-sky-950/30 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto p-6 border border-sky-100 flex flex-col">
-            <div class="flex justify-between items-center pb-4 border-b border-sky-100 mb-4">
-                <div class="flex items-center space-x-2">
-                    <div class="bg-sky-50 text-sky-600 p-2 rounded-xl border border-sky-100">
-                        <i class="fa-solid fa-gear text-sm"></i>
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-lg max-h-[92vh] overflow-y-auto p-6 border border-sky-100 flex flex-col">
+            <!-- Modal Header -->
+            <div class="flex justify-between items-center pb-4 border-b border-sky-100 mb-5">
+                <div class="flex items-center space-x-2.5">
+                    <div class="bg-sky-500 text-white p-2.5 rounded-2xl shadow-sm">
+                        <i class="fa-solid fa-sliders text-sm"></i>
                     </div>
-                    <h2 class="text-lg font-bold text-sky-950">ระบบหลังบ้าน (Admin Panel)</h2>
+                    <div>
+                        <h2 class="text-base font-bold text-sky-950">ระบบจัดการหลังบ้าน (Admin Dashboard)</h2>
+                        <p class="text-[11px] text-sky-500">จัดการข้อมูลร้านค้าและช่องทางชำระเงินของคุณ</p>
+                    </div>
                 </div>
-                <button onclick="toggleAdminModal()" class="text-sky-400 hover:text-sky-600 p-2 rounded-full">
+                <button onclick="toggleAdminModal()" class="text-sky-400 hover:text-sky-600 p-2 rounded-full transition-colors">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
 
-            <!-- Store Info Settings -->
-            <div class="bg-sky-50/60 p-4 rounded-2xl mb-6 border border-sky-100">
-                <h3 class="text-sm font-semibold text-sky-900 mb-3"><i class="fa-solid fa-store mr-1.5 text-sky-600"></i> ตั้งค่าร้านค้า</h3>
-                <div class="space-y-3">
-                    <div>
-                        <label class="block text-xs font-medium text-sky-700 mb-1">ชื่อร้านค้า</label>
-                        <input type="text" id="admin-store-name" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white text-sky-950">
+            <div class="space-y-6">
+                <!-- ================= BLOCK 1: ตั้งค่าข้อมูลร้านค้า ================= -->
+                <div class="bg-sky-50/70 p-4 rounded-3xl border border-sky-200/80 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-sky-200 text-sky-800 text-[10px] font-bold px-3 py-1 rounded-bl-xl">
+                        บล็อกที่ 1
                     </div>
-                    <div>
-                        <label class="block text-xs font-medium text-sky-700 mb-1">คำโปรย / สโลแกน</label>
-                        <input type="text" id="admin-store-subtitle" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white text-sky-950">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium text-sky-700 mb-1">อัปโหลดรูปโลโก้าร้าน</label>
-                        <input type="file" id="admin-store-logo-file" accept="image/*" onchange="previewStoreLogo(event)" class="w-full text-xs text-sky-600 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-sky-100 file:text-sky-700 hover:file:bg-sky-200 bg-white border border-sky-200 rounded-xl cursor-pointer">
-                        <input type="hidden" id="admin-store-logo">
-                    </div>
-                    <button onclick="saveStoreInfo()" class="w-full py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-xs font-medium transition-all shadow-sm">
-                        บันทึกข้อมูลร้านค้า
-                    </button>
-                </div>
-            </div>
-
-            <!-- Add / Edit Payment Method Form -->
-            <div class="bg-sky-50/60 p-4 rounded-2xl mb-6 border border-sky-100">
-                <h3 id="form-title" class="text-sm font-semibold text-sky-900 mb-3"><i class="fa-solid fa-circle-plus mr-1.5 text-sky-600"></i> เพิ่มช่องทางชำระเงินใหม่</h3>
-                <input type="hidden" id="edit-index" value="-1">
-                <input type="hidden" id="pay-icon">
-                <div class="space-y-3">
-                    <div class="grid grid-cols-2 gap-3">
+                    <h3 class="text-sm font-bold text-sky-900 mb-3 flex items-center">
+                        <i class="fa-solid fa-store mr-2 text-sky-600"></i> ตั้งค่าข้อมูลร้านค้า
+                    </h3>
+                    
+                    <div class="space-y-3">
                         <div>
-                            <label class="block text-xs font-medium text-sky-700 mb-1">ชื่อธนาคาร / แอป</label>
-                            <input type="text" id="pay-name" placeholder="เช่น กสิกรไทย" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white text-sky-950">
+                            <label class="block text-xs font-medium text-sky-700 mb-1">ชื่อร้านค้า</label>
+                            <input type="text" id="admin-store-name" class="w-full text-sm px-3.5 py-2.5 rounded-xl border border-sky-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white text-sky-950">
                         </div>
                         <div>
-                            <label class="block text-xs font-medium text-sky-700 mb-1">อัปโหลดรูปไอคอนธนาคาร</label>
-                            <input type="file" id="pay-icon-file" accept="image/*" onchange="previewPayIcon(event)" class="w-full text-xs text-sky-600 file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-[11px] file:font-semibold file:bg-sky-100 file:text-sky-700 hover:file:bg-sky-200 bg-white border border-sky-200 rounded-xl cursor-pointer">
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-xs font-medium text-sky-700 mb-1">ชื่อบัญชี</label>
-                            <input type="text" id="pay-acc-name" placeholder="นาย นนท์ นนท์" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white text-sky-950">
+                            <label class="block text-xs font-medium text-sky-700 mb-1">คำโปรย / สโลแกน</label>
+                            <input type="text" id="admin-store-subtitle" class="w-full text-sm px-3.5 py-2.5 rounded-xl border border-sky-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white text-sky-950">
                         </div>
                         <div>
-                            <label class="block text-xs font-medium text-sky-700 mb-1">เลขบัญชี / เบอร์โทร</label>
-                            <input type="text" id="pay-acc-num" placeholder="123-4-56789-0" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white text-sky-950 font-mono">
+                            <label class="block text-xs font-medium text-sky-700 mb-1">อัปโหลดรูปโลโก้าร้าน</label>
+                            <input type="file" id="admin-store-logo-file" accept="image/*" onchange="previewStoreLogo(event)" class="w-full text-xs text-sky-600 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-sky-100 file:text-sky-700 hover:file:bg-sky-200 bg-white border border-sky-200 rounded-xl cursor-pointer">
+                            <input type="hidden" id="admin-store-logo">
                         </div>
-                    </div>
-
-                    <!-- สถานะการเปิด/ปิด และข้อความแจ้งเตือนเมื่อปิด -->
-                    <div class="border-t border-sky-200/60 pt-3 space-y-3">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-medium text-sky-700">สถานะการแสดงผลหน้าเว็บ:</span>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" id="pay-active" class="sr-only peer" checked>
-                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sky-600"></div>
-                                <span class="ml-2 text-xs font-medium text-sky-900 peer-checked:text-sky-700">เปิดใช้งานปกติ</span>
-                            </label>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-medium text-sky-700 mb-1">ข้อความแจ้งเตือนลูกค้า (กรณีปิดชั่วคราว)</label>
-                            <input type="text" id="pay-closed-message" placeholder="เช่น ปิดปรับปรุงชั่วคราว / ธนาคารขัดข้อง (เปิดใช้งาน 12:00 น.)" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white text-sky-950">
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-2 pt-2">
-                        <button onclick="savePaymentMethod()" class="py-2.5 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-xs font-medium transition-all shadow-sm flex items-center justify-center space-x-1.5">
-                            <i class="fa-solid fa-check"></i>
-                            <span id="save-btn-text">บันทึกช่องทางนี้</span>
-                        </button>
-                        <button onclick="resetForm()" class="py-2.5 bg-white hover:bg-sky-50 text-sky-700 rounded-xl text-xs font-medium transition-all border border-sky-200">
-                            ล้างฟอร์ม / ยกเลิก
+                        <button onclick="saveStoreInfo()" class="w-full py-2.5 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-xs font-semibold transition-all shadow-sm flex items-center justify-center space-x-1.5">
+                            <i class="fa-solid fa-floppy-disk"></i>
+                            <span>บันทึกข้อมูลร้านค้า</span>
                         </button>
                     </div>
                 </div>
-            </div>
 
-            <!-- Existing Channels Management List -->
-            <div>
-                <h3 class="text-sm font-semibold text-sky-900 mb-3"><i class="fa-solid fa-list-check mr-1.5 text-sky-600"></i> รายการช่องทางทั้งหมด</h3>
-                <div id="admin-payment-list" class="space-y-2.5 max-h-48 overflow-y-auto pr-1">
-                    <!-- Populated dynamically -->
+                <!-- ================= BLOCK 2: เพิ่ม / แก้ไขช่องทางชำระเงิน ================= -->
+                <div class="bg-blue-50/55 p-4 rounded-3xl border border-blue-200/80 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-blue-200 text-blue-900 text-[10px] font-bold px-3 py-1 rounded-bl-xl">
+                        บล็อกที่ 2
+                    </div>
+
+                    <!-- Action Status Banner (แถบแจ้งเตือนสถานะการทำงานปัจจุบัน) -->
+                    <div id="form-status-banner" class="mb-3 p-2.5 rounded-xl bg-sky-100/90 border border-sky-300 text-sky-900 text-xs flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-circle-plus text-sky-600 text-sm" id="banner-icon"></i>
+                            <span id="banner-text" class="font-semibold">สถานะ: กำลังอยู่ในโหมดเพิ่มช่องทางใหม่</span>
+                        </div>
+                        <span id="status-badge" class="px-2 py-0.5 rounded-full bg-sky-600 text-white text-[10px] font-bold">MODE: ADD</span>
+                    </div>
+
+                    <h3 id="form-title" class="text-sm font-bold text-sky-900 mb-3 flex items-center">
+                        <i class="fa-solid fa-circle-plus mr-2 text-sky-600"></i> เพิ่มช่องทางชำระเงินใหม่
+                    </h3>
+
+                    <input type="hidden" id="edit-index" value="-1">
+                    <input type="hidden" id="pay-icon">
+                    
+                    <div class="space-y-3">
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-medium text-sky-700 mb-1">ชื่อธนาคาร / แอป <span class="text-rose-500">*</span></label>
+                                <input type="text" id="pay-name" placeholder="เช่น กสิกรไทย" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white text-sky-950">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-sky-700 mb-1">รูปไอคอนธนาคาร</label>
+                                <input type="file" id="pay-icon-file" accept="image/*" onchange="previewPayIcon(event)" class="w-full text-xs text-sky-600 file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-[11px] file:font-semibold file:bg-sky-100 file:text-sky-700 hover:file:bg-sky-200 bg-white border border-sky-200 rounded-xl cursor-pointer">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-medium text-sky-700 mb-1">ชื่อบัญชี</label>
+                                <input type="text" id="pay-acc-name" placeholder="นาย นนท์ นนท์" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white text-sky-950">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-sky-700 mb-1">เลขบัญชี / เบอร์โทร <span class="text-rose-500">*</span></label>
+                                <input type="text" id="pay-acc-num" placeholder="123-4-56789-0" class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white text-sky-950 font-mono">
+                            </div>
+                        </div>
+
+                        <!-- สถานะการเปิด/ปิด และข้อความแจ้งเตือนเมื่อปิด -->
+                        <div class="border-t border-sky-200/60 pt-3 space-y-3 bg-white/60 p-3 rounded-2xl border">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-semibold text-sky-900">สถานะการแสดงผล:</span>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" id="pay-active" class="sr-only peer" checked>
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
+                                    <span class="ml-2 text-xs font-bold text-emerald-700 peer-checked:text-emerald-700" id="active-status-label">เปิดใช้งานปกติ</span>
+                                </label>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-sky-700 mb-1">ข้อความแจ้งเตือนลูกค้า (กรณีปิดชั่วคราว)</label>
+                                <input type="text" id="pay-closed-message" placeholder="เช่น ปิดปรับปรุงชั่วคราว / เปิด 12:00 น." class="w-full text-sm px-3 py-2 rounded-xl border border-sky-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white text-sky-950">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2 pt-2">
+                            <button onclick="savePaymentMethod()" class="py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold transition-all shadow-sm flex items-center justify-center space-x-1.5">
+                                <i class="fa-solid fa-check"></i>
+                                <span id="save-btn-text">บันทึกช่องทางนี้</span>
+                            </button>
+                            <button onclick="resetForm()" class="py-2.5 bg-white hover:bg-sky-50 text-sky-700 rounded-xl text-xs font-medium transition-all border border-sky-200 flex items-center justify-center space-x-1">
+                                <i class="fa-solid fa-rotate-right"></i>
+                                <span>ล้างฟอร์ม / ยกเลิก</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= BLOCK 3: รายการช่องทางทั้งหมด (จัดการ / ลบ / สลับสถานะ) ================= -->
+                <div class="bg-sky-50/70 p-4 rounded-3xl border border-sky-200/80 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-sky-200 text-sky-800 text-[10px] font-bold px-3 py-1 rounded-bl-xl">
+                        บล็อกที่ 3
+                    </div>
+                    <h3 class="text-sm font-bold text-sky-900 mb-3 flex items-center">
+                        <i class="fa-solid fa-list-check mr-2 text-sky-600"></i> รายการช่องทางชำระเงินทั้งหมดในระบบ
+                    </h3>
+                    <div id="admin-payment-list" class="space-y-2.5 max-h-56 overflow-y-auto pr-1">
+                        <!-- Populated dynamically -->
+                    </div>
                 </div>
             </div>
 
+            <!-- Modal Footer Controls -->
             <div class="mt-6 pt-4 border-t border-sky-100 flex justify-between items-center">
-                <button onclick="resetToDefaultData()" class="text-xs text-rose-500 hover:text-rose-700 font-medium underline">
-                    รีเซ็ตเป็นค่าเริ่มต้น
+                <button onclick="resetToDefaultData()" class="text-xs text-rose-500 hover:text-rose-700 font-medium underline flex items-center space-x-1">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span>รีเซ็ตเป็นค่าเริ่มต้น</span>
                 </button>
-                <button onclick="toggleAdminModal()" class="px-4 py-2 bg-sky-100 hover:bg-sky-200 text-sky-800 rounded-xl text-xs font-medium transition-all">
-                    ปิดหน้าต่าง
+                <button onclick="toggleAdminModal()" class="px-5 py-2.5 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-xs font-semibold transition-all shadow-sm">
+                    เสร็จสิ้น / ปิดหน้าต่าง
                 </button>
             </div>
         </div>
     </div>
 
     <script>
-        // กำหนดรหัสผ่านแอดมินที่นี่ (ค่าเริ่มต้น: 1234)
         const ADMIN_PASSWORD = "1234";
 
         const defaultStoreInfo = {
@@ -424,7 +455,22 @@
             renderStoreInfo();
             renderFrontPaymentList();
             renderAdminPaymentList();
+            setupActiveToggleLabel();
         };
+
+        function setupActiveToggleLabel() {
+            const checkbox = document.getElementById('pay-active');
+            const label = document.getElementById('active-status-label');
+            checkbox.onchange = function() {
+                if (checkbox.checked) {
+                    label.innerText = "เปิดใช้งานปกติ";
+                    label.className = "ml-2 text-xs font-bold text-emerald-700";
+                } else {
+                    label.innerText = "ปิดใช้งานชั่วคราว";
+                    label.className = "ml-2 text-xs font-bold text-amber-700";
+                }
+            }
+        }
 
         function renderStoreInfo() {
             document.getElementById('store-name').innerText = storeInfo.name;
@@ -462,10 +508,8 @@
                     canvas.width = width;
                     canvas.height = height;
                     const ctx = canvas.getContext('2d');
-                    
                     ctx.clearRect(0, 0, width, height);
                     ctx.drawImage(img, 0, 0, width, height);
-                    
                     callback(canvas.toDataURL('image/png'));
                 }
                 img.src = e.target.result;
@@ -478,7 +522,7 @@
             if (file) {
                 compressImage(file, function(base64String) {
                     document.getElementById('admin-store-logo').value = base64String;
-                    showToast("อัปโหลดโลโก้สำเร็จแล้ว! (อย่าลืมกดบันทึกข้อมูลร้านค้า)");
+                    showToast("อัปโหลดโลโก้สำเร็จ! (กดปุ่มบันทึกข้อมูลร้านค้าด้านบนเพื่อยืนยัน)");
                 });
             }
         }
@@ -488,7 +532,7 @@
             if (file) {
                 compressImage(file, function(base64String) {
                     document.getElementById('pay-icon').value = base64String;
-                    showToast("อัปโหลดรูปไอคอนธนาคารสำเร็จ!");
+                    showToast("อัปโหลดรูปไอคอนสำเร็จ!");
                 });
             }
         }
@@ -522,13 +566,11 @@
 
             paymentMethods.forEach((item, index) => {
                 const card = document.createElement('div');
-                
                 const logoHtml = item.icon 
                     ? `<img src="${item.icon}" alt="${item.name}" class="w-full h-full object-contain p-1" onerror="this.onerror=null; this.src='https://placehold.co/100x100/e0f2fe/0284c7?text=Logo';">`
                     : `<i class="fa-solid fa-wallet text-sky-600 text-xl"></i>`;
 
                 if (item.active) {
-                    // สถานะ: เปิดใช้งานปกติ
                     card.className = "glass-card rounded-3xl p-5 shadow-lg hover:shadow-xl transition-all duration-300 border border-white relative overflow-hidden group";
                     card.innerHTML = `
                         <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-sky-100/60 to-transparent rounded-bl-full pointer-events-none"></div>
@@ -545,7 +587,7 @@
                         <div class="bg-white/95 rounded-2xl p-3.5 flex items-center justify-between border border-sky-100 shadow-inner">
                             <div class="min-w-0 mr-2">
                                 <span class="block text-[10px] text-sky-400 font-medium uppercase tracking-wider">เลขบัญชี / เบอร์โทร</span>
-                                <span id="acc-num-${index}" class="text-base font-bold text-sky-900 tracking-wide font-mono">${item.accountNumber}</span>
+                                <span class="text-base font-bold text-sky-900 tracking-wide font-mono">${item.accountNumber}</span>
                             </div>
                             <button onclick="copyToClipboard('${item.accountNumber}', '${item.name}')" class="bg-sky-600 hover:bg-sky-700 active:scale-95 text-white text-xs font-medium px-4 py-2.5 rounded-xl shadow-sm transition-all flex items-center space-x-1.5 flex-shrink-0">
                                 <i class="fa-regular fa-copy"></i>
@@ -554,7 +596,6 @@
                         </div>
                     `;
                 } else {
-                    // สถานะ: ปิดใช้งานชั่วคราว (แสดงการ์ดสีเทาจางลง พร้อมแถบเตือนสีเหลือง/ส้มละมุน)
                     card.className = "glass-card rounded-3xl p-5 shadow-sm border border-amber-200/60 relative overflow-hidden opacity-90";
                     const closedMsg = item.closedMessage || "ปิดปรับปรุงชั่วคราว";
                     card.innerHTML = `
@@ -563,14 +604,10 @@
                                 ${logoHtml}
                             </div>
                             <div class="flex-grow min-w-0">
-                                <div class="flex items-center space-x-2">
-                                    <h2 class="font-bold text-gray-700 text-base truncate">${item.name}</h2>
-                                </div>
+                                <h2 class="font-bold text-gray-700 text-base truncate">${item.name}</h2>
                                 <p class="text-xs text-gray-500 truncate mt-0.5"><i class="fa-regular fa-user mr-1 text-gray-400"></i> ${item.accountName}</p>
                             </div>
                         </div>
-
-                        <!-- แจ้งเตือนปิดชั่วคราว -->
                         <div class="bg-amber-50/90 rounded-2xl p-3 border border-amber-200/80 flex items-start space-x-2.5">
                             <div class="text-amber-500 text-sm mt-0.5 flex-shrink-0">
                                 <i class="fa-solid fa-triangle-exclamation"></i>
@@ -582,7 +619,6 @@
                         </div>
                     `;
                 }
-
                 container.appendChild(card);
             });
         }
@@ -613,11 +649,12 @@
                         </div>
                     </div>
                     <div class="flex items-center space-x-2 flex-shrink-0">
-                        <button onclick="toggleActive(${index})" class="px-2.5 py-1 rounded-lg font-medium text-[10px] ${item.active ? 'bg-sky-100 text-sky-800' : 'bg-amber-100 text-amber-800'}">
-                            ${item.active ? 'เปิดใช้งาน' : 'ปิดชั่วคราว'}
-                        </button>
-                        <button onclick="editPaymentMethod(${index})" class="p-1.5 text-sky-600 hover:bg-sky-50 rounded-lg transition-all" title="แก้ไข">
-                            <i class="fa-solid fa-pen"></i>
+                        <span class="px-2 py-1 rounded-lg font-bold text-[10px] ${item.active ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
+                            ${item.active ? '● ปกติ' : '● ปิดชั่วคราว'}
+                        </span>
+                        <button onclick="editPaymentMethod(${index})" class="px-2.5 py-1.5 bg-sky-50 hover:bg-sky-100 text-sky-700 rounded-lg transition-all font-medium flex items-center space-x-1" title="แก้ไข">
+                            <i class="fa-solid fa-pen text-[10px]"></i>
+                            <span>แก้ไข</span>
                         </button>
                         <button onclick="deletePaymentMethod(${index})" class="p-1.5 text-rose-500 hover:bg-rose-50 rounded-lg transition-all" title="ลบ">
                             <i class="fa-solid fa-trash"></i>
@@ -632,28 +669,8 @@
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(text).then(() => {
                     showToast(`คัดลอก ${label} สำเร็จแล้วค่ะ! ✨`);
-                }).catch(() => {
-                    fallbackCopy(text, label);
                 });
-            } else {
-                fallbackCopy(text, label);
             }
-        }
-
-        function fallbackCopy(text, label) {
-            const textArea = document.createElement("textarea");
-            textArea.value = text;
-            textArea.style.position = "fixed";
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            try {
-                document.execCommand('copy');
-                showToast(`คัดลอก ${label} สำเร็จแล้วค่ะ! ✨`);
-            } catch (err) {
-                showToast("ไม่สามารถคัดลอกได้ กรุณาลองใหม่อีกครั้ง");
-            }
-            document.body.removeChild(textArea);
         }
 
         function showToast(message) {
@@ -727,7 +744,7 @@
                 paymentMethods[editIndex].accountNumber = accountNumber;
                 paymentMethods[editIndex].active = active;
                 paymentMethods[editIndex].closedMessage = closedMessage || "ปิดปรับปรุงระบบชั่วคราว";
-                showToast("อัปเดตช่องทางชำระเงินเรียบร้อยแล้วค่ะ!");
+                showToast("อัปเดตข้อมูลสำเร็จเรียบร้อยค่ะ! ✅");
             } else {
                 paymentMethods.push({
                     name,
@@ -737,7 +754,7 @@
                     active: active,
                     closedMessage: closedMessage || "ปิดปรับปรุงระบบชั่วคราว"
                 });
-                showToast("เพิ่มช่องทางชำระเงินใหม่สำเร็จแล้วค่ะ!");
+                showToast("เพิ่มช่องทางใหม่สำเร็จเรียบร้อยค่ะ! 🎉");
             }
 
             localStorage.setItem('nonnon_payment_methods', JSON.stringify(paymentMethods));
@@ -753,11 +770,23 @@
             document.getElementById('pay-acc-name').value = item.accountName;
             document.getElementById('pay-acc-num').value = item.accountNumber;
             document.getElementById('pay-active').checked = item.active !== false;
+            document.getElementById('pay-active').dispatchEvent(new Event('change'));
             document.getElementById('pay-closed-message').value = item.closedMessage || "";
             document.getElementById('edit-index').value = index;
 
-            document.getElementById('form-title').innerHTML = `<i class="fa-solid fa-pen-to-square mr-1.5 text-sky-600"></i> แก้ไขช่องทาง: ${item.name}`;
-            document.getElementById('save-btn-text').innerText = "บันทึกการแก้ไข";
+            // เปลี่ยนสถานะ Banner ด้านบนฟอร์มให้ชัดเจนว่าเป็นโหมดแก้ไข
+            document.getElementById('form-title').innerHTML = `<i class="fa-solid fa-pen-to-square mr-2 text-blue-600"></i> แก้ไขข้อมูล: <span class="text-blue-700 underline">${item.name}</span>`;
+            document.getElementById('save-btn-text').innerText = "บันทึกการแก้ไขข้อมูลนี้";
+            document.getElementById('banner-text').innerText = `สถานะ: กำลังแก้ไขข้อมูล (${item.name})`;
+            document.getElementById('banner-icon').className = "fa-solid fa-pen-to-square text-blue-600 text-sm";
+            document.getElementById('form-status-banner').className = "mb-3 p-2.5 rounded-xl bg-blue-100/90 border border-blue-300 text-blue-900 text-xs flex items-center justify-between";
+            
+            const badge = document.getElementById('status-badge');
+            badge.innerText = "MODE: EDIT";
+            badge.className = "px-2 py-0.5 rounded-full bg-blue-600 text-white text-[10px] font-bold";
+
+            // เลื่อนหน้าต่างพรีวิวไปที่บล็อกที่ 2
+            document.getElementById('form-title').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
         function deletePaymentMethod(index) {
@@ -766,16 +795,9 @@
                 localStorage.setItem('nonnon_payment_methods', JSON.stringify(paymentMethods));
                 renderFrontPaymentList();
                 renderAdminPaymentList();
-                showToast("ลบเรียบร้อยแล้วค่ะ");
+                showToast("ลบข้อมูลเรียบร้อยแล้วค่ะ");
+                resetForm();
             }
-        }
-
-        function toggleActive(index) {
-            paymentMethods[index].active = !paymentMethods[index].active;
-            localStorage.setItem('nonnon_payment_methods', JSON.stringify(paymentMethods));
-            renderFrontPaymentList();
-            renderAdminPaymentList();
-            showToast(`เปลี่ยนสถานะเป็น ${paymentMethods[index].active ? 'เปิดใช้งาน' : 'ปิดชั่วคราว'} แล้ว`);
         }
 
         function resetForm() {
@@ -785,10 +807,20 @@
             document.getElementById('pay-acc-name').value = '';
             document.getElementById('pay-acc-num').value = '';
             document.getElementById('pay-active').checked = true;
+            document.getElementById('pay-active').dispatchEvent(new Event('change'));
             document.getElementById('pay-closed-message').value = '';
             document.getElementById('edit-index').value = -1;
-            document.getElementById('form-title').innerHTML = `<i class="fa-solid fa-circle-plus mr-1.5 text-sky-600"></i> เพิ่มช่องทางชำระเงินใหม่`;
+
+            // รีเซ็ตสถานะ Banner กลับเป็นโหมดเพิ่มใหม่
+            document.getElementById('form-title').innerHTML = `<i class="fa-solid fa-circle-plus mr-2 text-sky-600"></i> เพิ่มช่องทางชำระเงินใหม่`;
             document.getElementById('save-btn-text').innerText = "บันทึกช่องทางนี้";
+            document.getElementById('banner-text').innerText = "สถานะ: กำลังอยู่ในโหมดเพิ่มช่องทางใหม่";
+            document.getElementById('banner-icon').className = "fa-solid fa-circle-plus text-sky-600 text-sm";
+            document.getElementById('form-status-banner').className = "mb-3 p-2.5 rounded-xl bg-sky-100/90 border border-sky-300 text-sky-900 text-xs flex items-center justify-between";
+            
+            const badge = document.getElementById('status-badge');
+            badge.innerText = "MODE: ADD";
+            badge.className = "px-2 py-0.5 rounded-full bg-sky-600 text-white text-[10px] font-bold";
         }
 
         function resetToDefaultData() {
@@ -800,6 +832,7 @@
                 renderStoreInfo();
                 renderFrontPaymentList();
                 renderAdminPaymentList();
+                resetForm();
                 showToast("รีเซ็ตข้อมูลเรียบร้อยแล้วค่ะ!");
             }
         }
